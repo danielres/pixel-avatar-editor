@@ -1,6 +1,8 @@
 {
-  "name": "pixel-avatar-editor",
+  "name": "@danielres/pixel-avatar-editor",
   "version": "0.0.1",
+  "description": "A pixel avatar editor",
+  "license": "MIT",
   "scripts": {
     "dev": "vite dev",
     "build": "svelte-kit sync && svelte-package",
