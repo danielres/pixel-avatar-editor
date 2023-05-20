@@ -1,4 +1,8 @@
 import { grouper } from '$lib/utils/array'
+import {
+  compressToEncodedURIComponent as lzcompress,
+  decompressFromEncodedURIComponent as lzdecompress,
+} from 'lz-string'
 
 export type Cell = [number, number] | []
 export type Row = Cell[]
@@ -15,32 +19,18 @@ export function encode(board: Board, numCols: number) {
     .map((row) => row.map((cell) => (cell.length ? cell : 'x')))
     .flat(2)
     .join('')
-    .replaceAll('xxxx', 'y')
-    .replaceAll('xx', 'z')
-    .replaceAll('5555', 'c')
-    .replaceAll('0000', 'a')
-    .replaceAll('00', 'b')
-    .replaceAll('yyyy', 'D')
-    .replaceAll('DDD', 'G')
 
-  return numCols + '_' + stringified
+  return lzcompress(numCols + '_' + stringified)
 }
 
-export function decode(str: string): Board {
-  const [numCols, s] = str.split('_')
-  const expanded = s
-    .replaceAll('G', 'DDD')
-    .replaceAll('D', 'yyyy')
-    .replaceAll('b', '00')
-    .replaceAll('a', '0000')
-    .replaceAll('c', '5555')
-    .replaceAll('z', 'xx')
-    .replaceAll('y', 'xxxx')
-    .replaceAll('x', 'xx')
-  const split = expanded.split('')
-  const cells = grouper(split, 2)
-  const cleanedCells = cells.map((tuple) =>
-    tuple[0] === 'x' ? [] : tuple.map((t) => parseInt(t, 10))
+export function decode(encoded: string): Board {
+  const [numCols, str] = lzdecompress(encoded).split('_')
+  const expanded = str.replaceAll('x', 'xx')
+
+  const chars = expanded.split('')
+  const cells = grouper(chars, 2)
+  const cleanedCells = cells.map((cell) =>
+    cell[0] === 'x' ? [] : cell.map((t) => parseInt(t, 10))
   ) as Cell[]
   const board = grouper(cleanedCells, parseInt(numCols, 10))
   return board
