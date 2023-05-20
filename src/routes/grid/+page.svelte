@@ -1,28 +1,22 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Tools from './Tools.svelte'
   import domtoimage from 'dom-to-image'
+  import Tools from './Tools.svelte'
+  import { decode, encode, makeBoard, type Cell, type Board } from './board'
+  import presets from './presets'
 
   const debug = false
   const boardSize = 12
-  const boardHeight = boardSize
-  const boardWidth = boardSize
   const query = $page.url.searchParams.get('s')
 
   let hues = 8
   let lums = 8
   let sat = 40
 
-  type Tuple = [number, number]
+  let swatches: Cell[][] = [[]]
+  let selected: Cell
 
-  let swatches: Tuple[][] = [[]]
-  let selected: Tuple
-
-  let board: (Tuple | [])[][] = query
-    ? decode(query)
-    : Array.from({ length: boardHeight }, (_, i) => {
-        return Array.from({ length: boardWidth }, (_, j) => [])
-      })
+  let board: Board = query ? decode(query) : makeBoard(boardSize)
 
   let isDrawing = false
 
@@ -34,17 +28,6 @@
   function getLum(index: number) {
     const lum = Math.floor((80 / (lums - 0.5)) * index + 20)
     return lum
-  }
-
-  function encode(b: any, columns: number) {
-    return columns + '-' + b.flat(2).join('')
-  }
-
-  function decode(str: string) {
-    const [columns, values] = str.split('-')
-    const numbers = values.split('').map((s) => parseInt(s, 10))
-    const tuples = grouper(numbers, 2)
-    return grouper(tuples, parseInt(columns, 10))
   }
 
   async function generatePng() {
@@ -63,17 +46,6 @@
       console.error('oops, something went wrong!', error)
     }
   }
-
-  function grouper(lst: any[], size: number) {
-    var result = [],
-      i = 0,
-      n = lst.length
-    while (i < n) {
-      result.push(lst.slice(i, i + size))
-      i += size
-    }
-    return result
-  }
 </script>
 
 <div>
@@ -84,7 +56,11 @@
   <button on:click={generatePng}>Generate PNG</button>
 </div>
 
-{selected}
+<div class="presets">
+  {#each Object.entries(presets) as [k, v]}
+    <button on:click={() => (board = v)}>{k}</button>
+  {/each}
+</div>
 
 <div class="shell">
   {#if swatches?.[0]?.[0]?.[0] !== undefined}
@@ -151,6 +127,10 @@
 <div id="generated" />
 
 <style>
+  .presets {
+    display: flex;
+    gap: 0.5rem;
+  }
   .shell {
     display: flex;
     gap: 2rem;
