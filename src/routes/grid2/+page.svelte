@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DrawingBoard from './DrawingBoard.svelte'
   import Palette from './Palette.svelte'
   import makeStores from './stores'
 
@@ -8,10 +9,16 @@
   })
 </script>
 
-<Palette store={paletteStore} />
+<div class="main">
+  <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" />
+  <Palette {paletteStore} swatchSize="2rem" />
+</div>
 
-<pre>{JSON.stringify($boardStore, null, 2)}</pre>
-
-<section>[DrawingBoard]</section>
-<section>[palette]</section>
 <section>[history]</section>
+
+<style>
+  .main {
+    display: flex;
+    gap: 2rem;
+  }
+</style>

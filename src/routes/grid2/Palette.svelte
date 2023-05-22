@@ -1,17 +1,24 @@
 <script lang="ts">
-  import type { Writable } from 'svelte/store'
-  import type { Palette } from './stores'
+  import type { PaletteStore } from './stores'
 
   import Swatch from './Palette/Swatch.svelte'
 
-  export let store: Writable<Palette>
+  export let paletteStore: PaletteStore
+  export let swatchSize: string
+
+  const { currentSwatchXYStore } = paletteStore
 </script>
 
 <div class="palette">
-  {#each $store as row}
+  {#each $paletteStore as row, x}
     <div class="row">
-      {#each row as swatch}
-        <Swatch {swatch} />
+      {#each row as swatch, y}
+        <Swatch
+          {swatchSize}
+          {swatch}
+          on:click={() => ($currentSwatchXYStore = [x, y])}
+          isActive={x === $currentSwatchXYStore[0] && y === $currentSwatchXYStore[1]}
+        />
       {/each}
     </div>
   {/each}

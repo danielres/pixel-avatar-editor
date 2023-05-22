@@ -1,6 +1,6 @@
 import { writable, type Writable } from 'svelte/store'
 
-export type BoardCell = [number, number] | []
+export type BoardCell = SwatchXY | null
 export type BoardRow = BoardCell[]
 export type Board = BoardRow[]
 
@@ -10,6 +10,10 @@ export type Opacity = number
 export type Swatch = [Hue, Lum, Opacity?]
 export type PaletteRow = Swatch[]
 export type Palette = PaletteRow[]
+type SwatchXY = [number, number]
+
+export type BoardStore = ReturnType<typeof makeStores>['boardStore']
+export type PaletteStore = ReturnType<typeof makeStores>['paletteStore']
 
 type BoardData = { data: Board }
 type NewBoardOptions = { height: number; width: number }
@@ -19,10 +23,20 @@ type Options = {
   palette: { hues: number; lums: number; sat: number }
 }
 
-export default function (options: Options) {
+export default makeStores
+
+function makeStores(options: Options) {
   const boardStore = makeBoardStore(options.board)
   const paletteStore = makePaletteStore(options.palette)
-  return { boardStore, paletteStore }
+  const currentSwatchXYStore = writable<SwatchXY>([0, 0])
+
+  return {
+    boardStore,
+    paletteStore: {
+      ...paletteStore,
+      currentSwatchXYStore,
+    },
+  }
 }
 
 function makePaletteStore(options: Options['palette']): Writable<Palette> {
@@ -45,6 +59,6 @@ function makeBoardStore(options: Options['board']): Writable<Board> {
 
 function makeNewBoard(height: number, width: number): Board {
   return Array.from({ length: height }, () => {
-    return Array.from({ length: width }, () => [])
+    return Array.from({ length: width }, () => null)
   })
 }
