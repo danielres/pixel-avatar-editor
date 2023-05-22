@@ -1,5 +1,6 @@
 <script lang="ts">
   import DrawingBoard from './components/DrawingBoard.svelte'
+  import Cell from './components/DrawingBoard/BoardCell.svelte'
   import Eraser from './components/Eraser.svelte'
   import Palette from './components/Palette.svelte'
   import Preview from './components/Preview.svelte'
@@ -13,14 +14,23 @@
     board: { width: 12, height: 12 },
     palette: { hues: 8, lums: 8, sat },
   })
+
+  const { usedColors } = paletteStore
 </script>
 
 <main>
-  <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
+  <section>
+    <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
+  </section>
 
   <section class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
     <Eraser {stateStore} />
+    <div class="usedColors">
+      {#each $usedColors.slice(0, 16) as cell}
+        <Cell cellSize="2rem" {cell} {sat} {paletteStore} />
+      {/each}
+    </div>
   </section>
 
   <section class="previews">
@@ -50,6 +60,10 @@
     margin: 0 2rem;
   }
 
+  section {
+    height: fit-content;
+  }
+
   section .label {
     position: absolute;
     top: -1rem;
@@ -64,9 +78,16 @@
     height: fit-content;
   }
 
+  .usedColors {
+    display: flex;
+    width: 16rem;
+    flex-wrap: wrap;
+  }
+
   section.previews {
     display: flex;
     flex-direction: column;
+    background: #00000006;
     border: 1px solid #00000022;
     width: 8rem;
     height: 16rem;
@@ -82,6 +103,7 @@
     width: 12rem;
     height: 16rem;
     border: 1px solid #00000022;
+    background: #00000006;
     flex-wrap: wrap;
     justify-content: space-evenly;
   }
