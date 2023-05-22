@@ -56,6 +56,6 @@
   }
 
   .checkerboard {
-    background: repeating-conic-gradient(#fafafa 0% 25%, transparent 0% 50%) 50% / 1.5rem 1.5rem;
+    background: repeating-conic-gradient(#00000011 0% 25%, #ffffff22 0% 50%) 50% / 1.5rem 1.5rem;
   }
 </style>
