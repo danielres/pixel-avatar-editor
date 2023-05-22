@@ -1,9 +1,10 @@
 <script lang="ts">
-  import type { PaletteStore } from './stores'
+  import type { PaletteStore, StateStore } from './stores'
 
   import Swatch from './Palette/Swatch.svelte'
 
   export let paletteStore: PaletteStore
+  export let stateStore: StateStore
   export let swatchSize: string
   export let sat: number
 
@@ -18,7 +19,10 @@
           {swatchSize}
           {swatch}
           {sat}
-          on:click={() => ($currentSwatchXYStore = [x, y])}
+          on:click={() => {
+            $stateStore.isUsingEraser = false
+            $currentSwatchXYStore = [x, y]
+          }}
           isActive={x === $currentSwatchXYStore[0] && y === $currentSwatchXYStore[1]}
         />
       {/each}

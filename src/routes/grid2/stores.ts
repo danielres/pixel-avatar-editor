@@ -14,6 +14,7 @@ type SwatchXY = [number, number]
 
 export type BoardStore = ReturnType<typeof makeStores>['boardStore']
 export type PaletteStore = ReturnType<typeof makeStores>['paletteStore']
+export type StateStore = ReturnType<typeof makeStores>['stateStore']
 
 type BoardData = { data: Board }
 type NewBoardOptions = { height: number; width: number }
@@ -29,6 +30,7 @@ function makeStores(options: Options) {
   const boardStore = makeBoardStore(options.board)
   const paletteStore = makePaletteStore(options.palette)
   const currentSwatchXYStore = writable<SwatchXY>([0, 0])
+  const stateStore = writable({ isUsingEraser: false })
 
   return {
     boardStore,
@@ -36,6 +38,7 @@ function makeStores(options: Options) {
       ...paletteStore,
       currentSwatchXYStore,
     },
+    stateStore,
   }
 }
 

@@ -1,10 +1,11 @@
 <script lang="ts">
-  import type { BoardStore, PaletteStore } from './stores'
+  import type { BoardStore, PaletteStore, StateStore } from './stores'
 
   import Cell from './DrawingBoard/BoardCell.svelte'
 
   export let boardStore: BoardStore
   export let paletteStore: PaletteStore
+  export let stateStore: StateStore
   export let cellSize: string
   export let debug = false
   export let sat: number
@@ -12,7 +13,8 @@
   const { currentSwatchXYStore } = paletteStore
 
   function paint(rowIndex: number, cellIndex: number) {
-    return () => ($boardStore[rowIndex][cellIndex] = $currentSwatchXYStore)
+    return () =>
+      ($boardStore[rowIndex][cellIndex] = $stateStore.isUsingEraser ? null : $currentSwatchXYStore)
   }
 
   let isPainting = false

@@ -1,5 +1,6 @@
 <script lang="ts">
   import DrawingBoard from './DrawingBoard.svelte'
+  import Eraser from './Eraser.svelte'
   import Palette from './Palette.svelte'
   import presets from './presets'
   import makeStores from './stores'
@@ -7,7 +8,7 @@
   const debug = false
   const sat = 40
 
-  const { boardStore, paletteStore } = makeStores({
+  const { boardStore, paletteStore, stateStore } = makeStores({
     board: { width: 12, height: 12 },
     palette: { hues: 8, lums: 8, sat },
   })
@@ -20,8 +21,11 @@
 </div>
 
 <div class="main">
-  <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} />
-  <Palette {paletteStore} swatchSize="2rem" {sat} />
+  <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
+  <div class="tools">
+    <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
+    <Eraser {stateStore} />
+  </div>
 </div>
 
 <div>
@@ -34,5 +38,11 @@
   .main {
     display: flex;
     gap: 2rem;
+  }
+
+  .tools {
+    display: grid;
+    gap: 1rem;
+    height: fit-content;
   }
 </style>
