@@ -45,6 +45,7 @@
   .main {
     display: flex;
     gap: 2rem;
+    margin: 0 2rem;
   }
 
   .tools {
