@@ -18,6 +18,8 @@ const minidemon2: Board = [[[0,3],null,[0,6],null,null,null,null,null,null,[0,6]
 const nerd: Board = [[null,[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],null,null],[[0,1],[7,6],[7,5],[7,5],[0,1],[0,1],[0,1],[7,5],[7,5],[7,6],[0,1],null],[[0,1],[7,5],[7,6],[7,6],[7,6],[7,6],[7,6],[7,6],[7,6],[7,5],[0,1],null],[[0,1],[5,1],[5,1],[5,1],[5,1],[5,1],[5,1],[5,1],[5,1],[5,1],[0,1],null],[[5,1],[5,1],[4,6],[5,7],[5,1],[7,7],[5,1],[4,6],[4,7],[5,1],[5,1],null],[[7,6],[5,1],[4,6],[4,6],[5,1],[7,7],[5,1],[4,6],[4,6],[5,1],[7,6],null],[[7,6],[5,1],[5,1],[5,1],[5,1],[7,7],[5,1],[5,1],[5,1],[5,1],[7,6],null],[[7,5],[7,7],[7,7],[7,7],[7,6],[7,7],[7,6],[7,7],[7,7],[7,7],[7,5],null],[null,[7,7],[7,7],[7,6],[7,4],[7,4],[7,4],[7,6],[7,7],[7,7],null,null],[null,[7,7],[7,7],[7,7],[7,7],[7,7],[7,7],[7,7],[7,7],[7,7],null,null],[null,[7,6],[7,5],[7,7],[7,7],[7,7],[7,7],[7,7],[7,5],[7,6],null,null],[null,null,[7,6],[7,3],[7,3],[7,3],[7,3],[7,3],[7,6],null,null,null]]
 //prettier-ignore
 const drop: Board = [[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,[4,3],[4,3],null,null,null,null,null,null],[null,null,null,[4,3],[4,3],[4,3],[4,3],null,null,null,null,null],[null,null,null,[4,3],[4,3],[4,3],[4,5],[4,3],null,null,null,null],[null,null,[4,3],[4,3],[4,3],[4,3],[4,3],[4,5],null,null,null,null],[null,null,[4,3],[4,7],[4,3],[4,3],[4,7],[4,3],[4,4],null,null,null],[null,null,[4,3],[4,2],[4,3],[4,3],[4,2],[4,3],[4,4],null,null,null],[null,[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,5],null,null],[null,[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],null,null],[null,[4,3],[4,2],[4,3],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],null,null],[null,null,[4,3],[4,2],[4,2],[4,2],[4,2],[4,2],[4,3],null,null,null]]
+//prettier-ignore
+const zombie: Board = [[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,[1,0],[1,0],[1,0],[1,0],[2,3],null,null,null,null],[null,null,[1,0],[2,3],[2,2],[2,2],[2,2],[2,3],[1,0],null,null,null],[null,[1,0],[2,3],[2,2],[2,2],[2,2],[2,2],[2,3],[1,0],null,null,null],[[1,0],null,[2,3],[2,2],[2,2],[2,2],[2,2],[2,3],[1,0],null,null,null],[null,[2,3],[2,0],[0,7],[2,2],[2,2],[2,2],[2,3],[2,3],null,null,null],[null,[2,3],[0,6],[0,6],[2,2],[0,6],[0,7],[2,3],[2,3],null,null,null],[null,[2,3],[2,3],[2,3],[2,2],[0,6],[2,0],[2,3],null,null,null,null],[null,[2,3],[2,0],[2,0],[2,3],[2,3],[2,3],[2,3],null,null,null,null],[null,[2,3],[2,0],[2,0],[0,3],[2,3],[2,3],null,null,null,null,null],[[2,2],[2,3],[2,3],[2,3],[2,2],[2,2],[2,2],[2,2],null,null,null,null]]
 
 export default {
   piggy,
@@ -29,4 +31,5 @@ export default {
   minidemon2,
   nerd,
   drop,
+  zombie,
 }
