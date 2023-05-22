@@ -10,6 +10,7 @@
       <li><a href="/class">Class & canvas</a></li>
       <li><a href="/huegen">Huegen</a></li>
       <li><a href="/grid" data-sveltekit-reload>Grid</a></li>
+      <li><a href="/grid2" data-sveltekit-reload>Grid2</a></li>
     </ul>
   </nav>
 
