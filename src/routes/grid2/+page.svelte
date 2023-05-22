@@ -15,12 +15,6 @@
   })
 </script>
 
-<div class="presets">
-  {#each Object.entries(presets) as [k, v]}
-    <button on:click={() => ($boardStore = v)}>{k}</button>
-  {/each}
-</div>
-
 <div class="main">
   <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
 
@@ -30,16 +24,22 @@
   </div>
 
   <div class="previews">
-    <Preview {boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
-    <Preview {boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
+    <Preview board={$boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
+    <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
+  </div>
+
+  <div class="presets">
+    {#each Object.entries(presets) as [k, v]}
+      <button on:click={() => ($boardStore = v)}>
+        <Preview board={v} {paletteStore} cellSize="0.25rem" {sat} {debug} />
+      </button>
+    {/each}
   </div>
 </div>
 
-<div>
+<div style:color="transparent">
   {JSON.stringify($boardStore)}
 </div>
-
-<section>[history]</section>
 
 <style>
   .main {
@@ -68,11 +68,40 @@
   .previews::before {
     content: 'Preview';
     position: absolute;
-    top: 0;
+    top: -1rem;
     left: 0;
-    padding: 0.25rem;
-    background: #ffffffaa;
     color: #00000066;
     font-family: monospace;
+  }
+
+  .presets {
+    position: relative;
+    display: flex;
+    height: fit-content;
+    width: 12rem;
+    height: 16rem;
+    border: 1px solid #00000022;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  .presets::before {
+    content: 'Presets';
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    color: #00000066;
+    font-family: monospace;
+  }
+
+  .presets button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+  .presets button:hover {
+    opacity: 1;
   }
 </style>

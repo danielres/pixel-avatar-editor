@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { BoardStore, PaletteStore, StateStore } from '../stores'
+  import type { Board, PaletteStore } from '../stores'
 
   import Cell from './DrawingBoard/BoardCell.svelte'
 
-  export let boardStore: BoardStore
+  export let board: Board
   export let paletteStore: PaletteStore
   export let cellSize: string
   export let debug = false
@@ -11,7 +11,7 @@
 </script>
 
 <div>
-  {#each $boardStore as row}
+  {#each board as row}
     <div class="row">
       {#each row as cell}
         <Cell {cell} {cellSize} {sat} {paletteStore} {debug} />
