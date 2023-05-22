@@ -14,11 +14,9 @@
 <button
   on:click
   class:isActive
-  style="
-    background: hsl({hue},{sat}%,{lum}%);
-    width: {swatchSize};
-    height: {swatchSize};
-  "
+  style:background="hsl({hue},{sat}%,{lum}%)"
+  style:width={swatchSize}
+  style:height={swatchSize}
 />
 
 <style>
