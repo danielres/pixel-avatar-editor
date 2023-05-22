@@ -1,30 +1,38 @@
 <script lang="ts">
   import type { BoardStore, PaletteStore } from './stores'
 
+  import Cell from './DrawingBoard/BoardCell.svelte'
+
   export let boardStore: BoardStore
   export let paletteStore: PaletteStore
   export let cellSize: string
+  export let debug = false
+  export let sat: number
 
-  const currentSwatchXYStore = paletteStore.currentSwatchXYStore
+  const { currentSwatchXYStore } = paletteStore
 
-  function onClick(rowIndex: number, cellIndex: number) {
+  function paint(rowIndex: number, cellIndex: number) {
     return () => ($boardStore[rowIndex][cellIndex] = $currentSwatchXYStore)
   }
+
+  let isPainting = false
 </script>
 
-<div class="drawingBoard">
+<div
+  class="board checkerboard"
+  on:mousedown={() => (isPainting = true)}
+  on:mouseup={() => (isPainting = false)}
+  on:mouseleave={() => (isPainting = false)}
+>
   {#each $boardStore as row, rowIndex}
     <div class="row">
       {#each row as cell, cellIndex}
         <button
-          class="cell"
-          on:click={onClick(rowIndex, cellIndex)}
-          style="
-            width: {cellSize};
-            height: {cellSize};
-          "
+          on:mouseover={isPainting ? paint(rowIndex, cellIndex) : null}
+          on:mousedown={paint(rowIndex, cellIndex)}
+          on:focus
         >
-          {cell}
+          <Cell {cell} {cellSize} {sat} {paletteStore} {debug} />
         </button>
       {/each}
     </div>
@@ -36,7 +44,16 @@
     display: flex;
   }
 
-  .cell {
+  button {
     border: none;
+    background: transparent;
+  }
+
+  .board {
+    box-shadow: inset 0 0 1px 1px #00000033;
+  }
+
+  .checkerboard {
+    background: repeating-conic-gradient(#fafafa 0% 25%, transparent 0% 50%) 50% / 1.5rem 1.5rem;
   }
 </style>

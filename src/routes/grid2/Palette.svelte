@@ -5,6 +5,7 @@
 
   export let paletteStore: PaletteStore
   export let swatchSize: string
+  export let sat: number
 
   const { currentSwatchXYStore } = paletteStore
 </script>
@@ -16,6 +17,7 @@
         <Swatch
           {swatchSize}
           {swatch}
+          {sat}
           on:click={() => ($currentSwatchXYStore = [x, y])}
           isActive={x === $currentSwatchXYStore[0] && y === $currentSwatchXYStore[1]}
         />
