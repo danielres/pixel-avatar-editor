@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Swatch } from '../stores'
+  import type { Swatch } from '../../stores'
 
   export let swatch: Swatch
   export let swatchSize: string

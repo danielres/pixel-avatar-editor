@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PaletteStore, StateStore } from './stores'
+  import type { PaletteStore, StateStore } from '../stores'
 
   import Swatch from './Palette/Swatch.svelte'
 

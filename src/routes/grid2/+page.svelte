@@ -1,7 +1,7 @@
 <script lang="ts">
-  import DrawingBoard from './DrawingBoard.svelte'
-  import Eraser from './Eraser.svelte'
-  import Palette from './Palette.svelte'
+  import DrawingBoard from './components/DrawingBoard.svelte'
+  import Eraser from './components/Eraser.svelte'
+  import Palette from './components/Palette.svelte'
   import presets from './presets'
   import makeStores from './stores'
 
@@ -22,6 +22,7 @@
 
 <div class="main">
   <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
+
   <div class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
     <Eraser {stateStore} />
