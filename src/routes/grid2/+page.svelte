@@ -15,46 +15,56 @@
   })
 </script>
 
-<div class="main">
+<main>
   <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
 
-  <div class="tools">
+  <section class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
     <Eraser {stateStore} />
-  </div>
+  </section>
 
-  <div class="previews">
+  <section class="previews">
+    <div class="label">Previews</div>
     <Preview board={$boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
     <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
-  </div>
+  </section>
 
-  <div class="presets">
+  <section class="presets">
+    <div class="label">Presets</div>
     {#each Object.entries(presets) as [k, v]}
       <button on:click={() => ($boardStore = v)}>
         <Preview board={v} {paletteStore} cellSize="0.25rem" {sat} {debug} />
       </button>
     {/each}
-  </div>
-</div>
+  </section>
+</main>
 
 <div style:color="transparent">
   {JSON.stringify($boardStore)}
 </div>
 
 <style>
-  .main {
+  main {
     display: flex;
     gap: 2rem;
     margin: 0 2rem;
   }
 
-  .tools {
+  section .label {
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    color: #00000066;
+    font-family: monospace;
+  }
+
+  section.tools {
     display: grid;
     gap: 1rem;
     height: fit-content;
   }
 
-  .previews {
+  section.previews {
     display: flex;
     flex-direction: column;
     border: 1px solid #00000022;
@@ -65,16 +75,7 @@
     align-items: center;
   }
 
-  .previews::before {
-    content: 'Preview';
-    position: absolute;
-    top: -1rem;
-    left: 0;
-    color: #00000066;
-    font-family: monospace;
-  }
-
-  .presets {
+  section.presets {
     position: relative;
     display: flex;
     height: fit-content;
@@ -85,23 +86,14 @@
     justify-content: space-evenly;
   }
 
-  .presets::before {
-    content: 'Presets';
-    position: absolute;
-    top: -1rem;
-    left: 0;
-    color: #00000066;
-    font-family: monospace;
-  }
-
-  .presets button {
+  section.presets button {
     border: none;
     background: none;
     cursor: pointer;
     opacity: 0.5;
   }
 
-  .presets button:hover {
+  section.presets button:hover {
     opacity: 1;
   }
 </style>
