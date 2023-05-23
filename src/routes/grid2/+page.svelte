@@ -4,6 +4,7 @@
   import Eraser from './components/Eraser.svelte'
   import Palette from './components/Palette.svelte'
   import Preview from './components/Preview.svelte'
+  import Save from './components/Save.svelte'
   import presets from './presets'
   import makeStores from './stores'
 
@@ -25,7 +26,12 @@
 
   <section class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
-    <Eraser {stateStore} />
+
+    <div class="actions">
+      <Eraser {stateStore} />
+      <Save />
+    </div>
+
     <div class="usedColors">
       {#each $usedColors.slice(0, 16) as cell}
         <Cell cellSize="2rem" {cell} {sat} {paletteStore} />
@@ -77,6 +83,11 @@
     display: grid;
     gap: 1rem;
     height: fit-content;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
   }
 
   .usedColors {
