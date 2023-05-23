@@ -1,37 +1,30 @@
-import { grouper } from '$lib/utils/array'
+import type { Board } from '../stores'
+
 import {
   compressToEncodedURIComponent as lzcompress,
   decompressFromEncodedURIComponent as lzdecompress,
 } from 'lz-string'
 
-export type Cell = [number, number] | []
-export type Row = Cell[]
-export type Board = Row[]
-
-export function makeBoard(height: number, width = height): Board {
-  return Array.from({ length: height }, () => {
-    return Array.from({ length: width }, () => [])
-  })
-}
-
-export function encode(board: Board, numCols: number) {
-  const stringified = board
-    .map((row) => row.map((cell) => (cell.length ? cell : 'x')))
-    .flat(2)
-    .join('')
-
-  return lzcompress(numCols + '_' + stringified)
+export function encode(board: Board) {
+  const stringified = JSON.stringify(board)
+  const minified = stringified.replaceAll('null', 'x')
+  return lzcompress(minified)
 }
 
 export function decode(encoded: string): Board {
-  const [numCols, str] = lzdecompress(encoded).split('_')
-  const expanded = str.replaceAll('x', 'xx')
-
-  const chars = expanded.split('')
-  const cells = grouper(chars, 2)
-  const cleanedCells = cells.map((cell) =>
-    cell[0] === 'x' ? [] : cell.map((t) => parseInt(t, 10))
-  ) as Cell[]
-  const board = grouper(cleanedCells, parseInt(numCols, 10))
+  const decompressed = lzdecompress(encoded)
+  const unminified = decompressed.replaceAll('x', 'null')
+  const board = JSON.parse(unminified) as Board
   return board
+}
+
+export function saveBoardToUrl(board: Board) {
+  const encoded = encode(board)
+  window.history.pushState(null, '', `?b=${encoded}`)
+}
+
+export function getBoardFromUrl() {
+  const encoded = new URLSearchParams(window.location.search).get('b')
+  if (!encoded) return
+  return decode(encoded)
 }

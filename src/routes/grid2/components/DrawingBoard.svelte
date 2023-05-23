@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { BoardStore, PaletteStore, StateStore } from '../stores'
 
+  import { createEventDispatcher } from 'svelte'
   import Cell from './DrawingBoard/BoardCell.svelte'
 
   export let boardStore: BoardStore
@@ -12,9 +13,13 @@
 
   const { currentSwatchXYStore } = paletteStore
 
+  const dispatch = createEventDispatcher()
+
   function paint(rowIndex: number, cellIndex: number) {
-    return () =>
-      ($boardStore[rowIndex][cellIndex] = $stateStore.isUsingEraser ? null : $currentSwatchXYStore)
+    return () => {
+      $boardStore[rowIndex][cellIndex] = $stateStore.isUsingEraser ? null : $currentSwatchXYStore
+      dispatch('paint')
+    }
   }
 
   let isPainting = false

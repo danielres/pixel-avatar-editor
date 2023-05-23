@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte'
   import DrawingBoard from './components/DrawingBoard.svelte'
   import Cell from './components/DrawingBoard/BoardCell.svelte'
   import Eraser from './components/Eraser.svelte'
@@ -7,21 +8,39 @@
   import Save from './components/Save.svelte'
   import presets from './presets'
   import makeStores from './stores'
+  import { getBoardFromUrl, saveBoardToUrl } from './utils/board'
 
   const debug = false
+  const newBoardSize = 12
   const sat = 45
 
   const { boardStore, paletteStore, stateStore } = makeStores({
-    board: { width: 12, height: 12 },
+    board: { width: newBoardSize, height: newBoardSize },
     palette: { hues: 8, lums: 8, sat },
   })
-
   const { usedColors } = paletteStore
+
+  function handleUrlUpdate() {
+    const board = getBoardFromUrl()
+    if (board) $boardStore = board
+  }
+
+  onMount(handleUrlUpdate)
 </script>
+
+<svelte:window on:popstate={handleUrlUpdate} />
 
 <main>
   <section>
-    <DrawingBoard {boardStore} {paletteStore} cellSize="2rem" {sat} {debug} {stateStore} />
+    <DrawingBoard
+      on:paint={() => saveBoardToUrl($boardStore)}
+      cellSize="2rem"
+      {boardStore}
+      {paletteStore}
+      {sat}
+      {debug}
+      {stateStore}
+    />
   </section>
 
   <section class="tools">
@@ -49,7 +68,12 @@
   <section class="presets">
     <div class="label">Presets</div>
     {#each Object.entries(presets) as [k, v]}
-      <button on:click={() => ($boardStore = v)}>
+      <button
+        on:click={() => {
+          $boardStore = v
+          saveBoardToUrl($boardStore)
+        }}
+      >
         <Preview board={v} {paletteStore} cellSize="0.25rem" {sat} {debug} />
       </button>
     {/each}
