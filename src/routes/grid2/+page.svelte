@@ -52,10 +52,7 @@
   <section class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
 
-    <div class="actions">
-      <Eraser {stateStore} />
-      <Download on:click={handleDownload} />
-    </div>
+    <Eraser {stateStore} />
 
     <div class="usedColors">
       {#each $usedColors.slice(0, 16) as cell}
@@ -64,12 +61,17 @@
     </div>
   </section>
 
-  <section class="previews">
-    <div class="label">Previews</div>
-    <Preview board={$boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
-    <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
-    <Preview board={$boardStore} {paletteStore} cellSize="0.125rem" {sat} {debug} />
-  </section>
+  <div class="previews">
+    <section>
+      <div class="label">Previews</div>
+      <Preview board={$boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
+      <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
+      <Preview board={$boardStore} {paletteStore} cellSize="0.125rem" {sat} {debug} />
+      <div class="actions">
+        <Download on:click={handleDownload} />
+      </div>
+    </section>
+  </div>
 
   <section class="presets">
     <div class="label">Presets</div>
@@ -115,18 +117,26 @@
     height: fit-content;
   }
 
-  .actions {
-    display: flex;
-    justify-content: space-between;
-  }
-
   .usedColors {
     display: flex;
     width: 16rem;
     flex-wrap: wrap;
   }
 
-  section.previews {
+  .previews {
+    display: grid;
+    gap: 1rem;
+    height: fit-content;
+    position: relative;
+  }
+
+  .previews .actions {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .previews section {
     display: flex;
     flex-direction: column;
     background: #00000006;
@@ -141,7 +151,6 @@
   section.presets {
     position: relative;
     display: flex;
-    height: fit-content;
     width: 12rem;
     height: 16rem;
     border: 1px solid #00000022;
