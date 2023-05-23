@@ -22,6 +22,7 @@
 <style>
   button {
     border: none;
+    cursor: crosshair;
   }
 
   .isActive {
