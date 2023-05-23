@@ -54,7 +54,7 @@
 
     <Eraser {stateStore} />
 
-    <div class="usedColors">
+    <div class="usedColors" style:display="none">
       {#each $usedColors.slice(0, 16) as cell}
         <Cell cellSize="2rem" {cell} {sat} {paletteStore} />
       {/each}
@@ -88,9 +88,9 @@
   </section>
 </main>
 
-<div style:color="transparent">
+<!-- <div style:color="transparent">
   {JSON.stringify($boardStore)}
-</div>
+</div> -->
 
 <style>
   main {
