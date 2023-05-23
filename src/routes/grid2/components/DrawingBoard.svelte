@@ -25,25 +25,28 @@
   let isPainting = false
 </script>
 
-<div
-  class="board checkerboard"
-  on:mousedown={() => (isPainting = true)}
-  on:mouseup={() => (isPainting = false)}
-  on:mouseleave={() => (isPainting = false)}
->
-  {#each $boardStore as row, rowIndex}
-    <div class="row">
-      {#each row as cell, cellIndex}
-        <button
-          on:mouseover={isPainting ? paint(rowIndex, cellIndex) : null}
-          on:mousedown={paint(rowIndex, cellIndex)}
-          on:focus
-        >
-          <Cell {cell} {cellSize} {sat} {paletteStore} {debug} />
-        </button>
-      {/each}
-    </div>
-  {/each}
+<div class="checkerboard">
+  <div
+    id="drawingboard"
+    class="board"
+    on:mousedown={() => (isPainting = true)}
+    on:mouseup={() => (isPainting = false)}
+    on:mouseleave={() => (isPainting = false)}
+  >
+    {#each $boardStore as row, rowIndex}
+      <div class="row">
+        {#each row as cell, cellIndex}
+          <button
+            on:mouseover={isPainting ? paint(rowIndex, cellIndex) : null}
+            on:mousedown={paint(rowIndex, cellIndex)}
+            on:focus
+          >
+            <Cell {cell} {cellSize} {sat} {paletteStore} {debug} />
+          </button>
+        {/each}
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style>

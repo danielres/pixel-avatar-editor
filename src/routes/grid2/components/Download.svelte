@@ -4,7 +4,7 @@
   export let size = '2rem'
 </script>
 
-<button style:width={size} style:height={size} style:padding="4px" title="Erase">
+<button on:click style:width={size} style:height={size} style:padding="4px" title="Download as PNG">
   <Icon kind="save" />
 </button>
 

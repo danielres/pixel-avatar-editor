@@ -5,10 +5,11 @@
   import Eraser from './components/Eraser.svelte'
   import Palette from './components/Palette.svelte'
   import Preview from './components/Preview.svelte'
-  import Save from './components/Save.svelte'
+  import Download from './components/Download.svelte'
   import presets from './presets'
   import makeStores from './stores'
   import { getBoardFromUrl, saveBoardToUrl } from './utils/board'
+  import { downloadAsPng } from './utils/download'
 
   const debug = false
   const newBoardSize = 12
@@ -23,6 +24,11 @@
   function handleUrlUpdate() {
     const board = getBoardFromUrl()
     if (board) $boardStore = board
+  }
+
+  function handleDownload() {
+    const node = document.getElementById('drawingboard')
+    downloadAsPng(node)
   }
 
   onMount(handleUrlUpdate)
@@ -48,7 +54,7 @@
 
     <div class="actions">
       <Eraser {stateStore} />
-      <Save />
+      <Download on:click={handleDownload} />
     </div>
 
     <div class="usedColors">
