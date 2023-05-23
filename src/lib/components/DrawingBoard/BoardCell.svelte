@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BoardCell, PaletteStore } from '../stores'
+  import type { BoardCell, PaletteStore } from '$lib/stores'
 
   export let debug = false
   export let cell: BoardCell

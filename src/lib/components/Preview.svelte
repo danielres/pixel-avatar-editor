@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Board, PaletteStore } from '../stores'
+  import type { Board, PaletteStore } from '$lib/stores'
 
   import Cell from './DrawingBoard/BoardCell.svelte'
 

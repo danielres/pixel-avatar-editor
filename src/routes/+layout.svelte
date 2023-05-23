@@ -5,16 +5,11 @@
 </script>
 
 <div class="shell">
-  <nav>
-    <ul>
-      <li><a href="/class">Class & canvas</a></li>
-      <li><a href="/huegen">Huegen</a></li>
-      <li><a href="/grid" data-sveltekit-reload>Grid</a></li>
-      <li><a href="/grid2" data-sveltekit-reload>Grid2</a></li>
-    </ul>
-  </nav>
+  <header>HEAD</header>
 
   <slot />
+
+  <footer>Foot</footer>
 </div>
 
 <style>
@@ -23,13 +18,6 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-  }
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 1rem;
   }
 
   .shell {

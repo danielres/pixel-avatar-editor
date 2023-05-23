@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BoardStore, PaletteStore, StateStore } from '../stores'
+  import type { BoardStore, PaletteStore, StateStore } from '$lib/stores'
 
   import { createEventDispatcher } from 'svelte'
   import Cell from './DrawingBoard/BoardCell.svelte'

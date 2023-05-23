@@ -1,15 +1,14 @@
 <script lang="ts">
+  import Download from '$lib/components/Download.svelte'
+  import DrawingBoard from '$lib/components/DrawingBoard.svelte'
+  import Eraser from '$lib/components/Eraser.svelte'
+  import Palette from '$lib/components/Palette.svelte'
+  import Preview from '$lib/components/Preview.svelte'
   import { onMount } from 'svelte'
-  import DrawingBoard from './components/DrawingBoard.svelte'
-  import Cell from './components/DrawingBoard/BoardCell.svelte'
-  import Eraser from './components/Eraser.svelte'
-  import Palette from './components/Palette.svelte'
-  import Preview from './components/Preview.svelte'
-  import Download from './components/Download.svelte'
+  import makeStores from '$lib/stores'
   import presets from './presets'
-  import makeStores from './stores'
-  import { getBoardFromUrl, saveBoardToUrl } from './utils/board'
-  import { downloadAsPng } from './utils/download'
+  import { getBoardFromUrl, saveBoardToUrl } from '$lib/utils/board'
+  import { downloadAsPng } from '$lib/utils/download'
 
   const debug = false
   const newBoardSize = 12
@@ -19,7 +18,8 @@
     board: { width: newBoardSize, height: newBoardSize },
     palette: { hues: 8, lums: 8, sat },
   })
-  const { usedColors } = paletteStore
+
+  // const { usedColors } = paletteStore
 
   function handleUrlUpdate() {
     const board = getBoardFromUrl()
@@ -54,11 +54,11 @@
 
     <Eraser {stateStore} />
 
-    <div class="usedColors" style:display="none">
+    <!-- <div class="usedColors" style:display="none">
       {#each $usedColors.slice(0, 16) as cell}
         <Cell cellSize="2rem" {cell} {sat} {paletteStore} />
       {/each}
-    </div>
+    </div> -->
   </section>
 
   <div class="previews">

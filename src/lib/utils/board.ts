@@ -1,4 +1,4 @@
-import type { Board } from '../stores'
+import type { Board } from '$lib/stores'
 
 import {
   compressToEncodedURIComponent as lzcompress,
