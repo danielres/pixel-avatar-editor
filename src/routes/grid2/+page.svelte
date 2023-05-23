@@ -37,6 +37,7 @@
     <div class="label">Previews</div>
     <Preview board={$boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
     <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
+    <Preview board={$boardStore} {paletteStore} cellSize="0.125rem" {sat} {debug} />
   </section>
 
   <section class="presets">
