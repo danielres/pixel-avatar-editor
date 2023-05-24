@@ -34,7 +34,7 @@
   onMount(handleUrlUpdate)
 </script>
 
-<svelte:window on:popstate={handleUrlUpdate} />
+<svelte:window on:popstate={handleUrlUpdate} on:mouseup={() => saveBoardToUrl($boardStore)} />
 
 <main>
   <!-- mobile -->
