@@ -8,7 +8,7 @@
   export let paletteStore: PaletteStore
   export let stateStore: StateStore
   export let cellSize: string
-  export let debug = false
+  export let debug: boolean
   export let sat: number
 
   const { currentSwatchXYStore } = paletteStore
@@ -30,6 +30,9 @@
 </script>
 
 <div class="checkerboard">
+  {#if debug}
+    isPainting: {isPainting}
+  {/if}
   <div
     id="drawingboard"
     class="board"

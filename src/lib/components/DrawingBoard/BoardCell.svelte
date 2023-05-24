@@ -33,13 +33,18 @@
   style:background={swatch ? `hsl(${swatch[0]} ${sat}% ${swatch[1]}%)` : 'transparent'}
 >
   {#if debug}
-    <div>{cell}</div>
-    <div>{swatch}</div>
+    <div class="debug">
+      <div>{cell}</div>
+      <div>{swatch}</div>
+    </div>
   {/if}
 </div>
 
 <style>
   div {
     font-size: xx-small;
+  }
+  .debug {
+    opacity: 0.4;
   }
 </style>
