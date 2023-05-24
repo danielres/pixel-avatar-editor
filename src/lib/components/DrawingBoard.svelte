@@ -59,11 +59,8 @@
     background: transparent;
   }
 
-  .board {
-    box-shadow: inset 0 0 1px 1px #00000033;
-  }
-
   .checkerboard {
+    box-shadow: inset 0 0 10px 1px #00000033;
     background: repeating-conic-gradient(#00000011 0% 25%, #ffffff22 0% 50%) 50% / 1.5rem 1.5rem;
   }
 </style>
