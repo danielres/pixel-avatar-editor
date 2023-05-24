@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { BoardStore, PaletteStore, StateStore } from '$lib/stores'
 
-  import { createEventDispatcher } from 'svelte'
+  import { browser } from '$app/environment'
   import Cell from './DrawingBoard/BoardCell.svelte'
 
   export let boardStore: BoardStore
@@ -13,16 +13,20 @@
 
   const { currentSwatchXYStore } = paletteStore
 
-  const dispatch = createEventDispatcher()
-
   function paint(rowIndex: number, cellIndex: number) {
     return () => {
       $boardStore[rowIndex][cellIndex] = $stateStore.isUsingEraser ? null : $currentSwatchXYStore
-      dispatch('paint')
     }
   }
 
   let isPainting = false
+  let pointerXY = { x: 0, y: 0 }
+
+  $: if (browser) {
+    isPainting
+      ? document.body.classList.add('is-painting')
+      : document.body.classList.remove('is-painting')
+  }
 </script>
 
 <div class="checkerboard">
@@ -30,18 +34,25 @@
     id="drawingboard"
     class="board"
     on:mousedown={() => (isPainting = true)}
-    on:mouseup={() => (isPainting = false)}
     on:mouseleave={() => (isPainting = false)}
+    on:mouseup={() => (isPainting = false)}
+    on:pointerdown={() => (isPainting = true)}
+    on:pointermove={(e) => (pointerXY = { x: e.clientX, y: e.clientY })}
+    on:pointerup={() => (isPainting = false)}
   >
     {#each $boardStore as row, rowIndex}
       <div class="row">
         {#each row as cell, cellIndex}
-          <button
-            on:mouseover={isPainting ? paint(rowIndex, cellIndex) : null}
-            on:mousedown={paint(rowIndex, cellIndex)}
-            on:focus
-          >
-            <Cell {cell} {cellSize} {sat} {paletteStore} {debug} />
+          <button on:pointerdown={paint(rowIndex, cellIndex)} on:focus>
+            <Cell
+              on:pointerInside={isPainting ? paint(rowIndex, cellIndex) : null}
+              {cell}
+              {cellSize}
+              {sat}
+              {paletteStore}
+              {debug}
+              {pointerXY}
+            />
           </button>
         {/each}
       </div>
@@ -50,6 +61,12 @@
 </div>
 
 <style>
+  :global(body.is-painting) {
+    width: 100vw;
+    height: 50vh;
+    overflow-y: hidden;
+  }
+
   .row {
     display: flex;
   }

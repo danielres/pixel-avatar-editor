@@ -37,16 +37,21 @@
 <svelte:window on:popstate={handleUrlUpdate} />
 
 <main>
-  <section>
+  <!-- mobile -->
+  <section class="sm:hidden">
     <DrawingBoard
-      on:paint={() => saveBoardToUrl($boardStore)}
-      cellSize="2rem"
+      cellSize="calc((100vw - 40px) / {$boardStore[0].length})"
       {boardStore}
       {paletteStore}
       {sat}
       {debug}
       {stateStore}
     />
+  </section>
+
+  <!-- desktop -->
+  <section class="hidden sm:block">
+    <DrawingBoard cellSize="2rem" {boardStore} {paletteStore} {sat} {debug} {stateStore} />
   </section>
 
   <section class="tools">
@@ -95,6 +100,7 @@
 <style>
   main {
     display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
   }
 
