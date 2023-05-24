@@ -57,7 +57,16 @@
   <section class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
 
-    <ButtonEraser {stateStore} />
+    <div class="flex justify-between">
+      <ButtonEraser {stateStore} />
+
+      <!-- <ButtonUndo
+        on:click={() => {
+          window.history.back()
+          window.history.back()
+        }}
+      /> -->
+    </div>
 
     <!-- <div class="usedColors" style:display="none">
       {#each $usedColors.slice(0, 16) as cell}
