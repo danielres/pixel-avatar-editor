@@ -11,7 +11,7 @@
 <style>
   button {
     cursor: pointer;
-    color: #aaa;
+    color: #333;
     background: none;
     border: none;
     /* box-shadow: inset 0 0 0 1px #00000055; */
