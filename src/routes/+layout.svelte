@@ -4,12 +4,15 @@
   export let data: LayoutData
 </script>
 
-<div class="shell">
-  <header>HEAD</header>
+<div class="shell" data-sveltekit-reload>
+  <header>
+    <a href="/">
+      <img class="mascot" src="/piggy.png" alt="mascot" width="75" height="75" />
+      <img src="/logo_02.png" alt="logo" height="45" />
+    </a>
+  </header>
 
   <slot />
-
-  <footer>Foot</footer>
 </div>
 
 <style>
@@ -20,8 +23,31 @@
     font-family: sans-serif;
   }
 
+  :global(body) {
+    background: white;
+  }
+
   .shell {
     display: grid;
+    gap: 3rem;
+  }
+
+  img.mascot {
+    position: relative;
+    top: 1rem;
+  }
+
+  header a {
+    display: flex;
+    /* justify-content: center; */
     gap: 1rem;
+    align-items: center;
+    padding: 0 2rem;
+    background: #eee;
+    background: rgb(240, 247, 233);
+  }
+
+  header img {
+    image-rendering: crisp-edges;
   }
 </style>
