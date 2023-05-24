@@ -1,7 +1,7 @@
 {
-  "name": "@danielres/pixel-avatar-editor",
+  "name": "@danielres/pigggy",
   "version": "0.0.1",
-  "description": "A pixel avatar editor",
+  "description": "A pixel art editor",
   "license": "MIT",
   "scripts": {
     "dev": "vite dev",
