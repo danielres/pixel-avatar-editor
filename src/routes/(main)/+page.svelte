@@ -1,14 +1,14 @@
 <script lang="ts">
-  import Download from '$lib/components/Download.svelte'
+  import ButtonDownload from '$lib/components/ButtonDownload.svelte'
+  import ButtonEraser from '$lib/components/ButtonEraser.svelte'
   import DrawingBoard from '$lib/components/DrawingBoard.svelte'
-  import Eraser from '$lib/components/Eraser.svelte'
   import Palette from '$lib/components/Palette.svelte'
   import Preview from '$lib/components/Preview.svelte'
-  import { onMount } from 'svelte'
   import makeStores from '$lib/stores'
-  import presets from './presets'
   import { getBoardFromUrl, saveBoardToUrl } from '$lib/utils/board'
   import { downloadAsPng } from '$lib/utils/download'
+  import { onMount } from 'svelte'
+  import presets from './presets'
 
   const debug = false
   const newBoardSize = 12
@@ -52,7 +52,7 @@
   <section class="tools">
     <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
 
-    <Eraser {stateStore} />
+    <ButtonEraser {stateStore} />
 
     <!-- <div class="usedColors" style:display="none">
       {#each $usedColors.slice(0, 16) as cell}
@@ -68,7 +68,7 @@
       <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
       <Preview board={$boardStore} {paletteStore} cellSize="0.125rem" {sat} {debug} />
       <div class="actions">
-        <Download on:click={handleDownload} />
+        <ButtonDownload on:click={handleDownload} />
       </div>
     </section>
   </div>
