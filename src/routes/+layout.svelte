@@ -24,6 +24,13 @@
 </div>
 
 <style lang="postcss">
+  :global(html) {
+    overscroll-behavior: none;
+  }
+
+  :global(body) {
+    overscroll-behavior-y: contain;
+  }
   :global(*) {
     font-family: monospace;
     image-rendering: crisp-edges;
