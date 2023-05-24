@@ -18,7 +18,7 @@
     </div>
   </header>
 
-  <div class="container mx-auto px-4">
+  <div class="container mx-auto px-4 pb-4">
     <slot />
   </div>
 </div>
