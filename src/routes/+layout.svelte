@@ -8,21 +8,25 @@
 
 <div class="shell" data-sveltekit-reload>
   <header>
-    <a href="/">
-      <img class="mascot" src="/piggy.png" alt="mascot" width="75" height="75" />
-      <img src="/logo_02.png" alt="logo" height="45" />
-    </a>
+    <div class="container mx-auto px-4">
+      <a href="/">
+        <div class="circle">
+          <img class="mascot" src="/piggy.png" alt="mascot" width="75" height="75" />
+        </div>
+        <img class="logo" src="/logo_02.png" alt="logo" width="175" />
+      </a>
+    </div>
   </header>
 
-  <slot />
+  <div class="container mx-auto px-4">
+    <slot />
+  </div>
 </div>
 
-<style>
+<style lang="postcss">
   :global(*) {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+    font-family: monospace;
+    image-rendering: crisp-edges;
   }
 
   :global(body) {
@@ -31,25 +35,41 @@
 
   .shell {
     display: grid;
-    gap: 3rem;
+    gap: 2rem;
   }
 
-  img.mascot {
-    position: relative;
-    top: 1rem;
-  }
+  header {
+    /* background: rgb(240, 247, 233);
+    background: rgb(186, 217, 155);
+    background: rgb(214, 233, 196);
+    background: rgb(214, 233, 196); */
 
-  header a {
-    display: flex;
-    /* justify-content: center; */
-    gap: 1rem;
-    align-items: center;
-    padding: 0 2rem;
-    background: #eee;
-    background: rgb(240, 247, 233);
-  }
+    --stop: 0%;
+    background: linear-gradient(180deg, rgb(218, 231, 205) var(--stop), rgb(202, 228, 176) 100%);
+    padding-top: 5px;
+    height: 62px;
 
-  header img {
-    image-rendering: crisp-edges;
+    a {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      .circle {
+        background: #ffffffaa;
+        padding: 20px;
+        border-radius: 100%;
+        margin-top: -20px;
+        margin-left: -27px;
+        box-shadow: 0 0 0 20px #ffffff55;
+      }
+
+      img.mascot {
+        filter: drop-shadow(0 0 2px rgb(233, 196, 223));
+      }
+
+      img.logo {
+        margin-top: -20px;
+        filter: drop-shadow(0px 0px 8px #ffffffff);
+      }
+    }
   }
 </style>

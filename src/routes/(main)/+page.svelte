@@ -96,7 +96,6 @@
   main {
     display: flex;
     gap: 2rem;
-    margin: 0 2rem;
   }
 
   section {
@@ -108,7 +107,6 @@
     top: -1rem;
     left: 0;
     color: #00000066;
-    font-family: monospace;
   }
 
   section.tools {
