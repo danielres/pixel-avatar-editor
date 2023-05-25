@@ -1,13 +1,12 @@
 <script lang="ts">
-  import type { PaletteStore, StateStore } from '$lib/stores'
+  import type { PaletteStore, StateStore, Stores } from '$lib/stores'
 
   import Swatch from './Palette/Swatch.svelte'
 
-  export let paletteStore: PaletteStore
-  export let stateStore: StateStore
+  export let stores: Stores
   export let swatchSize: string
-  export let sat: number
 
+  const { paletteStore, stateStore } = stores
   const { currentSwatchXYStore, usedColors } = paletteStore
 </script>
 
@@ -18,7 +17,7 @@
         <Swatch
           {swatchSize}
           {swatch}
-          {sat}
+          sat={stores.paletteStore.sat}
           on:click={() => {
             $stateStore.isUsingEraser = false
             $currentSwatchXYStore = [x, y]

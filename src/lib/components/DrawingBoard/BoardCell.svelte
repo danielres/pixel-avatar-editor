@@ -1,14 +1,17 @@
 <script lang="ts">
-  import type { BoardCell, PaletteStore } from '$lib/stores'
+  import type { BoardCell, Stores } from '$lib/stores'
 
   import { createEventDispatcher, onMount } from 'svelte'
 
-  export let debug = false
   export let cell: BoardCell
   export let cellSize: string
-  export let paletteStore: PaletteStore
-  export let sat: number
-  export let pointerXY: { x: number; y: number }
+  export let stores: Stores
+  export let pointerXY: undefined | { x: number; y: number } = undefined
+
+  const sat = stores.paletteStore.sat
+  const debug = stores.debug
+
+  const { paletteStore } = stores
 
   $: swatch = cell ? $paletteStore[cell[0]][cell[1]] : null
 
@@ -41,10 +44,8 @@
 </div>
 
 <style>
-  div {
-    font-size: xx-small;
-  }
   .debug {
+    font-size: xx-small;
     opacity: 0.4;
   }
 </style>

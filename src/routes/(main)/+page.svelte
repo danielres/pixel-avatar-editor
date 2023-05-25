@@ -10,14 +10,14 @@
   import { onMount } from 'svelte'
   import presets from './presets'
 
-  const debug = false
   const newBoardSize = 12
-  const sat = 45
 
-  const { boardStore, paletteStore, stateStore } = makeStores({
+  const stores = makeStores({
     board: { width: newBoardSize, height: newBoardSize },
-    palette: { hues: 8, lums: 8, sat },
+    palette: { hues: 8, lums: 8, sat: 45 },
   })
+
+  const { boardStore, stateStore } = stores
 
   // const { usedColors } = paletteStore
 
@@ -27,8 +27,7 @@
   }
 
   function handleDownload() {
-    const node = document.getElementById('drawingboard')
-    downloadAsPng(node)
+    downloadAsPng(document.getElementById('drawingboard'))
   }
 
   onMount(handleUrlUpdate)
@@ -39,23 +38,16 @@
 <main>
   <!-- mobile -->
   <section class="sm:hidden">
-    <DrawingBoard
-      cellSize="calc((100vw - 40px) / {$boardStore[0].length})"
-      {boardStore}
-      {paletteStore}
-      {sat}
-      {debug}
-      {stateStore}
-    />
+    <DrawingBoard {stores} cellSize="calc((100vw - 40px) / {$boardStore[0].length})" />
   </section>
 
   <!-- desktop -->
   <section class="hidden sm:block">
-    <DrawingBoard cellSize="2rem" {boardStore} {paletteStore} {sat} {debug} {stateStore} />
+    <DrawingBoard {stores} cellSize="2rem" />
   </section>
 
   <section class="tools">
-    <Palette {paletteStore} swatchSize="2rem" {sat} {stateStore} />
+    <Palette {stores} swatchSize="2rem" />
 
     <div class="flex justify-between">
       <ButtonEraser {stateStore} />
@@ -78,9 +70,9 @@
   <div class="previews">
     <section>
       <div class="label">Previews</div>
-      <Preview board={$boardStore} {paletteStore} cellSize="0.5rem" {sat} {debug} />
-      <Preview board={$boardStore} {paletteStore} cellSize="0.25rem" {sat} {debug} />
-      <Preview board={$boardStore} {paletteStore} cellSize="0.125rem" {sat} {debug} />
+      <Preview board={$boardStore} {stores} cellSize="0.5rem" />
+      <Preview board={$boardStore} {stores} cellSize="0.25rem" />
+      <Preview board={$boardStore} {stores} cellSize="0.125rem" />
       <div class="actions">
         <ButtonDownload on:click={handleDownload} />
       </div>
@@ -96,7 +88,7 @@
           saveBoardToUrl($boardStore)
         }}
       >
-        <Preview board={v} {paletteStore} cellSize="0.25rem" {sat} {debug} />
+        <Preview board={v} {stores} cellSize="0.25rem" />
       </button>
     {/each}
   </section>

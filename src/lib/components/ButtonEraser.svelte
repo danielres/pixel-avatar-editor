@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Icon from './Icon.svelte'
   import type { StateStore } from '$lib/stores'
+
+  import Icon from './Icon.svelte'
 
   export let stateStore: StateStore
 
