@@ -30,7 +30,9 @@
     downloadAsPng(document.getElementById('drawingboard'))
   }
 
-  onMount(handleUrlUpdate)
+  onMount(() => {
+    handleUrlUpdate()
+  })
 </script>
 
 <svelte:window on:popstate={handleUrlUpdate} on:mouseup={() => saveBoardToUrl($boardStore)} />
