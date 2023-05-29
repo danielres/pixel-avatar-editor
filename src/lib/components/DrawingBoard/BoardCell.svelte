@@ -4,7 +4,6 @@
   import { createEventDispatcher, onMount } from 'svelte'
 
   export let cell: BoardCell
-  export let cellSize: string
   export let stores: Stores
   export let pointerXY: undefined | { x: number; y: number } = undefined
 
@@ -31,8 +30,8 @@
 
 <div
   bind:this={element}
-  style:width={cellSize}
-  style:height={cellSize}
+  style:width="var(--cell-size)"
+  style:height="var(--cell-size)"
   style:background={swatch ? `hsl(${swatch[0]} ${sat}% ${swatch[1]}%)` : 'transparent'}
 >
   {#if debug}

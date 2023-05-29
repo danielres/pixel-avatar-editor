@@ -6,7 +6,6 @@
   import { onMount } from 'svelte'
 
   export let stores: Stores
-  export let cellSize: string
 
   const { boardStore, stateStore, debug, paintCell } = stores
 
@@ -46,7 +45,6 @@
             <Cell
               on:pointerInside={$stateStore.isPainting ? paintCell(rowIndex, cellIndex) : null}
               {cell}
-              {cellSize}
               {stores}
               {pointerXY}
             />

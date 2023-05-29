@@ -38,19 +38,13 @@
 <svelte:window on:popstate={handleUrlUpdate} on:mouseup={() => saveBoardToUrl($boardStore)} />
 
 <main>
-  <!-- mobile -->
-  <section class="sm:hidden">
-    <DrawingBoard {stores} cellSize="calc((100vw - 40px) / {$boardStore[0].length})" />
-  </section>
-
-  <!-- desktop -->
-  <section class="hidden sm:block">
-    <DrawingBoard {stores} cellSize="2rem" />
+  <section class="board">
+    <DrawingBoard {stores} />
   </section>
 
   <section class="tools">
     <Palette {stores} swatchSize="2rem" />
-
+    <!--  -->
     <div class="flex justify-between">
       <ButtonEraser {stateStore} />
 
@@ -72,16 +66,22 @@
   <div class="previews">
     <section>
       <div class="label">Previews</div>
-      <Preview board={$boardStore} {stores} cellSize="0.5rem" />
-      <Preview board={$boardStore} {stores} cellSize="0.25rem" />
-      <Preview board={$boardStore} {stores} cellSize="0.125rem" />
+      <div style:--cell-size="0.5rem">
+        <Preview board={$boardStore} {stores} />
+      </div>
+      <div style:--cell-size="0.25rem">
+        <Preview board={$boardStore} {stores} />
+      </div>
+      <div style:--cell-size="0.125rem">
+        <Preview board={$boardStore} {stores} />
+      </div>
       <div class="actions">
         <ButtonDownload on:click={handleDownload} />
       </div>
     </section>
   </div>
 
-  <section class="presets">
+  <section class="presets" style:--cell-size="0.25rem">
     <div class="label">Presets</div>
     {#each Object.entries(presets) as [k, v]}
       <button
@@ -90,7 +90,7 @@
           saveBoardToUrl($boardStore)
         }}
       >
-        <Preview board={v} {stores} cellSize="0.25rem" />
+        <Preview board={v} {stores} />
       </button>
     {/each}
   </section>
@@ -100,7 +100,14 @@
   {JSON.stringify($boardStore)}
 </div> -->
 
-<style>
+<style lang="postcss">
+  .board {
+    --cell-size: calc((100vw - 40px) / 12);
+    @screen sm {
+      --cell-size: 2rem;
+    }
+  }
+
   main {
     display: flex;
     flex-wrap: wrap;

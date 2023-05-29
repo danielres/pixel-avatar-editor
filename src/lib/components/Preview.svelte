@@ -5,14 +5,13 @@
 
   export let board: Board
   export let stores: Stores
-  export let cellSize: string
 </script>
 
 <div>
   {#each board as row}
     <div class="row">
       {#each row as cell}
-        <Cell {cell} {cellSize} {stores} />
+        <Cell {cell} {stores} />
       {/each}
     </div>
   {/each}
