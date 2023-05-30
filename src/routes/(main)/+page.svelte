@@ -141,7 +141,7 @@
     </section>
   </div> -->
 
-  <section class="presets" style:--cell-size="0.25rem">
+  <section class="presets" style:--cell-size="0.25rem" on:click={() => undos++}>
     <div class="label">Presets</div>
     {#each Object.entries(presets) as [k, v]}
       <button
