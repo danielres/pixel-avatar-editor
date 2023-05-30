@@ -1,4 +1,7 @@
+import type { Board, Palette, Stores } from '$lib/stores'
+
 import domtoimage from 'dom-to-image'
+import { get } from 'svelte/store'
 
 export async function downloadAsPng(node: HTMLElement | null) {
   if (!node) {
@@ -13,6 +16,24 @@ export async function downloadAsPng(node: HTMLElement | null) {
   } catch (error) {
     console.error('Something went wrong...', error)
   }
+}
+
+export async function downloadAsSvg(stores: Stores) {
+  const board = get(stores.boardStore)
+  const palette = get(stores.paletteStore)
+  const sat = stores.paletteStore.sat
+
+  return downloadSvgStr(boardToSvgStr(board, palette, sat))
+}
+
+function downloadSvgStr(svgCode: string, fileName = 'image.svg') {
+  const svgBlob = new Blob([svgCode], { type: 'image/svg+xml' })
+  const reader = new FileReader()
+  reader.onloadend = () => {
+    const base64Data = reader.result as string
+    downloadBase64File(base64Data, fileName)
+  }
+  reader.readAsDataURL(svgBlob)
 }
 
 function formatDate(date: Date) {
@@ -31,4 +52,29 @@ function downloadBase64File(base64Data: string, fileName: string) {
   downloadLink.download = fileName
   downloadLink.click()
   downloadLink.remove()
+}
+
+function boardToSvgStr(board: Board, palette: Palette, sat: number) {
+  let svgstr = `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">`
+  console.log('boardToSvgStr', board, palette, sat)
+
+  board.forEach((row, rowIndex) => {
+    row.forEach((cell, cellIndex) => {
+      const swatch = cell ? palette[cell[0]][cell[1]] : null
+
+      svgstr += `
+        <rect 
+          x="${cellIndex * 10}"
+          y="${rowIndex * 10}"
+          width="10"
+          height="10"
+          fill="${swatch ? `hsl(${swatch[0]} ${sat}% ${swatch[1]}%)` : 'transparent'}"
+        />
+      `
+    })
+  })
+
+  svgstr += `</svg>`
+
+  return svgstr
 }
