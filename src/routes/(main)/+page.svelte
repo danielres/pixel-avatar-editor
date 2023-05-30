@@ -1,6 +1,7 @@
 <script lang="ts">
   import ButtonEraser from '$lib/components/ButtonEraser.svelte'
   import DrawingBoard from '$lib/components/DrawingBoard.svelte'
+  import Icon from '$lib/components/Icon.svelte'
   import Palette from '$lib/components/Palette.svelte'
   import Preview from '$lib/components/Preview.svelte'
   import PreviewAsSvg from '$lib/components/PreviewAsSvg.svelte'
@@ -9,7 +10,6 @@
   import { downloadAsPng, downloadAsSvg } from '$lib/utils/download'
   import { onMount } from 'svelte'
   import presets from './presets'
-  import Icon from '$lib/components/Icon.svelte'
 
   const newBoardSize = 12
 
@@ -35,27 +35,58 @@
   onMount(() => {
     handleUrlUpdate()
   })
+
+  let undos = 0
+  let redos = 0
 </script>
 
-<svelte:window on:popstate={handleUrlUpdate} on:mouseup={() => saveBoardToUrl($boardStore)} />
-
+<svelte:window on:popstate={handleUrlUpdate} />
 <main>
-  <section class="board">
+  <section
+    class="board"
+    on:mouseup={() => {
+      undos++
+      redos = 0
+      saveBoardToUrl($boardStore)
+    }}
+  >
     <DrawingBoard {stores} />
   </section>
 
   <section class="tools">
     <Palette {stores} swatchSize="2rem" />
-    <!--  -->
+
     <div class="flex justify-between">
       <ButtonEraser {stateStore} />
 
-      <!-- <ButtonUndo
-        on:click={() => {
-          window.history.back()
-          window.history.back()
-        }}
-      /> -->
+      <div class="flex">
+        <button
+          on:click={() => {
+            undos--
+            redos++
+            window.history.back()
+          }}
+          class="w-[2rem] aspect-square p-[5px] hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
+          disabled={!undos}
+          title="Undo"
+        >
+          <Icon kind="arrow-turn-left" />
+        </button>
+
+        <button
+          on:click={() => {
+            if (!redos) return
+            undos++
+            redos--
+            window.history.forward()
+          }}
+          disabled={!redos}
+          class="w-[2rem] aspect-square p-[5px] hover:bg-gray-100 text-gray-600 -scale-x-100 disabled:opacity-30 disabled:cursor-not-allowed"
+          title="Redo"
+        >
+          <Icon kind="arrow-turn-left" />
+        </button>
+      </div>
     </div>
 
     <!-- <div class="usedColors" style:display="none">
