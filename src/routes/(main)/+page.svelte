@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dev } from '$app/environment'
   import ButtonEraser from '$lib/components/ButtonEraser.svelte'
   import DrawingBoard from '$lib/components/DrawingBoard.svelte'
   import Icon from '$lib/components/Icon.svelte'
@@ -157,9 +158,11 @@
   </section>
 </main>
 
-<!-- <div style:color="transparent">
-  {JSON.stringify($boardStore)}
-</div> -->
+{#if dev}
+  <div style:color="transparent">
+    {JSON.stringify($boardStore)}
+  </div>
+{/if}
 
 <style lang="postcss">
   .board {
