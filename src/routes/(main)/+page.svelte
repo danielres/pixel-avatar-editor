@@ -10,7 +10,7 @@
   import { getBoardFromUrl, saveBoardToUrl } from '$lib/utils/board'
   import { downloadAsPng, downloadAsSvg } from '$lib/utils/download'
   import { onMount } from 'svelte'
-  import presets from './presets'
+  import examples from './examples'
 
   const newBoardSize = 12
 
@@ -143,9 +143,9 @@
   </div> -->
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <section class="presets" style:--cell-size="0.25rem" on:click={() => undos++}>
-    <div class="label">Presets</div>
-    {#each Object.entries(presets) as [k, v]}
+  <section class="examples" style:--cell-size="0.25rem" on:click={() => undos++}>
+    <div class="label">Examples</div>
+    {#each Object.entries(examples) as [k, v]}
       <button
         on:click={() => {
           $boardStore = v
@@ -211,7 +211,7 @@
     justify-content: left;
   }
 
-  section.presets {
+  section.examples {
     display: flex;
     position: relative;
     width: 9.5rem;
@@ -220,13 +220,13 @@
     justify-content: left;
   }
 
-  section.presets button {
+  section.examples button {
     background: none;
     cursor: pointer;
     opacity: 0.7;
   }
 
-  section.presets button:hover {
+  section.examples button:hover {
     opacity: 1;
   }
 </style>
