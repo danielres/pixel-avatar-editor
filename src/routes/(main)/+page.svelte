@@ -1,14 +1,15 @@
 <script lang="ts">
-  import ButtonDownload from '$lib/components/ButtonDownload.svelte'
   import ButtonEraser from '$lib/components/ButtonEraser.svelte'
   import DrawingBoard from '$lib/components/DrawingBoard.svelte'
   import Palette from '$lib/components/Palette.svelte'
   import Preview from '$lib/components/Preview.svelte'
+  import PreviewAsSvg from '$lib/components/PreviewAsSvg.svelte'
   import makeStores from '$lib/stores'
   import { getBoardFromUrl, saveBoardToUrl } from '$lib/utils/board'
-  import { downloadAsPng } from '$lib/utils/download'
+  import { downloadAsPng, downloadAsSvg } from '$lib/utils/download'
   import { onMount } from 'svelte'
   import presets from './presets'
+  import Icon from '$lib/components/Icon.svelte'
 
   const newBoardSize = 12
 
@@ -28,6 +29,7 @@
 
   function handleDownload() {
     downloadAsPng(document.getElementById('drawingboard'))
+    downloadAsSvg(stores)
   }
 
   onMount(() => {
@@ -66,6 +68,33 @@
   <div class="previews">
     <section>
       <div class="label">Previews</div>
+
+      <div class="grid grid-cols-3 gap-1">
+        <div class="col-span-3">
+          <PreviewAsSvg {stores} class="w-full shadow-inner bg-gray-50 border border-gray-300" />
+        </div>
+        <div class="col-span-2">
+          <PreviewAsSvg {stores} class="w-full shadow-inner bg-gray-50 border border-gray-300" />
+        </div>
+
+        <div class="col-span-1 grid gap-1">
+          <PreviewAsSvg {stores} class="w-full shadow-inner bg-gray-50 border border-gray-300" />
+
+          <button
+            on:click={handleDownload}
+            class="p-3 hover:bg-gray-100 text-gray-600"
+            title="Download as PNG + SVG"
+          >
+            <Icon kind="save" />
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- <div class="previews">
+    <section>
+      <div class="label">Previews</div>
       <div style:--cell-size="0.5rem">
         <Preview board={$boardStore} {stores} />
       </div>
@@ -79,7 +108,7 @@
         <ButtonDownload on:click={handleDownload} />
       </div>
     </section>
-  </div>
+  </div> -->
 
   <section class="presets" style:--cell-size="0.25rem">
     <div class="label">Presets</div>
@@ -120,9 +149,9 @@
 
   section .label {
     position: absolute;
-    top: -1rem;
+    top: -1.25rem;
     left: 0;
-    color: #00000066;
+    color: #00000088;
   }
 
   section.tools {
@@ -137,47 +166,29 @@
     flex-wrap: wrap;
   }
 
-  .previews {
-    display: grid;
-    gap: 1rem;
-    height: fit-content;
-    position: relative;
-  }
-
-  .previews .actions {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
-
   .previews section {
     display: flex;
-    flex-direction: column;
-    background: #00000006;
-    border: 1px solid #00000022;
-    width: 8rem;
-    height: 16rem;
     position: relative;
-    justify-content: space-evenly;
-    align-items: center;
+    width: 10rem;
+
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: left;
   }
 
   section.presets {
-    position: relative;
     display: flex;
-    width: 12rem;
-    height: 16rem;
-    border: 1px solid #00000022;
-    background: #00000006;
+    position: relative;
+    width: 9.5rem;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    gap: 0.25rem;
+    justify-content: left;
   }
 
   section.presets button {
-    border: none;
     background: none;
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.7;
   }
 
   section.presets button:hover {
