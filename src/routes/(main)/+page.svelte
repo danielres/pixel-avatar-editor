@@ -55,7 +55,7 @@
   </section>
 
   <section class="tools">
-    <Palette {stores} swatchSize="2rem" />
+    <Palette {stores} swatchSize="1.5rem" />
 
     <div class="flex justify-between">
       <ButtonEraser {stateStore} />
