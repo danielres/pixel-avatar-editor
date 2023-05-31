@@ -170,6 +170,7 @@
     @screen sm {
       --cell-size: 2rem;
     }
+    touch-action: none;
   }
 
   main {
