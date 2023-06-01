@@ -145,14 +145,14 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <section class="examples" style:--cell-size="0.25rem" on:click={() => undos++}>
     <div class="label">Examples</div>
-    {#each Object.entries(examples) as [k, v]}
+    {#each Object.values(examples) as example}
       <button
         on:click={() => {
-          $boardStore = v
+          $boardStore = example
           saveBoardToUrl($boardStore)
         }}
       >
-        <Preview board={v} {stores} />
+        <Preview board={example} {stores} />
       </button>
     {/each}
   </section>
