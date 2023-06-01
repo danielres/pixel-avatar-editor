@@ -1,7 +1,6 @@
-<script lang="ts">
-  import type { Stores } from '$lib/stores'
-
-  export let stores: Stores
+<script>
+  /** @type {import("$lib/types").Stores} */
+  export let stores
 
   const { boardStore, paletteStore } = stores
   const { sat } = paletteStore

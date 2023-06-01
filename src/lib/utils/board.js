@@ -1,28 +1,41 @@
-import type { Board } from '$lib/stores'
-
 import {
   compressToEncodedURIComponent as lzcompress,
   decompressFromEncodedURIComponent as lzdecompress,
 } from 'lz-string'
 
-export function encode(board: Board) {
+/**
+ * @param {import('$lib/types').Board} board
+ * @return {string}
+ */
+export function encode(board) {
   const stringified = JSON.stringify(board)
   const minified = stringified.replaceAll('null', 'x')
   return lzcompress(minified)
 }
 
-export function decode(encoded: string): Board {
+/**
+ * @param {string} encoded
+ * @return {import('$lib/types').Board}
+ */
+export function decode(encoded) {
   const decompressed = lzdecompress(encoded)
   const unminified = decompressed.replaceAll('x', 'null')
-  const board = JSON.parse(unminified) as Board
+  /** @type {import('$lib/types').Board} */
+  const board = JSON.parse(unminified)
   return board
 }
 
-export function saveBoardToUrl(board: Board) {
+/**
+ * @param {import('$lib/types').Board} board
+ */
+export function saveBoardToUrl(board) {
   const encoded = encode(board)
   window.history.pushState(null, '', `?b=${encoded}`)
 }
 
+/**
+ * @return {undefined | import('$lib/types').Board}
+ */
 export function getBoardFromUrl() {
   const encoded = new URLSearchParams(window.location.search).get('b')
   if (!encoded) return

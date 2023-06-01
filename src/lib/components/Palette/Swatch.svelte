@@ -1,8 +1,8 @@
-<script lang="ts">
-  import type { Swatch } from '$lib/stores'
-
-  export let swatch: Swatch
-  export let swatchSize: string
+<script>
+  /** @type {import("$lib/types").Swatch} */
+  export let swatch
+  /** @type {string} */
+  export let swatchSize
   export let isActive = false
 
   export let sat = 50

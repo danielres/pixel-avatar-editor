@@ -1,10 +1,11 @@
-<script lang="ts">
-  import type { PaletteStore, StateStore, Stores } from '$lib/stores'
-
+<script>
   import Swatch from './Palette/Swatch.svelte'
 
-  export let stores: Stores
-  export let swatchSize: string
+  /** @type {import('$lib/types').Stores} */
+  export let stores
+
+  /** @type {string} */
+  export let swatchSize
 
   const { paletteStore, stateStore } = stores
   const { currentSwatchXYStore, usedColors } = paletteStore

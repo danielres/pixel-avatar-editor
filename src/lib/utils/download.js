@@ -1,9 +1,13 @@
-import type { Board, Palette, Stores } from '$lib/stores'
-
 import domtoimage from 'dom-to-image'
 import { get } from 'svelte/store'
+import { assertString } from './asserts'
 
-export async function downloadAsPng(node: HTMLElement | null) {
+/**./asserts
+ * @export
+ * @param {(HTMLElement | null)} node
+ * @returns {Promise<void>}
+ */
+export async function downloadAsPng(node) {
   if (!node) {
     console.error('downloadAsPng: No node provided')
     return
@@ -18,7 +22,12 @@ export async function downloadAsPng(node: HTMLElement | null) {
   }
 }
 
-export async function downloadAsSvg(stores: Stores) {
+/**
+ * @export
+ * @param {import('$lib/types').Stores} stores
+ * @returns {Promise<void>}
+ */
+export async function downloadAsSvg(stores) {
   const board = get(stores.boardStore)
   const palette = get(stores.paletteStore)
   const sat = stores.paletteStore.sat
@@ -26,17 +35,31 @@ export async function downloadAsSvg(stores: Stores) {
   return downloadSvgStr(boardToSvgStr(board, palette, sat))
 }
 
-function downloadSvgStr(svgCode: string, fileName = 'image.svg') {
+/**
+ *
+ *
+ * @param {string} svgCode
+ * @param {string} [fileName='image.svg']
+ * @returns {void}
+ */
+function downloadSvgStr(svgCode, fileName = 'image.svg') {
   const svgBlob = new Blob([svgCode], { type: 'image/svg+xml' })
   const reader = new FileReader()
   reader.onloadend = () => {
-    const base64Data = reader.result as string
+    const base64Data = reader.result
+    assertString(base64Data)
     downloadBase64File(base64Data, fileName)
   }
   reader.readAsDataURL(svgBlob)
 }
 
-function formatDate(date: Date) {
+/**
+ *
+ *
+ * @param {Date} date
+ * @return {*}
+ */
+function formatDate(date) {
   const year = date.getFullYear()
   const month = date.toLocaleString('default', { month: '2-digit' })
   const day = date.toLocaleString('default', { day: '2-digit' })
@@ -46,7 +69,13 @@ function formatDate(date: Date) {
   return `${year}-${month}-${day}_${hour}:${minute}:${seconds}`
 }
 
-function downloadBase64File(base64Data: string, fileName: string) {
+/**
+ *
+ *
+ * @param {string} base64Data
+ * @param {string} fileName
+ */
+function downloadBase64File(base64Data, fileName) {
   const downloadLink = document.createElement('a')
   downloadLink.href = base64Data
   downloadLink.download = fileName
@@ -54,7 +83,15 @@ function downloadBase64File(base64Data: string, fileName: string) {
   downloadLink.remove()
 }
 
-function boardToSvgStr(board: Board, palette: Palette, sat: number) {
+/**
+ *
+ *
+ * @param {import('$lib/types').Board} board
+ * @param {import('$lib/types').Palette} palette
+ * @param {number} sat
+ * @return {*}
+ */
+function boardToSvgStr(board, palette, sat) {
   let svgstr = `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">`
   console.log('boardToSvgStr', board, palette, sat)
 

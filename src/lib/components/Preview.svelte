@@ -1,10 +1,11 @@
-<script lang="ts">
-  import type { Board, Stores } from '$lib/stores'
-
+<script>
   import Cell from './DrawingBoard/BoardCell.svelte'
 
-  export let board: Board
-  export let stores: Stores
+  /** @type {import('$lib/types').Board} */
+  export let board
+
+  /** @type {import('$lib/types').Stores} */
+  export let stores
 </script>
 
 <div>

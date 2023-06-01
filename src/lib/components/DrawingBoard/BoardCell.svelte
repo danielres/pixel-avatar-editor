@@ -1,11 +1,14 @@
-<script lang="ts">
-  import type { BoardCell, Stores } from '$lib/stores'
-
+<script>
   import { createEventDispatcher, onMount } from 'svelte'
 
-  export let cell: BoardCell
-  export let stores: Stores
-  export let pointerXY: undefined | { x: number; y: number } = undefined
+  /** @type {import('$lib/types').BoardCell} */
+  export let cell
+
+  /** @type {import('$lib/types').Stores} */
+  export let stores
+
+  /** @type {undefined | { x: number; y: number }} */
+  export let pointerXY = undefined
 
   const sat = stores.paletteStore.sat
   const debug = stores.debug
@@ -14,8 +17,11 @@
 
   $: swatch = cell ? $paletteStore[cell[0]][cell[1]] : null
 
-  let element: HTMLElement
-  let rect: DOMRect
+  /** @type {HTMLElement} */
+  let element
+
+  /** @type {DOMRect} */
+  let rect
 
   const dispatch = createEventDispatcher()
 

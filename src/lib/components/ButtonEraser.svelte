@@ -1,9 +1,8 @@
-<script lang="ts">
-  import type { StateStore } from '$lib/stores'
-
+<script>
   import Icon from './Icon.svelte'
 
-  export let stateStore: StateStore
+  /** @type {import('$lib/types').StateStore} */
+  export let stateStore
 
   export let size = '2rem'
 </script>

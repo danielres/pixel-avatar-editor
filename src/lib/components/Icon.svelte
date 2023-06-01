@@ -1,5 +1,6 @@
-<script lang="ts">
-  export let kind: string
+<script>
+  /** @type {string} */
+  export let kind
 </script>
 
 {#if kind === 'eraser'}

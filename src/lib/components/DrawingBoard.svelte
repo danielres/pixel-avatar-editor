@@ -1,18 +1,17 @@
-<script lang="ts">
-  import type { Stores } from '$lib/stores'
+<script>
   import { fade } from 'svelte/transition'
 
   import Cell from './DrawingBoard/BoardCell.svelte'
   import { onMount } from 'svelte'
 
-  export let stores: Stores
+  /** @type {import("$lib/types").Stores} */
+  export let stores
 
   const { boardStore, stateStore, debug, paintCell } = stores
 
   let pointerXY = { x: 0, y: 0 }
 
   onMount(() => {
-    const { stateStore } = stores
     $stateStore.isLoading = false
   })
 </script>

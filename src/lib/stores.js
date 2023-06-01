@@ -1,46 +1,46 @@
 import { browser } from '$app/environment'
-import { get, writable, type Writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 
-export type BoardCell = SwatchXY | null
-export type BoardRow = BoardCell[]
-export type Board = BoardRow[]
-
-export type Hue = number
-export type Lum = number
-export type Opacity = number
-export type Swatch = [Hue, Lum, Opacity?]
-export type PaletteRow = Swatch[]
-export type Palette = PaletteRow[]
-type SwatchXY = [number, number]
-
-export type BoardStore = ReturnType<typeof makeStores>['boardStore']
-export type PaletteStore = ReturnType<typeof makeStores>['paletteStore']
-export type StateStore = ReturnType<typeof makeStores>['stateStore']
-export type Stores = ReturnType<typeof makeStores>
-
-type BoardData = { data: Board }
-type NewBoardOptions = { height: number; width: number }
-
-type Options = {
-  board: BoardData | NewBoardOptions
-  palette: { hues: number; lums: number; sat: number }
-  debug?: boolean
-}
+/**
+ * @typedef {[number, number]} SwatchXY
+ * @typedef {{ data: import('$lib/types').Board }} BoardData
+ * @typedef {{ height: number; width: number }} NewBoardOptions
+ *
+ * @typedef {{
+ *  board: BoardData | NewBoardOptions
+ *  palette: { hues: number; lums: number; sat: number }
+ *  debug?: boolean
+ * }} Options
+ */
 
 export default makeStores
 
-function makeStores(options: Options) {
+/**
+ * @param {Options} options
+ * @return {*}
+ */
+function makeStores(options) {
   const boardStore = makeBoardStore(options.board)
+
   const paletteStore = makePaletteStore(options.palette)
-  const currentSwatchXYStore = writable<SwatchXY>([0, 0])
+
+  /** @type {import('svelte/store').Writable<SwatchXY>} */
+  const currentSwatchXYStore = writable([0, 0])
+
   const stateStore = writable({ isUsingEraser: false, isPainting: false, isLoading: true })
-  const usedColors = writable<Swatch[]>([
+
+  /** @type {import('svelte/store').Writable<import('$lib/types').Swatch[]>} */
+  const usedColors = writable([
     // [5, 5], [5, 5], [4, 5], [4, 3], [3, 2], [2, 4], [2, 5], [1, 3], [1, 2], [3, 2], [5, 2], [5, 4], [6, 4], [5, 3], [3, 4], [3, 3],
   ])
 
-  function paintCell(rowIndex: number, cellIndex: number) {
+  /**
+   * @param {number} rowIndex
+   * @param {number} cellIndex
+   */
+  function paintCell(rowIndex, cellIndex) {
     return () => {
-      boardStore.update(($boardStore) => {
+      boardStore.update((/** @type {(SwatchXY | null)[][]} */ $boardStore) => {
         $boardStore[rowIndex][cellIndex] = get(stateStore).isUsingEraser
           ? null
           : get(currentSwatchXYStore)
@@ -70,11 +70,21 @@ function makeStores(options: Options) {
   }
 }
 
-function makePaletteStore(options: Options['palette']): Writable<Palette> {
+/**
+ *
+ *
+ * @param {Options['palette']} options
+ * @return {import('svelte/store').Writable<import('$lib/types').Palette>}
+ */
+function makePaletteStore(options) {
   return writable(makeNewPalette(options))
 }
 
-function makeNewPalette(options: Options['palette']): Palette {
+/**
+ * @param {Options['palette']} options
+ * @return {import('$lib/types').Palette}
+ */
+function makeNewPalette(options) {
   return Array.from({ length: options.hues }, (_, i) =>
     Array.from({ length: options.lums }, (_, j) => [
       Math.floor((360 / options.hues) * i),
@@ -83,12 +93,21 @@ function makeNewPalette(options: Options['palette']): Palette {
   )
 }
 
-function makeBoardStore(options: Options['board']): Writable<Board> {
+/**
+ * @param {Options['board']} options
+ * @return {import('svelte/store').Writable<import('$lib/types').Board>}
+ */
+function makeBoardStore(options) {
   if ('data' in options) return writable(options.data)
   return writable(makeNewBoard(options.height, options.width))
 }
 
-function makeNewBoard(height: number, width: number): Board {
+/**
+ * @param {number} height
+ * @param {number} width
+ * @return {import('$lib/types').Board}
+ */
+function makeNewBoard(height, width) {
   return Array.from({ length: height }, () => {
     return Array.from({ length: width }, () => null)
   })
