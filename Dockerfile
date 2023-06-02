@@ -1,14 +1,14 @@
-FROM node:18-alpine3.16
-
+FROM node:18-alpine3.16 AS build
 WORKDIR /app
-
-COPY package.json pnpm-lock.yaml ./
+COPY . .
 RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
+RUN pnpm run build
 
-COPY . .
-# RUN yarn prisma migrate deploy
-# RUN yarn prisma generate
-# RUN yarn vite build
-
+FROM node:18-alpine3.16 AS deploy-node
+WORKDIR /app
+RUN npm install -g pnpm
+COPY --from=build /app/package.json .
+COPY --from=build /app/build ./build
+RUN pnpm install --production
 CMD [ "pnpm", "start" ]
