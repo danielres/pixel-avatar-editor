@@ -5,7 +5,6 @@
   import Icon from '$lib/components/Icon.svelte'
   import Palette from '$lib/components/Palette.svelte'
   import Preview from '$lib/components/Preview.svelte'
-  import PreviewAsSvg from '$lib/components/PreviewAsSvg.svelte'
   import makeStores from '$lib/stores'
   import { getBoardFromUrl, saveBoardToUrl } from '$lib/utils/board'
   import { downloadAsPng, downloadAsSvg } from '$lib/utils/download'
@@ -102,16 +101,15 @@
       <div class="label">Previews</div>
 
       <div class="grid grid-cols-3 gap-1">
-        <div class="col-span-3">
-          <PreviewAsSvg {stores} class="w-full shadow-inner bg-gray-50 border border-gray-300" />
+        <div class="col-span-3 w-40">
+          <Preview {stores} />
         </div>
-        <div class="col-span-2">
-          <PreviewAsSvg {stores} class="w-full shadow-inner bg-gray-50 border border-gray-300" />
+        <div class="col-span-2 w-26">
+          <Preview {stores} />
         </div>
 
-        <div class="col-span-1 grid gap-1">
-          <PreviewAsSvg {stores} class="w-full shadow-inner bg-gray-50 border border-gray-300" />
-
+        <div class="col-span-1 grid gap-1 w-13">
+          <Preview {stores} />
           <button
             on:click={handleDownload}
             class="p-3 hover:bg-gray-100 text-gray-600"
@@ -143,10 +141,11 @@
   </div> -->
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <section class="examples" style:--cell-size="0.25rem" on:click={() => undos++}>
+  <section class="examples" on:click={() => undos++}>
     <div class="label">Examples</div>
     {#each Object.values(examples) as example}
       <button
+        class="w-12"
         on:click={() => {
           $boardStore = example
           saveBoardToUrl($boardStore)
