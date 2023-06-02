@@ -1,10 +1,13 @@
-import { redirect } from '@sveltejs/kit'
+import { dev } from '$app/environment'
+import { redirect, type Handle } from '@sveltejs/kit'
+import { sequence } from '@sveltejs/kit/hooks'
 
-/** @type {import('@sveltejs/kit').Handle} */
-export async function handle({ event, resolve }) {
-  if (event.url.hostname === 'pigg.gy') throw redirect(303, 'https://www.pigg.gy')
-  if (event.url.hostname === 'pigggy.fly.dev') throw redirect(303, 'https://www.pigg.gy')
+const ensureCanonicalUrlInProd: Handle = async ({ event, resolve }) => {
+  if (dev) return await resolve(event)
 
-  const response = await resolve(event)
-  return response
+  const { hostname } = event.url
+  if (hostname !== 'www.pigg.gy') throw redirect(303, `https://www.pigg.gy${event.url.pathname}`)
+  return await resolve(event)
 }
+
+export const handle = sequence(ensureCanonicalUrlInProd)
