@@ -44,7 +44,7 @@
 </script>
 
 <svelte:window on:popstate={handleUrlUpdate} />
-<main>
+<main class="flex flex-wrap gap-x-4 sm:gap-x-8 gap-y-8">
   <section
     class="board p-1 bg-white"
     on:mouseup={() => {
@@ -107,11 +107,11 @@
     <section>
       <h2 class="label w-full text-center">Preview <span class="opacity-75">&</span> Download</h2>
 
-      <div class="grid grid-cols-3 gap-2 border shadow-md p-4 w-48 bg-white">
-        <div class="col-span-3 w-40">
+      <div class="grid grid-cols-3 gap-2 border shadow-md p-4 w-44 bg-white">
+        <div class="col-span-3 w-36">
           <Preview {stores} />
         </div>
-        <div class="col-span-2 w-26">
+        <div class="col-span-2 w-20">
           <Preview {stores} />
         </div>
 
@@ -119,7 +119,7 @@
           <Preview {stores} />
           <button
             on:click={handleDownload}
-            class="p-3 hover:bg-gray-100 text-gray-600"
+            class="p-2 hover:bg-gray-100 text-gray-600"
             title="Download as PNG + SVG"
           >
             <Icon kind="save" />
@@ -210,12 +210,6 @@
       --cell-size: 2rem;
     }
     touch-action: none;
-  }
-
-  main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
   }
 
   section {
