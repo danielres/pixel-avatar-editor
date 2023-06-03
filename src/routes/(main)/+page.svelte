@@ -106,7 +106,7 @@
     <section>
       <h2 class="label w-full text-center">Preview <span class="opacity-75">&</span> Download</h2>
 
-      <div class="grid grid-cols-3 gap-1">
+      <div class="grid grid-cols-3 gap-2">
         <div class="col-span-3 w-40">
           <Preview {stores} />
         </div>
