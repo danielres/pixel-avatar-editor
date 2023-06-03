@@ -4,10 +4,9 @@ import { sequence } from '@sveltejs/kit/hooks'
 
 const ensureCanonicalUrlInProd: Handle = async ({ event, resolve }) => {
   if (dev) return await resolve(event)
+  if (event.url.hostname === 'www.pigg.gy') return await resolve(event)
 
-  const { hostname } = event.url
-  if (hostname !== 'www.pigg.gy') throw redirect(303, `https://www.pigg.gy${event.url.pathname}`)
-  return await resolve(event)
+  throw redirect(303, `https://www.pigg.gy${event.url.pathname}${event.url.search}`)
 }
 
 export const handle = sequence(ensureCanonicalUrlInProd)
