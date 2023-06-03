@@ -33,6 +33,8 @@ const cool_boy: Board = [[null,null,null,[1,0],null,[1,0],null,null,null,null,nu
 //prettier-ignore
 const pencil: Board = [[null,null,null,null,null,null,null,null,[4,1],null,null,null],[null,null,null,null,null,null,null,[4,1],[4,5],[4,1],null,null],[null,null,null,null,null,null,[4,1],[4,5],[4,7],[4,4],[4,1],null],[null,null,null,null,null,[4,1],[4,5],[4,7],[4,4],[4,3],[4,2],[4,0]],[null,null,null,null,[4,1],[4,5],[4,7],[4,4],[4,3],[4,2],[4,0],null],[null,null,null,[4,1],[4,5],[4,7],[4,4],[4,3],[4,2],[4,0],null,null],[null,null,[4,1],[4,5],[4,7],[4,4],[4,3],[4,2],[4,0],null,null,null],[null,[4,1],[4,5],[4,7],[4,4],[4,3],[4,2],[4,0],null,null,null,null],[[1,3],[1,5],[4,7],[4,4],[4,3],[4,2],[4,0],null,null,null,null,null],[[1,4],[1,4],[1,4],[4,3],[4,2],[4,0],null,null,null,null,null,null],[[1,5],[1,4],[1,3],[1,4],[4,0],null,null,null,null,null,null,null],[[4,0],[1,3],[1,2],[1,1],null,null,null,null,null,null,null,null]]
 //prettier-ignore
+const eraser: Board = [[null,null,null,[0,3],[0,4],[0,4],[0,4],[0,4],[0,6],null,null,null],[null,null,null,[0,2],[0,3],[0,3],[0,3],[0,3],[0,5],null,null,null],[null,null,null,[0,2],[0,3],[0,3],[0,3],[0,3],[0,5],null,null,null],[null,null,null,[0,2],[0,3],[0,3],[0,3],[0,3],[0,5],null,null,null],[null,null,null,[0,2],[0,3],[0,3],[0,3],[0,3],[0,5],null,null,null],[null,null,null,[4,3],[4,4],[4,4],[4,4],[4,4],[4,5],null,null,null],[null,null,null,[4,3],[4,4],[4,4],[4,4],[4,4],[4,5],null,null,null],[null,null,null,[4,3],[4,4],[4,4],[4,4],[4,4],[4,5],null,null,null],[null,null,null,[4,3],[4,4],[4,4],[4,4],[4,4],[4,5],null,null,null],[null,null,null,[4,3],[4,4],[4,4],[4,4],[4,4],[4,5],null,null,null],[null,null,null,[4,3],[4,4],[4,4],[4,4],[4,4],[4,5],null,null,null],[null,null,null,[4,4],[4,3],[4,3],[4,3],[4,3],[4,6],null,null,null]]
+//prettier-ignore
 const arrow_back: Board = [[null,null,null,null,[7,3],null,null,null,null,null,null,null],[null,null,null,[7,3],[7,2],null,null,null,null,null,null,null],[null,null,[7,3],[7,2],[7,3],null,null,null,null,null,null,null],[null,[7,3],[7,2],[7,3],[7,3],[7,2],[7,2],[7,2],[7,2],[7,2],null,null],[[7,3],[7,2],[7,3],[7,3],[7,3],[7,3],[7,3],[7,3],[7,3],[7,2],[7,2],null],[null,[7,3],[7,2],[7,3],[7,3],[7,2],[7,2],[7,2],[7,2],[7,3],[7,2],[7,3]],[null,null,[7,3],[7,2],[7,3],null,null,null,null,[7,2],[7,2],[7,3]],[null,null,null,[7,3],[7,2],null,null,null,null,null,[7,2],[7,3]],[null,null,null,null,[7,3],null,null,null,null,null,[7,3],[7,3]],[null,null,null,null,null,null,null,null,null,[7,3],[7,3],[7,4]],[null,null,null,null,null,null,null,[7,5],[7,4],[7,4],[7,4],null],[null,null,null,[7,6],[7,5],[7,4],[7,4],[7,4],[7,4],[7,5],null,null]]
 
 export default {
@@ -54,6 +56,7 @@ export default {
   },
   Icons: {
     pencil,
+    eraser,
     arrow_back,
   },
 }
