@@ -106,7 +106,7 @@
     <section>
       <h2 class="label w-full text-center">Preview <span class="opacity-75">&</span> Download</h2>
 
-      <div class="grid grid-cols-3 gap-2">
+      <div class="grid grid-cols-3 gap-2 border shadow-md p-4 w-48 bg-white">
         <div class="col-span-3 w-40">
           <Preview {stores} />
         </div>
@@ -175,7 +175,7 @@
       </div>
     </h2>
 
-    <div class="examples-previews grid grid-cols-3 gap-2">
+    <div class="examples-previews grid grid-cols-3 gap-2 border shadow-md p-4 bg-white">
       {#each Object.values(examples) as entries, i}
         {#if i === currentLibraryIndex}
           {#each Object.values(entries) as example}
@@ -242,7 +242,6 @@
   .previews section {
     display: flex;
     position: relative;
-    width: 10rem;
 
     flex-wrap: wrap;
     gap: 0.5rem;

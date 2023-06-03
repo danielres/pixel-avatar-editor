@@ -7,7 +7,7 @@
   const { boardStore, paletteStore } = stores
   const { sat } = paletteStore
 
-  let _class = 'shadow-inner bg-gray-50 border border-gray-300'
+  let _class = ''
   export { _class as class }
 
   $: b = board ? board : $boardStore
