@@ -45,7 +45,7 @@
 <svelte:window on:popstate={handleUrlUpdate} />
 <main>
   <section
-    class="board"
+    class="board p-1 bg-white"
     on:mouseup={() => {
       undos++
       redos = 0
@@ -56,7 +56,7 @@
   </section>
 
   <section class="tools">
-    <div class="border border-gray-300">
+    <div class=" p-1 bg-white shadow-md">
       <Palette {stores} swatchSize="1.5rem" />
     </div>
 
