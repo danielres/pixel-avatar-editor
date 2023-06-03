@@ -1,10 +1,11 @@
 <script>
   import Icon from './Icon.svelte'
+  import eraser from '$lib/assets/icons/eraser.png'
 
   /** @type {import('$lib/types').StateStore} */
   export let stateStore
 
-  export let size = '2rem'
+  export let size = '3rem'
 </script>
 
 <button
@@ -14,19 +15,25 @@
   title="Erase"
   class:isActive={!!$stateStore.isUsingEraser}
 >
-  <Icon kind="eraser" />
+  <img src={eraser} alt="" />
 </button>
 
 <style>
   button {
-    cursor: crosshair;
-    background: none;
-    border: none;
-    box-shadow: inset 0 0 0 1px #00000055;
+    border: 1px solid transparent;
     color: #c29494;
+    background: white;
+    box-shadow: -2px 2px 3px 0 #00000033;
   }
   .isActive {
     color: #512323;
-    background: #c29494;
+    background: #ffd0d044;
+    border-color: #ff5b5baa;
+  }
+  img {
+    rotate: 45deg;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    filter: drop-shadow(5px 5px 3px #00000011);
   }
 </style>

@@ -56,7 +56,9 @@
   </section>
 
   <section class="tools">
-    <Palette {stores} swatchSize="1.5rem" />
+    <div class="border border-gray-300">
+      <Palette {stores} swatchSize="1.5rem" />
+    </div>
 
     <div class="flex justify-between">
       <ButtonEraser {stateStore} />
@@ -68,7 +70,7 @@
             redos++
             window.history.back()
           }}
-          class="w-[2rem] aspect-square p-[5px] hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
+          class="w-[3rem] h-[3rem] aspect-square p-[0.75rem] hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
           disabled={!undos}
           title="Undo"
         >
@@ -84,7 +86,7 @@
             window.history.forward()
           }}
           disabled={!redos}
-          class="w-[2rem] aspect-square p-[5px] hover:bg-gray-100 text-gray-600 -scale-x-100 disabled:opacity-30 disabled:cursor-not-allowed"
+          class="w-[3rem] h-[3rem] aspect-square p-[0.75rem] hover:bg-gray-100 text-gray-600 -scale-x-100 disabled:opacity-30 disabled:cursor-not-allowed"
           title="Redo"
         >
           <Icon kind="arrow-turn-left" />

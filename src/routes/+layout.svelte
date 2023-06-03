@@ -38,7 +38,7 @@
   }
 
   :global(body) {
-    background: white;
+    background: #f8f8f8;
   }
 
   .shell {
