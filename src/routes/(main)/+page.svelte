@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition'
   import { dev } from '$app/environment'
   import ButtonEraser from '$lib/components/ButtonEraser.svelte'
   import DrawingBoard from '$lib/components/DrawingBoard.svelte'
@@ -178,8 +179,9 @@
     <div class="examples-previews grid grid-cols-3 gap-2 border shadow-md p-4 bg-white">
       {#each Object.values(examples) as entries, i}
         {#if i === currentLibraryIndex}
-          {#each Object.values(entries) as example}
+          {#each Object.values(entries) as example, j}
             <button
+              in:fade={{ delay: j * 35 }}
               class="w-12"
               on:click={() => {
                 $boardStore = example
