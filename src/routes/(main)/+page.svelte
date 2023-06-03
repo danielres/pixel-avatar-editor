@@ -38,6 +38,8 @@
 
   let undos = 0
   let redos = 0
+
+  let currentLibraryIndex = 0
 </script>
 
 <svelte:window on:popstate={handleUrlUpdate} />
@@ -71,6 +73,7 @@
           title="Undo"
         >
           <Icon kind="arrow-turn-left" />
+          <!-- <img src={arrow_back} alt="" /> -->
         </button>
 
         <button
@@ -85,6 +88,7 @@
           title="Redo"
         >
           <Icon kind="arrow-turn-left" />
+          <!-- <img src={arrow_back} alt="" /> -->
         </button>
       </div>
     </div>
@@ -98,7 +102,7 @@
 
   <div class="previews">
     <section>
-      <div class="label">Previews</div>
+      <h2 class="label w-full text-center">Preview <span class="opacity-75">&</span> Download</h2>
 
       <div class="grid grid-cols-3 gap-1">
         <div class="col-span-3 w-40">
@@ -142,18 +146,50 @@
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <section class="examples" on:click={() => undos++}>
-    <div class="label">Examples</div>
-    {#each Object.values(examples) as example}
-      <button
-        class="w-12"
-        on:click={() => {
-          $boardStore = example
-          saveBoardToUrl($boardStore)
-        }}
-      >
-        <Preview board={example} {stores} />
-      </button>
-    {/each}
+    <h2 class="label flex justify-center w-full">
+      <div class="flex items-center justify-between gap-2">
+        <button
+          class="text-black w-3 opacity-50 hover:opacity-100"
+          on:click={() => {
+            if (currentLibraryIndex > 0) return currentLibraryIndex--
+            currentLibraryIndex = Object.keys(examples).length - 1
+          }}
+        >
+          <Icon kind="arrow-left" />
+        </button>
+
+        <div class="min-w-[5rem] text-center">{Object.keys(examples)[currentLibraryIndex]}</div>
+
+        <button
+          class="text-black w-3 rotate-180 opacity-50 hover:opacity-100"
+          on:click={() => {
+            if (currentLibraryIndex === Object.keys(examples).length - 1)
+              return (currentLibraryIndex = 0)
+            currentLibraryIndex++
+          }}
+        >
+          <Icon kind="arrow-left" />
+        </button>
+      </div>
+    </h2>
+
+    <div class="examples-previews grid grid-cols-3 gap-2">
+      {#each Object.values(examples) as entries, i}
+        {#if i === currentLibraryIndex}
+          {#each Object.values(entries) as example}
+            <button
+              class="w-12"
+              on:click={() => {
+                $boardStore = example
+                saveBoardToUrl($boardStore)
+              }}
+            >
+              <Preview board={example} {stores} />
+            </button>
+          {/each}
+        {/if}
+      {/each}
+    </div>
   </section>
 </main>
 
@@ -212,21 +248,16 @@
   }
 
   section.examples {
-    display: flex;
     position: relative;
-    width: 9.5rem;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    justify-content: left;
   }
 
-  section.examples button {
+  section.examples .examples-previews button {
     background: none;
     cursor: pointer;
     opacity: 0.7;
   }
 
-  section.examples button:hover {
+  section.examples .examples-previews button:hover {
     opacity: 1;
   }
 </style>
