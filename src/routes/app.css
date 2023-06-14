@@ -1,3 +1,26 @@
 body {
   background-color: #f3f3f3;
 }
+
+button {
+  border: none;
+  display: block;
+  cursor: pointer;
+}
+
+.stack {
+  display: grid;
+}
+
+.stack > * {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.stack > * + * {
+  pointer-events: none;
+}
+
+.stack > * + * > * {
+  pointer-events: auto;
+}

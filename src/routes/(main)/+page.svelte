@@ -67,29 +67,6 @@
 </div>
 
 <style>
-  :global(button) {
-    border: none;
-    display: block;
-    cursor: pointer;
-  }
-
-  .stack {
-    display: grid;
-  }
-
-  .stack > * {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .stack > * + * {
-    pointer-events: none;
-  }
-
-  .stack > * + * > * {
-    pointer-events: auto;
-  }
-
   .checkerboard {
     margin: 1rem;
   }
