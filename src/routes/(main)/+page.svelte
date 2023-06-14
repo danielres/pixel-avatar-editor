@@ -16,7 +16,11 @@
 
 <div style="width: 200px">
   <Picker {stores} />
-  <CurrentColor {stores} />
+  <div style="width: 40px">
+    <Checkerboard rows={1} cols={1}>
+      <CurrentColor {stores} />
+    </Checkerboard>
+  </div>
 </div>
 
 <div class="wrapper">

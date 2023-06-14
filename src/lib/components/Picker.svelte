@@ -10,7 +10,7 @@
   const getHue = (i: number) => (Math.floor(i / lums) * 360) / hues
   const getLum = (i: number) => lumPad + ((100 - lumPad) / lums) * (i % hues)
 
-  let sat = 50
+  let sat = 40
   let op = 100
 
   type OnPickTarget = EventTarget &
@@ -42,8 +42,8 @@
   </div>
 </Checkerboard>
 
-<input type="range" bind:value={sat} />
-<input type="range" bind:value={op} />
+<input title="saturation {sat}" type="range" bind:value={sat} step="20" />
+<input title="opacity {op}" type="range" bind:value={op} step="20" />
 
 <style>
   div {

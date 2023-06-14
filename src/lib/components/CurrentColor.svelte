@@ -4,10 +4,9 @@
   export let stores: Stores
 
   const { currentColor } = stores
-  const size = '2rem'
 </script>
 
-<div style:background={$currentColor} style:width={size} />
+<div style:background={$currentColor} />
 
 <style lang="postcss">
   div {
