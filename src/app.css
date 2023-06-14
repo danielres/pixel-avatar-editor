@@ -1,0 +1,25 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f3f3f3;
+}
+
+.stack {
+  display: grid;
+
+  & > * {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  & > * + * {
+    pointer-events: none;
+  }
+
+  & > * + * > * {
+    pointer-events: auto;
+  }
+}
