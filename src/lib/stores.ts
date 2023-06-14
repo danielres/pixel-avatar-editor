@@ -42,6 +42,7 @@ export default function makeStores(cols: number, rows: number) {
     paint: (index: number) => paint(index, tool, currentColor, board),
     setCurrentColor: (nextColor: string) => setCurrentColor(nextColor, currentColor),
     setTool: (nextTool: Tool) => setTool(nextTool, tool),
+    tool,
   }
 }
 

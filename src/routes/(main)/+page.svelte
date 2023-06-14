@@ -1,7 +1,7 @@
 <script lang="ts">
   import makeStores from '$lib/stores'
 
-  const { board, isPainting, paint, setTool, setCurrentColor, adjust } = makeStores(12, 12)
+  const { board, isPainting, paint, setTool, setCurrentColor, adjust, tool } = makeStores(12, 12)
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
@@ -39,28 +39,30 @@
         {/each}
       </div>
     </div>
-    <div class="adjust stack">
-      <div class="adjust-left adjust-x">
-        <button on:click={adjust.addColumnBefore}>+</button>
-        <button on:click={adjust.moveLeft}>M</button>
-        <button on:click={adjust.removeColumnBefore}>-</button>
+    {#if $tool === 'adjust'}
+      <div class="adjust stack">
+        <div class="adjust-left adjust-x">
+          <button on:click={adjust.addColumnBefore}>+</button>
+          <button on:click={adjust.moveLeft}>M</button>
+          <button on:click={adjust.removeColumnBefore}>-</button>
+        </div>
+        <div class="adjust-right adjust-x">
+          <button on:click={adjust.addColumnAfter}>+</button>
+          <button on:click={adjust.moveRight}>M</button>
+          <button on:click={adjust.removeColumnAfter}>-</button>
+        </div>
+        <div class="adjust-top adjust-y">
+          <button on:click={adjust.addRowBefore}>+</button>
+          <button on:click={adjust.moveUp}>M</button>
+          <button on:click={adjust.removeRowBefore}>-</button>
+        </div>
+        <div class="adjust-bottom adjust-y">
+          <button on:click={adjust.addRowAfter}>+</button>
+          <button on:click={adjust.moveDown}>M</button>
+          <button on:click={adjust.removeRowAfter}>-</button>
+        </div>
       </div>
-      <div class="adjust-right adjust-x">
-        <button on:click={adjust.addColumnAfter}>+</button>
-        <button on:click={adjust.moveRight}>M</button>
-        <button on:click={adjust.removeColumnAfter}>-</button>
-      </div>
-      <div class="adjust-top adjust-y">
-        <button on:click={adjust.addRowBefore}>+</button>
-        <button on:click={adjust.moveUp}>M</button>
-        <button on:click={adjust.removeRowBefore}>-</button>
-      </div>
-      <div class="adjust-bottom adjust-y">
-        <button on:click={adjust.addRowAfter}>+</button>
-        <button on:click={adjust.moveDown}>M</button>
-        <button on:click={adjust.removeRowAfter}>-</button>
-      </div>
-    </div>
+    {/if}
   </div>
 </div>
 
@@ -96,10 +98,12 @@
     display: flex;
     flex-direction: column;
     width: fit-content;
+    gap: 1rem;
   }
   .adjust-y {
     display: flex;
     height: fit-content;
+    gap: 1rem;
   }
 
   .adjust-left {
