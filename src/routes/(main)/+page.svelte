@@ -1,22 +1,21 @@
 <script lang="ts">
   import Adjust from '$lib/components/Adjust.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
+  import Picker from '$lib/components/Picker.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
 
   const stores = makeStores(12, 12)
-  const { board, isPainting, paint, setCurrentColor, tool } = stores
+  const { board, isPainting, paint, tool } = stores
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
 
 <Tools {stores} />
 
-<ul class="colorPicker">
-  <li><button on:pointerdown={setCurrentColor('red')}>Red</button></li>
-  <li><button on:pointerdown={setCurrentColor('blue')}>Blue</button></li>
-  <li><button on:pointerdown={setCurrentColor('green')}>Green</button></li>
-</ul>
+<div style="width: 200px">
+  <Picker {stores} />
+</div>
 
 <div class="wrapper">
   <div class="stack">

@@ -109,7 +109,7 @@ function setTool(nextTool: Tool, tool: Writable<Tool>) {
 }
 
 function setCurrentColor(nextColor: string, currentColor: Writable<string>) {
-  return () => currentColor.set(nextColor)
+  currentColor.set(nextColor)
 }
 
 function addRowAfter(board: Writable<Board>) {
