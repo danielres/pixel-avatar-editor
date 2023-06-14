@@ -9,7 +9,7 @@ export default function makeStores(cols: number, rows: number) {
   const board = writable<Board>(initialValue)
   const isPainting = writable<boolean>(false)
   const tool = writable<Tool>('brush')
-  const currentColor = writable<string>('red')
+  const currentColor = writable<string>('none')
 
   return {
     adjust: {
@@ -39,6 +39,7 @@ export default function makeStores(cols: number, rows: number) {
       },
     },
     board,
+    currentColor,
     isPainting,
     paint: (index: number) => paint(index, tool, currentColor, board),
     setCurrentColor: (nextColor: string) => setCurrentColor(nextColor, currentColor),

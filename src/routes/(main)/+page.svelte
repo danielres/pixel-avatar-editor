@@ -1,6 +1,7 @@
 <script lang="ts">
   import Adjust from '$lib/components/Adjust.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
+  import CurrentColor from '$lib/components/CurrentColor.svelte'
   import Picker from '$lib/components/Picker.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
@@ -15,6 +16,7 @@
 
 <div style="width: 200px">
   <Picker {stores} />
+  <CurrentColor {stores} />
 </div>
 
 <div class="wrapper">
