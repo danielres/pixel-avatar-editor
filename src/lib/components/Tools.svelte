@@ -10,13 +10,25 @@
 </script>
 
 <ul>
-  <li><button on:pointerdown={() => setCurrentTool('brush')}><Brush /></button></li>
-  <li><button on:pointerdown={() => setCurrentTool('eraser')}><Eraser /></button></li>
-  <li><button on:pointerdown={() => setCurrentTool('fill')}><PaintBucket /></button></li>
-  <li><button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button></li>
-  <li><button on:pointerdown={() => setCurrentTool('pipette')}><Pipette /></button></li>
-  <li><button on:pointerdown={() => setCurrentTool('smudge')}><Pointer /></button></li>
-  <li>
+  <li class:active={$currentTool === 'brush'}>
+    <button on:pointerdown={() => setCurrentTool('brush')}><Brush /></button>
+  </li>
+  <li class:active={$currentTool === 'eraser'}>
+    <button on:pointerdown={() => setCurrentTool('eraser')}><Eraser /></button>
+  </li>
+  <li class:active={$currentTool === 'fill'}>
+    <button on:pointerdown={() => setCurrentTool('fill')}><PaintBucket /></button>
+  </li>
+  <li class:active={$currentTool === 'adjust'}>
+    <button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button>
+  </li>
+  <li class:active={$currentTool === 'pipette'}>
+    <button on:pointerdown={() => setCurrentTool('pipette')}><Pipette /></button>
+  </li>
+  <li class:active={$currentTool === 'smudge'}>
+    <button on:pointerdown={() => setCurrentTool('smudge')}><Pointer /></button>
+  </li>
+  <li class:active={$currentTool === 'picker'}>
     <button
       style:width="2rem"
       on:pointerdown={() =>
@@ -35,5 +47,13 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+  }
+
+  li {
+    color: hsl(0, 0%, 70%);
+  }
+
+  li.active {
+    color: hsl(0, 0%, 0%);
   }
 </style>
