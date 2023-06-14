@@ -16,6 +16,8 @@
     const newColor = (e.target as OnPickTarget).dataset.background
     stores.setCurrentColor(newColor)
   }
+
+  stores.setCurrentColor($values[Math.floor($values.length / 2)])
 </script>
 
 <Checkerboard>

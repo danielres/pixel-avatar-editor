@@ -50,11 +50,14 @@
         <Adjust {stores} />
       {/if}
 
-      {#if $currentTool === 'picker'}
-        <div style="width: 75%; place-self: center" class="card">
-          <Picker {stores} />
-        </div>
-      {/if}
+      <div
+        class="card"
+        style:display={$currentTool === 'picker' ? 'block' : 'none'}
+        style:width="75%"
+        style:place-self="center"
+      >
+        <Picker {stores} />
+      </div>
     </div>
   </Ratio>
 </div>
