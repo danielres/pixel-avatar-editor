@@ -3,7 +3,7 @@ import adjust from './stores/adjust'
 import { paint } from './stores/paint'
 
 export type Board = { cols: number; values: string[] }
-export type Tool = 'brush' | 'eraser' | 'fill' | 'adjust'
+export type Tool = 'brush' | 'eraser' | 'fill' | 'adjust' | 'pick'
 export type Stores = ReturnType<typeof makeStores>
 
 export default function makeStores(cols: number, rows: number) {

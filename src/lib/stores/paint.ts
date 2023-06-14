@@ -46,9 +46,4 @@ export function paint(
     }
     return
   }
-
-  board.update(($board) => {
-    $board.values[index] = get(currentColor)
-    return $board
-  })
 }

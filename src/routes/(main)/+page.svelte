@@ -11,7 +11,6 @@
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
-
 <Tools {stores} />
 
 <div style="width: 200px">
@@ -31,10 +30,13 @@
           <button
             style:background={value}
             on:pointerdown={() => {
-              paint(i)
               $isPainting = true
+              $currentTool === 'pick' ? stores.setCurrentColor(value) : paint(i)
             }}
-            on:pointerover={$isPainting ? () => paint(i) : null}
+            on:pointerover={() => {
+              if (!$isPainting) return
+              $currentTool === 'pick' ? stores.setCurrentColor(value) : paint(i)
+            }}
           />
         {/each}
       </div>

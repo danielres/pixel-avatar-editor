@@ -10,6 +10,7 @@
   <li><button on:pointerdown={setCurrentTool('eraser')}>Eraser</button></li>
   <li><button on:pointerdown={setCurrentTool('fill')}>Fill</button></li>
   <li><button on:pointerdown={setCurrentTool('adjust')}>Adjust</button></li>
+  <li><button on:pointerdown={setCurrentTool('pick')}>Pick</button></li>
 </ul>
 
 <style>
