@@ -9,7 +9,7 @@ export default function makeStores(cols: number, rows: number) {
   const initialValue = { cols, values: Array.from({ length: cols * rows }).map(() => 'none') }
   const board = writable<Board>(initialValue)
   const isPainting = writable<boolean>(false)
-  const tool = writable<Tool>('brush')
+  const currentTool = writable<Tool>('brush')
   const currentColor = writable<string>('none')
 
   return {
@@ -17,15 +17,15 @@ export default function makeStores(cols: number, rows: number) {
     board,
     currentColor,
     isPainting,
-    paint: (index: number) => paint(index, tool, currentColor, board),
+    paint: (index: number) => paint(index, currentTool, currentColor, board),
     setCurrentColor: (nextColor: string) => setCurrentColor(nextColor, currentColor),
-    setTool: (nextTool: Tool) => setTool(nextTool, tool),
-    tool,
+    setCurrentTool: (nextTool: Tool) => setCurrentTool(nextTool, currentTool),
+    currentTool,
   }
 }
 
-function setTool(nextTool: Tool, tool: Writable<Tool>) {
-  return () => tool.set(nextTool)
+function setCurrentTool(nextTool: Tool, currentTool: Writable<Tool>) {
+  return () => currentTool.set(nextTool)
 }
 
 function setCurrentColor(nextColor: string, currentColor: Writable<string>) {
@@ -34,14 +34,14 @@ function setCurrentColor(nextColor: string, currentColor: Writable<string>) {
 
 function paint(
   index: number,
-  tool: Writable<Tool>,
+  currentTool: Writable<Tool>,
   currentColor: Writable<string>,
   board: Writable<Board>
 ) {
   const cols = get(board).cols
   const rows = get(board).values.length / cols
 
-  if (get(tool) === 'eraser') {
+  if (get(currentTool) === 'eraser') {
     board.update(($board) => {
       $board.values[index] = 'none'
       return $board
@@ -49,7 +49,7 @@ function paint(
     return
   }
 
-  if (get(tool) === 'fill') {
+  if (get(currentTool) === 'fill') {
     const color = get(board).values[index]
     const queue = [index]
     const visited = new Set<number>()

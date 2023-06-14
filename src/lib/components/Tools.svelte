@@ -2,14 +2,14 @@
   import type { Stores } from '$lib/stores'
 
   export let stores: Stores
-  const { setTool } = stores
+  const { setCurrentTool } = stores
 </script>
 
 <ul>
-  <li><button on:pointerdown={setTool('brush')}>Brush</button></li>
-  <li><button on:pointerdown={setTool('eraser')}>Eraser</button></li>
-  <li><button on:pointerdown={setTool('fill')}>Fill</button></li>
-  <li><button on:pointerdown={setTool('adjust')}>Adjust</button></li>
+  <li><button on:pointerdown={setCurrentTool('brush')}>Brush</button></li>
+  <li><button on:pointerdown={setCurrentTool('eraser')}>Eraser</button></li>
+  <li><button on:pointerdown={setCurrentTool('fill')}>Fill</button></li>
+  <li><button on:pointerdown={setCurrentTool('adjust')}>Adjust</button></li>
 </ul>
 
 <style>

@@ -7,7 +7,7 @@
   import makeStores from '$lib/stores'
 
   const stores = makeStores(12, 12)
-  const { board, isPainting, paint, tool } = stores
+  const { board, isPainting, paint, currentTool } = stores
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
@@ -40,7 +40,7 @@
       </div>
     </Checkerboard>
 
-    {#if $tool === 'adjust'}
+    {#if $currentTool === 'adjust'}
       <Adjust {stores} />
     {/if}
   </div>
