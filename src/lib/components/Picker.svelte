@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { Stores } from '$lib/stores'
+  import { onMount } from 'svelte'
   import Checkerboard from './Checkerboard.svelte'
 
+  export let stores: Stores
   export let hues = 8
   export let lums = 8
   export let lumPad = 30
-  export let stores: Stores
 
   const getHue = (i: number) => (Math.floor(i / lums) * 360) / hues
   const getLum = (i: number) => lumPad + ((100 - lumPad) / lums) * (i % hues)
@@ -13,31 +14,26 @@
   let sat = 40
   let op = 100
 
+  $: backgrounds = Array.from({ length: lums * hues }).map(
+    (_, i) => `hsla(${getHue(i)}, ${sat}%, ${getLum(i)}%, ${op / 100})`
+  )
+
   type OnPickTarget = EventTarget &
     HTMLButtonElement & { dataset: { hue: string; lum: string; op: string; sat: string } }
 
-  const onPick = (e: MouseEvent) => {
-    const target = e.target as OnPickTarget
-    const { hue, lum, op, sat } = target.dataset
-    const str = `hsla(${hue}, ${sat}, ${lum}, ${op})`
-    stores.setCurrentColor(str)
-  }
+  const onPick = (e: MouseEvent) =>
+    stores.setCurrentColor((e.target as OnPickTarget).style.background)
+
+  onMount(() => {
+    const middleColor = backgrounds[Math.floor(backgrounds.length / 2)]
+    stores.setCurrentColor(middleColor)
+  })
 </script>
 
 <Checkerboard>
-  <div style:--lums={lums}>
-    {#each Array.from({ length: lums * hues }) as item, i}
-      <button
-        on:click={onPick}
-        style:--hue={getHue(i)}
-        style:--lum="{getLum(i)}%"
-        style:--sat="{sat}%"
-        style:--op={op / 100}
-        data-hue={getHue(i)}
-        data-lum="{getLum(i)}%"
-        data-sat="{sat}%"
-        data-op={op / 100}
-      />
+  <div style:grid-template-columns="repeat({lums}, 1fr)">
+    {#each backgrounds as bg}
+      <button on:click={onPick} style:background={bg} />
     {/each}
   </div>
 </Checkerboard>
@@ -48,12 +44,10 @@
 <style>
   div {
     display: grid;
-    grid-template-columns: repeat(var(--lums), 1fr);
   }
 
   button {
     aspect-ratio: 1;
-    background: hsla(var(--hue), var(--sat), var(--lum), var(--op));
     border: thin solid #ffffff33;
   }
 </style>
