@@ -1,21 +1,7 @@
 <script lang="ts">
   import makeStores from '$lib/stores'
 
-  const {
-    board,
-    isPainting,
-    paint,
-    setTool,
-    setCurrentColor,
-    addRowAfter,
-    addRowBefore,
-    removeRowBefore,
-    removeRowAfter,
-    addColumnBefore,
-    addColumnAfter,
-    removeColumnAfter,
-    removeColumnBefore,
-  } = makeStores(12, 12)
+  const { board, isPainting, paint, setTool, setCurrentColor, adjust } = makeStores(12, 12)
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
@@ -34,28 +20,42 @@
 </ul>
 
 <div class="wrapper">
-  <div class="stack checkerboard">
-    <div class="board" style:grid-template-columns="repeat({$board.cols}, 1fr)">
-      {#each $board.values as value, i}
-        <button
-          style:background={value}
-          on:pointerdown={() => {
-            paint(i)
-            $isPainting = true
-          }}
-          on:pointerover={$isPainting ? () => paint(i) : null}
-        />
-      {/each}
+  <div class="stack">
+    <div class="checkerboard">
+      <div class="board" style:grid-template-columns="repeat({$board.cols}, 1fr)">
+        {#each $board.values as value, i}
+          <button
+            style:background={value}
+            on:pointerdown={() => {
+              paint(i)
+              $isPainting = true
+            }}
+            on:pointerover={$isPainting ? () => paint(i) : null}
+          />
+        {/each}
+      </div>
     </div>
-    <div class="board-adjust">
-      <button on:click={() => addRowBefore()}>Add row before</button>
-      <button on:click={() => removeRowBefore()}>Remove row before</button>
-      <button on:click={() => addRowAfter()}>Add row after</button>
-      <button on:click={() => removeRowAfter()}>Remove row after</button>
-      <button on:click={() => addColumnBefore()}>Add column before</button>
-      <button on:click={() => addColumnAfter()}>Add column after</button>
-      <button on:click={() => removeColumnAfter()}>Remove column after</button>
-      <button on:click={() => removeColumnBefore()}>Remove column before</button>
+    <div class="adjust stack">
+      <div class="adjust-left adjust-x">
+        <button on:click={adjust.addColumnBefore}>+</button>
+        <button on:click={adjust.moveLeft}>M</button>
+        <button on:click={adjust.removeColumnBefore}>-</button>
+      </div>
+      <div class="adjust-right adjust-x">
+        <button on:click={adjust.addColumnAfter}>+</button>
+        <button on:click={adjust.moveRight}>M</button>
+        <button on:click={adjust.removeColumnAfter}>-</button>
+      </div>
+      <div class="adjust-top adjust-y">
+        <button on:click={adjust.addRowBefore}>+</button>
+        <button on:click={adjust.moveUp}>M</button>
+        <button on:click={adjust.removeRowBefore}>-</button>
+      </div>
+      <div class="adjust-bottom adjust-y">
+        <button on:click={adjust.addRowAfter}>+</button>
+        <button on:click={adjust.moveDown}>M</button>
+        <button on:click={adjust.removeRowAfter}>-</button>
+      </div>
     </div>
   </div>
 </div>
@@ -82,6 +82,43 @@
 
   .stack > * + * > * {
     pointer-events: auto;
+  }
+
+  .checkerboard {
+    margin: 1rem;
+  }
+
+  .adjust-x {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+  .adjust-y {
+    display: flex;
+    height: fit-content;
+  }
+
+  .adjust-left {
+    align-self: center;
+  }
+
+  .adjust-right {
+    align-self: center;
+    justify-self: end;
+  }
+
+  .adjust-top {
+    justify-self: center;
+  }
+
+  .adjust-bottom {
+    justify-self: center;
+    align-self: end;
+  }
+
+  .adjust button {
+    aspect-ratio: 1;
+    width: 1rem;
   }
 
   .wrapper {
