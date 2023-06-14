@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 import adjust from './stores/adjust'
 import getColors from './stores/getColors'
 import { paint } from './stores/paint'
@@ -12,6 +12,7 @@ export default function makeStores(cols: number, rows: number) {
   const board = writable<Board>(initialValue)
   const isPainting = writable<boolean>(false)
   const currentTool = writable<Tool>('brush')
+  const previousTool = writable<Tool>('brush')
   const currentColor = writable<string>('none')
 
   return {
@@ -20,9 +21,16 @@ export default function makeStores(cols: number, rows: number) {
     currentColor,
     currentTool,
     isPainting,
+    previousTool,
     paint: (index: number) => paint(index, currentTool, currentColor, board),
-    setCurrentColor: (nextColor: string) => currentColor.set(nextColor),
-    setCurrentTool: (nextTool: Tool) => () => currentTool.set(nextTool),
     getColors,
+    setCurrentColor: (nextColor: string) => currentColor.set(nextColor),
+    setCurrentTool: (nextTool: Tool) => {
+      previousTool.set(get(currentTool))
+      currentTool.set(nextTool)
+    },
+    restorePreviousTool: () => {
+      currentTool.set(get(previousTool))
+    },
   }
 }

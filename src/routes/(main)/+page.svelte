@@ -1,14 +1,13 @@
 <script lang="ts">
   import Adjust from '$lib/components/Adjust.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
-  import CurrentColor from '$lib/components/CurrentColor.svelte'
   import Picker from '$lib/components/Picker.svelte'
   import Ratio from '$lib/components/Ratio.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
 
   const stores = makeStores(12, 12)
-  const { board, isPainting, paint, currentTool } = stores
+  const { board, isPainting, paint, currentTool, restorePreviousTool } = stores
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
@@ -50,13 +49,11 @@
         <Adjust {stores} />
       {/if}
 
-      <div
-        class="card"
-        style:display={$currentTool === 'picker' ? 'block' : 'none'}
-        style:width="75%"
-        style:place-self="center"
-      >
-        <Picker {stores} />
+      <div class="stack" style:display={$currentTool === 'picker' ? 'grid' : 'none'}>
+        <button on:pointerdown={restorePreviousTool} title="close" />
+        <div class="card" style:width="75%" style:place-self="center">
+          <Picker {stores} />
+        </div>
       </div>
     </div>
   </Ratio>

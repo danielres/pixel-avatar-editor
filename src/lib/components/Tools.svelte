@@ -6,18 +6,22 @@
   import CurrentColor from './CurrentColor.svelte'
 
   export let stores: Stores
-  const { setCurrentTool } = stores
+  const { setCurrentTool, currentTool, restorePreviousTool } = stores
 </script>
 
 <ul>
-  <li><button on:pointerdown={setCurrentTool('brush')}><Brush /></button></li>
-  <li><button on:pointerdown={setCurrentTool('eraser')}><Eraser /></button></li>
-  <li><button on:pointerdown={setCurrentTool('fill')}><PaintBucket /></button></li>
-  <li><button on:pointerdown={setCurrentTool('adjust')}><Crop /></button></li>
-  <li><button on:pointerdown={setCurrentTool('pipette')}><Pipette /></button></li>
-  <li><button on:pointerdown={setCurrentTool('smudge')}><Pointer /></button></li>
+  <li><button on:pointerdown={() => setCurrentTool('brush')}><Brush /></button></li>
+  <li><button on:pointerdown={() => setCurrentTool('eraser')}><Eraser /></button></li>
+  <li><button on:pointerdown={() => setCurrentTool('fill')}><PaintBucket /></button></li>
+  <li><button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button></li>
+  <li><button on:pointerdown={() => setCurrentTool('pipette')}><Pipette /></button></li>
+  <li><button on:pointerdown={() => setCurrentTool('smudge')}><Pointer /></button></li>
   <li>
-    <button on:pointerdown={setCurrentTool('picker')} style:width="2rem">
+    <button
+      style:width="2rem"
+      on:pointerdown={() =>
+        $currentTool === 'picker' ? restorePreviousTool() : setCurrentTool('picker')}
+    >
       <Checkerboard rows={1} cols={1}>
         <CurrentColor {stores} />
       </Checkerboard>

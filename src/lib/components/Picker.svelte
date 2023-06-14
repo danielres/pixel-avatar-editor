@@ -7,7 +7,7 @@
   export let lums = 8
   export let lumPad = 30
 
-  const { currentColor, getColors } = stores
+  const { currentColor, getColors, restorePreviousTool } = stores
   const { sat, op, values } = getColors(hues, lums, lumPad)
 
   type OnPickTarget = EventTarget & HTMLButtonElement & { dataset: { background: string } }
@@ -15,6 +15,7 @@
   const onPick = (e: MouseEvent) => {
     const newColor = (e.target as OnPickTarget).dataset.background
     stores.setCurrentColor(newColor)
+    restorePreviousTool()
   }
 
   stores.setCurrentColor($values[Math.floor($values.length / 2)])
