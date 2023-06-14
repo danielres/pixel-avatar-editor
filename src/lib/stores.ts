@@ -11,14 +11,32 @@ export default function makeStores(cols: number, rows: number) {
   const currentColor = writable<string>('red')
 
   return {
-    addColumnBefore: () => addColumnBefore(board),
-    addColumnAfter: () => addColumnAfter(board),
-    removeColumnAfter: () => removeColumnAfter(board),
-    removeColumnBefore: () => removeColumnBefore(board),
-    addRowAfter: () => addRowAfter(board),
-    addRowBefore: () => addRowBefore(board),
-    removeRowAfter: () => removeRowAfter(board),
-    removeRowBefore: () => removeRowBefore(board),
+    adjust: {
+      addColumnBefore: () => addColumnBefore(board),
+      addColumnAfter: () => addColumnAfter(board),
+      removeColumnAfter: () => removeColumnAfter(board),
+      removeColumnBefore: () => removeColumnBefore(board),
+      addRowAfter: () => addRowAfter(board),
+      addRowBefore: () => addRowBefore(board),
+      removeRowAfter: () => removeRowAfter(board),
+      removeRowBefore: () => removeRowBefore(board),
+      moveUp: () => {
+        removeRowBefore(board)
+        addRowAfter(board)
+      },
+      moveDown: () => {
+        removeRowAfter(board)
+        addRowBefore(board)
+      },
+      moveLeft: () => {
+        removeColumnBefore(board)
+        addColumnAfter(board)
+      },
+      moveRight: () => {
+        removeColumnAfter(board)
+        addColumnBefore(board)
+      },
+    },
     board,
     isPainting,
     paint: (index: number) => paint(index, tool, currentColor, board),
