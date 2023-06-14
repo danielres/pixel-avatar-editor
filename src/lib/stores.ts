@@ -2,6 +2,7 @@ import { get, writable, type Writable } from 'svelte/store'
 
 type Board = { cols: number; values: string[] }
 export type Tool = 'brush' | 'eraser' | 'fill' | 'adjust'
+export type Stores = ReturnType<typeof makeStores>
 
 export default function makeStores(cols: number, rows: number) {
   const initialValue = { cols, values: Array.from({ length: cols * rows }).map(() => 'none') }

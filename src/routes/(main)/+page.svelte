@@ -1,17 +1,15 @@
 <script lang="ts">
+  import Adjust from '$lib/components/Adjust.svelte'
+  import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
 
-  const { board, isPainting, paint, setTool, setCurrentColor, adjust, tool } = makeStores(12, 12)
+  const stores = makeStores(12, 12)
+  const { board, isPainting, paint, setCurrentColor, tool } = stores
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
 
-<ul class="tools">
-  <li><button on:pointerdown={setTool('brush')}>Brush</button></li>
-  <li><button on:pointerdown={setTool('eraser')}>Eraser</button></li>
-  <li><button on:pointerdown={setTool('fill')}>Fill</button></li>
-  <li><button on:pointerdown={setTool('adjust')}>Adjust</button></li>
-</ul>
+<Tools {stores} />
 
 <ul class="colorPicker">
   <li><button on:pointerdown={setCurrentColor('red')}>Red</button></li>
@@ -39,29 +37,9 @@
         {/each}
       </div>
     </div>
+
     {#if $tool === 'adjust'}
-      <div class="adjust stack">
-        <div class="adjust-left adjust-x">
-          <button on:click={adjust.addColumnBefore}>+</button>
-          <button on:click={adjust.moveLeft}>M</button>
-          <button on:click={adjust.removeColumnBefore}>-</button>
-        </div>
-        <div class="adjust-right adjust-x">
-          <button on:click={adjust.addColumnAfter}>+</button>
-          <button on:click={adjust.moveRight}>M</button>
-          <button on:click={adjust.removeColumnAfter}>-</button>
-        </div>
-        <div class="adjust-top adjust-y">
-          <button on:click={adjust.addRowBefore}>+</button>
-          <button on:click={adjust.moveUp}>M</button>
-          <button on:click={adjust.removeRowBefore}>-</button>
-        </div>
-        <div class="adjust-bottom adjust-y">
-          <button on:click={adjust.addRowAfter}>+</button>
-          <button on:click={adjust.moveDown}>M</button>
-          <button on:click={adjust.removeRowAfter}>-</button>
-        </div>
-      </div>
+      <Adjust {stores} />
     {/if}
   </div>
 </div>
@@ -69,41 +47,6 @@
 <style>
   .checkerboard {
     margin: 1rem;
-  }
-
-  .adjust-x {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    gap: 1rem;
-  }
-  .adjust-y {
-    display: flex;
-    height: fit-content;
-    gap: 1rem;
-  }
-
-  .adjust-left {
-    align-self: center;
-  }
-
-  .adjust-right {
-    align-self: center;
-    justify-self: end;
-  }
-
-  .adjust-top {
-    justify-self: center;
-  }
-
-  .adjust-bottom {
-    justify-self: center;
-    align-self: end;
-  }
-
-  .adjust button {
-    aspect-ratio: 1;
-    width: 1rem;
   }
 
   .wrapper {
@@ -117,13 +60,6 @@
 
   .board button {
     aspect-ratio: 1;
-  }
-
-  .tools {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
   }
 
   .checkerboard {
