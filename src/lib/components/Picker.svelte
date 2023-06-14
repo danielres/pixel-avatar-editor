@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Stores } from '$lib/stores'
-  import { onMount } from 'svelte'
   import Checkerboard from './Checkerboard.svelte'
 
   export let stores: Stores
@@ -8,17 +7,8 @@
   export let lums = 8
   export let lumPad = 30
 
-  const { currentColor } = stores
-
-  const getHue = (i: number) => (Math.floor(i / lums) * 360) / hues
-  const getLum = (i: number) => lumPad + ((100 - lumPad) / lums) * (i % hues)
-
-  let sat = 40
-  let op = 100
-
-  $: backgrounds = Array.from({ length: lums * hues }).map(
-    (_, i) => `hsla(${getHue(i)}, ${sat}%, ${getLum(i)}%, ${op / 100})`
-  )
+  const { currentColor, getColors } = stores
+  const { sat, op, values } = getColors(hues, lums, lumPad)
 
   type OnPickTarget = EventTarget & HTMLButtonElement & { dataset: { background: string } }
 
@@ -26,16 +16,11 @@
     const newColor = (e.target as OnPickTarget).dataset.background
     stores.setCurrentColor(newColor)
   }
-
-  onMount(() => {
-    const middleColor = backgrounds[Math.floor(backgrounds.length / 2)]
-    stores.setCurrentColor(middleColor)
-  })
 </script>
 
 <Checkerboard>
   <div style:grid-template-columns="repeat({lums}, 1fr)">
-    {#each backgrounds as bg}
+    {#each $values as bg}
       <button
         on:click={onPick}
         style:background={bg}
@@ -45,8 +30,8 @@
     {/each}
   </div>
 </Checkerboard>
-<input title="saturation {sat}" type="range" bind:value={sat} step="20" />
-<input title="opacity {op}" type="range" bind:value={op} step="20" />
+<input title="saturation {sat}" type="range" bind:value={$sat} step="20" />
+<input title="opacity {op}" type="range" bind:value={$op} step="20" />
 
 <style>
   div {

@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store'
 import adjust from './stores/adjust'
+import getColors from './stores/getColors'
 import { paint } from './stores/paint'
 
 export type Board = { cols: number; values: string[] }
@@ -22,5 +23,6 @@ export default function makeStores(cols: number, rows: number) {
     paint: (index: number) => paint(index, currentTool, currentColor, board),
     setCurrentColor: (nextColor: string) => currentColor.set(nextColor),
     setCurrentTool: (nextTool: Tool) => () => currentTool.set(nextTool),
+    getColors,
   }
 }
