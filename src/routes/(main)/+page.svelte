@@ -1,5 +1,6 @@
 <script lang="ts">
   import Adjust from '$lib/components/Adjust.svelte'
+  import Checkerboard from '$lib/components/Checkerboard.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
 
@@ -19,11 +20,7 @@
 
 <div class="wrapper">
   <div class="stack">
-    <div
-      class="checkerboard"
-      style:--cols={$board.cols}
-      style:--rows={$board.values.length / $board.cols}
-    >
+    <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
       <div class="board" style:grid-template-columns="repeat({$board.cols}, 1fr)">
         {#each $board.values as value, i}
           <button
@@ -36,7 +33,7 @@
           />
         {/each}
       </div>
-    </div>
+    </Checkerboard>
 
     {#if $tool === 'adjust'}
       <Adjust {stores} />
@@ -45,10 +42,6 @@
 </div>
 
 <style>
-  .checkerboard {
-    margin: 1rem;
-  }
-
   .wrapper {
     max-width: 25%;
   }
@@ -60,11 +53,5 @@
 
   .board button {
     aspect-ratio: 1;
-  }
-
-  .checkerboard {
-    --color: hsl(0, 0%, 97%);
-    background: repeating-conic-gradient(transparent 0 90deg, var(--color) 0 180deg) 0 0 /
-      calc(100% / var(--cols)) calc(100% / var(--rows)) round;
   }
 </style>
