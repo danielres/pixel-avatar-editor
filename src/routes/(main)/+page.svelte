@@ -3,6 +3,7 @@
   import Checkerboard from '$lib/components/Checkerboard.svelte'
   import CurrentColor from '$lib/components/CurrentColor.svelte'
   import Picker from '$lib/components/Picker.svelte'
+  import Ratio from '$lib/components/Ratio.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
 
@@ -11,53 +12,71 @@
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
-<Tools {stores} />
 
-<div style="width: 200px">
-  <Picker {stores} />
-  <div style="width: 40px">
-    <Checkerboard rows={1} cols={1}>
-      <CurrentColor {stores} />
-    </Checkerboard>
-  </div>
-</div>
+<div class="shell">
+  <header>
+    <div class="card">HEADER</div>
+  </header>
 
-<div class="wrapper">
-  <div class="stack">
-    <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
-      <div class="board" style:grid-template-columns="repeat({$board.cols}, 1fr)">
-        {#each $board.values as value, i}
-          <button
-            style:background={value}
-            on:pointerdown={() => {
-              $isPainting = true
-              if (['pick', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)
-              else paint(i)
-            }}
-            on:pointerover={() => {
-              if (!$isPainting) return
-              if ($currentTool === 'pick') stores.setCurrentColor(value)
-              else paint(i)
-            }}
-          />
-        {/each}
-      </div>
-    </Checkerboard>
+  <aside>
+    <div class="card shadow-md">
+      <Tools {stores} />
+    </div>
+  </aside>
 
-    {#if $currentTool === 'adjust'}
-      <Adjust {stores} />
-    {/if}
-  </div>
+  <Ratio ratiow={$board.cols} ratioh={$board.values.length / $board.cols}>
+    <div class="stack">
+      <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
+        <div class="board" style:grid-template-columns="repeat({$board.cols}, 1fr)">
+          {#each $board.values as value, i}
+            <button
+              style:background={value}
+              on:pointerdown={() => {
+                $isPainting = true
+                if (['pipette', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)
+                else paint(i)
+              }}
+              on:pointerover={() => {
+                if (!$isPainting) return
+                if ($currentTool === 'pipette') stores.setCurrentColor(value)
+                else paint(i)
+              }}
+            />
+          {/each}
+        </div>
+      </Checkerboard>
+
+      {#if $currentTool === 'adjust'}
+        <Adjust {stores} />
+      {/if}
+
+      {#if $currentTool === 'picker'}
+        <div style="width: 75%; place-self: center" class="card">
+          <Picker {stores} />
+        </div>
+      {/if}
+    </div>
+  </Ratio>
 </div>
 
 <style>
-  .wrapper {
-    max-width: 25%;
+  .shell {
+    height: calc(100svh);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  header {
+    grid-column: 1 / -1;
+    background: #ccc;
   }
 
   .board {
     display: grid;
-    border: 1px solid black;
+    box-shadow: inset 0 0 15px 1px #0000001e;
   }
 
   .board button {
