@@ -11,6 +11,7 @@
   <li><button on:pointerdown={setCurrentTool('fill')}>Fill</button></li>
   <li><button on:pointerdown={setCurrentTool('adjust')}>Adjust</button></li>
   <li><button on:pointerdown={setCurrentTool('pick')}>Pick</button></li>
+  <li><button on:pointerdown={setCurrentTool('smudge')}>Smudge</button></li>
 </ul>
 
 <style>

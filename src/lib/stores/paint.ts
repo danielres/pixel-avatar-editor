@@ -10,7 +10,7 @@ export function paint(
   const cols = get(board).cols
   const rows = get(board).values.length / cols
 
-  if (get(currentTool) === 'brush') {
+  if (['brush', 'smudge'].includes(get(currentTool))) {
     board.update(($board) => {
       $board.values[index] = get(currentColor)
       return $board

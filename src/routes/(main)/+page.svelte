@@ -31,11 +31,13 @@
             style:background={value}
             on:pointerdown={() => {
               $isPainting = true
-              $currentTool === 'pick' ? stores.setCurrentColor(value) : paint(i)
+              if (['pick', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)
+              else paint(i)
             }}
             on:pointerover={() => {
               if (!$isPainting) return
-              $currentTool === 'pick' ? stores.setCurrentColor(value) : paint(i)
+              if ($currentTool === 'pick') stores.setCurrentColor(value)
+              else paint(i)
             }}
           />
         {/each}
