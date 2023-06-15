@@ -12,7 +12,7 @@ export default function makeStores(cols: number, rows: number) {
   const board = writable<Board>(initialValue)
   const isPainting = writable<boolean>(false)
   const currentTool = writable<Tool>('brush')
-  const previousTool = writable<Tool>('brush')
+  const previousTools = writable<Tool[]>(['brush'])
   const currentColor = writable<string>('none')
 
   return {
@@ -21,16 +21,25 @@ export default function makeStores(cols: number, rows: number) {
     currentColor,
     currentTool,
     isPainting,
-    previousTool,
     paint: (index: number) => paint(index, currentTool, currentColor, board),
     getColors,
     setCurrentColor: (nextColor: string) => currentColor.set(nextColor),
     setCurrentTool: (nextTool: Tool) => {
-      previousTool.set(get(currentTool))
+      previousTools.update(($previousTools) => [
+        ...$previousTools.filter((i) => i !== get(currentTool)),
+        get(currentTool),
+      ])
       currentTool.set(nextTool)
     },
+    previousTools,
     restorePreviousTool: () => {
-      currentTool.set(get(previousTool))
+      const previousTool =
+        get(currentTool) === 'picker'
+          ? get(previousTools)
+              .reverse()
+              .find((t) => ['brush', 'fill'].includes(t)) ?? 'brush'
+          : 'brush'
+      currentTool.set(previousTool)
     },
   }
 }
