@@ -2,13 +2,18 @@
   import type { Stores } from '$lib/stores'
 
   export let stores: Stores
+
   const { board, currentTool, isPainting, paint } = stores
+  const { history } = board
 </script>
+
+<svelte:window on:pointerup={() => ($isPainting = false)} />
 
 <div style:grid-template-columns="repeat({$board.cols}, 1fr)">
   {#each $board.values as value, i}
     <button
       style:background={value}
+      on:pointerup={history.append}
       on:pointerdown={() => {
         $isPainting = true
         if (['pipette', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)

@@ -18,11 +18,55 @@ export default function makeStores(cols: number, rows: number) {
   const previousTools = writable<Tool[]>(['brush'])
   const currentColor = writable<string>('none')
 
+  const historyStore = writable<Board[]>([initialValue()])
+  const historyIndex = writable<number>(0)
+
+  const history = {
+    ...historyStore,
+    index: historyIndex,
+
+    append() {
+      historyStore.update(($history) => {
+        const b = structuredClone(get(board))
+        const $historyIndex = get(historyIndex)
+        if ($historyIndex < $history.length - 1) {
+          return $history.slice(0, $historyIndex + 1).concat(b)
+        }
+        return [...$history, b]
+      })
+
+      historyIndex.update(($idx) => $idx + 1)
+    },
+
+    undo() {
+      historyIndex.update(($historyIndex) => {
+        if ($historyIndex === 0) return $historyIndex
+        const b = get(historyStore)[$historyIndex - 1]
+        board.set(structuredClone(b))
+        return $historyIndex - 1
+      })
+    },
+
+    redo() {
+      historyIndex.update(($idx) => {
+        const history = get(historyStore)
+        if ($idx === history.length - 1) return $idx
+        const b = history[$idx + 1]
+        board.set(structuredClone(b))
+        return $idx + 1
+      })
+    },
+  }
+
   return {
-    adjust: adjust(board),
+    adjust: adjust(board, history.append),
     board: {
       ...board,
-      reset: () => board.set(initialValue()),
+      reset: () => {
+        board.set(initialValue())
+        history.append()
+      },
+      history,
     },
     currentColor,
     currentTool,

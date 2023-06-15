@@ -28,8 +28,8 @@
       <li class:active={$currentTool === 'adjust'}>
         <button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button>
       </li>
-      <li><button><Undo2 /></button></li>
-      <li><button><Redo2 /></button></li>
+      <li><button on:pointerdown={() => board.history.undo()}><Undo2 /></button></li>
+      <li><button on:pointerdown={() => board.history.redo()}><Redo2 /></button></li>
     </ul>
   </li>
 

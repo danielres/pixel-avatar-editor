@@ -1,31 +1,59 @@
 import type { Board } from '$lib/stores'
 import { get, type Writable } from 'svelte/store'
 
-export default (board: Writable<Board>) => {
+export default (board: Writable<Board>, onChange: () => void) => {
   return {
-    addColumnBefore: () => addColumnBefore(board),
-    addColumnAfter: () => addColumnAfter(board),
-    removeColumnAfter: () => removeColumnAfter(board),
-    removeColumnBefore: () => removeColumnBefore(board),
-    addRowAfter: () => addRowAfter(board),
-    addRowBefore: () => addRowBefore(board),
-    removeRowAfter: () => removeRowAfter(board),
-    removeRowBefore: () => removeRowBefore(board),
+    addColumnBefore: () => {
+      addColumnBefore(board)
+      onChange()
+    },
+    addColumnAfter: () => {
+      addColumnAfter(board)
+      onChange()
+    },
+    removeColumnAfter: () => {
+      removeColumnAfter(board)
+      onChange()
+    },
+    removeColumnBefore: () => {
+      removeColumnBefore(board)
+      onChange()
+    },
+    addRowAfter: () => {
+      addRowAfter(board)
+      onChange()
+    },
+    addRowBefore: () => {
+      addRowBefore(board)
+      onChange()
+    },
+    removeRowAfter: () => {
+      removeRowAfter(board)
+      onChange()
+    },
+    removeRowBefore: () => {
+      removeRowBefore(board)
+      onChange()
+    },
     moveUp: () => {
       removeRowBefore(board)
       addRowAfter(board)
+      onChange()
     },
     moveDown: () => {
       removeRowAfter(board)
       addRowBefore(board)
+      onChange()
     },
     moveLeft: () => {
       removeColumnBefore(board)
       addColumnAfter(board)
+      onChange()
     },
     moveRight: () => {
       removeColumnAfter(board)
       addColumnBefore(board)
+      onChange()
     },
   }
 }

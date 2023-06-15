@@ -11,8 +11,6 @@
   const { board, isPainting, paint, currentTool, restorePreviousTool } = stores
 </script>
 
-<svelte:window on:pointerup={() => ($isPainting = false)} />
-
 <div class="shell">
   <header>
     <div class="card">HEADER</div>
