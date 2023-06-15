@@ -33,12 +33,15 @@ export default function makeStores(cols: number, rows: number) {
     },
     previousTools,
     restorePreviousTool: () => {
-      const previousTool =
-        get(currentTool) === 'picker'
-          ? get(previousTools)
-              .reverse()
-              .find((t) => ['brush', 'fill'].includes(t)) ?? 'brush'
-          : 'brush'
+      const previousTool = ['picker'].includes(get(currentTool))
+        ? get(previousTools)
+            .reverse()
+            .find((t) => ['brush', 'fill'].includes(t)) ?? 'brush'
+        : ['adjust'].includes(get(currentTool))
+        ? get(previousTools)
+            .reverse()
+            .find((t) => ['brush', 'fill', 'smudge', 'eraser', 'pipette'].includes(t)) ?? 'brush'
+        : 'brush'
       currentTool.set(previousTool)
     },
   }
