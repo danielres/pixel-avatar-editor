@@ -19,9 +19,7 @@
   </header>
 
   <aside>
-    <div class="card shadow-md">
-      <Tools {stores} />
-    </div>
+    <Tools {stores} />
   </aside>
 
   <Ratio ratiow={$board.cols} ratioh={$board.values.length / $board.cols}>
