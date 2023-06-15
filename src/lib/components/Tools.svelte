@@ -1,23 +1,35 @@
 <script lang="ts">
   import type { Stores } from '$lib/stores'
 
-  import { Brush, Crop, Eraser, PaintBucket, Pipette, Pointer, FilePlus } from 'lucide-svelte'
+  import {
+    Brush,
+    Crop,
+    Eraser,
+    PaintBucket,
+    Pipette,
+    Pointer,
+    FilePlus,
+    Undo2,
+    Redo2,
+  } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
 
   export let stores: Stores
-  const { setCurrentTool, currentTool, restorePreviousTool } = stores
+  const { setCurrentTool, currentTool, restorePreviousTool, board } = stores
 </script>
 
 <ul class="tools">
   <li>
     <ul class="group">
       <li>
-        <button><FilePlus /></button>
+        <button on:pointerdown={() => board.reset()}><FilePlus /></button>
       </li>
       <li class:active={$currentTool === 'adjust'}>
         <button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button>
       </li>
+      <li><button><Undo2 /></button></li>
+      <li><button><Redo2 /></button></li>
     </ul>
   </li>
 

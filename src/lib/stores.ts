@@ -8,8 +8,11 @@ export type Tool = 'brush' | 'eraser' | 'fill' | 'adjust' | 'pipette' | 'smudge'
 export type Stores = ReturnType<typeof makeStores>
 
 export default function makeStores(cols: number, rows: number) {
-  const initialValue = { cols, values: Array.from({ length: cols * rows }).map(() => 'none') }
-  const board = writable<Board>(initialValue)
+  const initialValue = () => ({
+    cols,
+    values: Array.from({ length: cols * rows }).map(() => 'none'),
+  })
+  const board = writable<Board>(initialValue())
   const isPainting = writable<boolean>(false)
   const currentTool = writable<Tool>('brush')
   const previousTools = writable<Tool[]>(['brush'])
@@ -17,7 +20,10 @@ export default function makeStores(cols: number, rows: number) {
 
   return {
     adjust: adjust(board),
-    board,
+    board: {
+      ...board,
+      reset: () => board.set(initialValue()),
+    },
     currentColor,
     currentTool,
     isPainting,
