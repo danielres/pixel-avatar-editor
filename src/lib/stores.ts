@@ -18,6 +18,7 @@ export default function makeStores(cols: number, rows: number) {
   const previousTools = writable<Tool[]>(['brush'])
   const currentColor = writable<string>('none')
 
+  const MAX_HISTORY_LENGTH = 10
   const historyStore = writable<Board[]>([initialValue()])
   const historyIndex = writable<number>(0)
 
@@ -26,12 +27,15 @@ export default function makeStores(cols: number, rows: number) {
     index: historyIndex,
 
     append() {
+      if (get(history).length >= MAX_HISTORY_LENGTH) {
+        historyStore.update(($h) => $h.slice(1))
+        historyIndex.update(($idx) => $idx - 1)
+      }
+
       historyStore.update(($history) => {
         const b = structuredClone(get(board))
-        const $historyIndex = get(historyIndex)
-        if ($historyIndex < $history.length - 1) {
-          return $history.slice(0, $historyIndex + 1).concat(b)
-        }
+        const idx = get(historyIndex)
+        if (idx < $history.length - 1) return $history.slice(0, idx + 1).concat(b)
         return [...$history, b]
       })
 
@@ -39,19 +43,19 @@ export default function makeStores(cols: number, rows: number) {
     },
 
     undo() {
-      historyIndex.update(($historyIndex) => {
-        if ($historyIndex === 0) return $historyIndex
-        const b = get(historyStore)[$historyIndex - 1]
+      historyIndex.update(($idx) => {
+        if ($idx === 0) return $idx
+        const b = get(historyStore)[$idx - 1]
         board.set(structuredClone(b))
-        return $historyIndex - 1
+        return $idx - 1
       })
     },
 
     redo() {
       historyIndex.update(($idx) => {
-        const history = get(historyStore)
-        if ($idx === history.length - 1) return $idx
-        const b = history[$idx + 1]
+        const h = get(historyStore)
+        if ($idx === h.length - 1) return $idx
+        const b = h[$idx + 1]
         board.set(structuredClone(b))
         return $idx + 1
       })
