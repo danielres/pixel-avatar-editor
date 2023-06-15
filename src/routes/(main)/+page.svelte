@@ -8,7 +8,7 @@
   import makeStores from '$lib/stores'
 
   const stores = makeStores(12, 12)
-  const { board, isPainting, paint, currentTool, restorePreviousTool } = stores
+  const { board, currentTool, restorePreviousTool } = stores
 </script>
 
 <div class="shell">
