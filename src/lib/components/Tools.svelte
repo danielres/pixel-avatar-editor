@@ -17,6 +17,7 @@
 
   export let stores: Stores
   const { setCurrentTool, currentTool, restorePreviousTool, board } = stores
+  const { undo, redo, undos, redos } = board.history
 </script>
 
 <ul class="tools">
@@ -28,8 +29,12 @@
       <li class:active={$currentTool === 'adjust'}>
         <button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button>
       </li>
-      <li><button on:pointerdown={() => board.history.undo()}><Undo2 /></button></li>
-      <li><button on:pointerdown={() => board.history.redo()}><Redo2 /></button></li>
+      <li>
+        <button on:pointerdown={undo} disabled={!$undos}><Undo2 /></button>
+      </li>
+      <li>
+        <button on:pointerdown={redo} disabled={!$redos}><Redo2 /></button>
+      </li>
     </ul>
   </li>
 

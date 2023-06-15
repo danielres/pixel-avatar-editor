@@ -1,4 +1,4 @@
-import { get, writable } from 'svelte/store'
+import { derived, get, writable } from 'svelte/store'
 import adjust from './stores/adjust'
 import getColors from './stores/getColors'
 import { paint } from './stores/paint'
@@ -24,7 +24,8 @@ export default function makeStores(cols: number, rows: number) {
 
   const history = {
     ...historyStore,
-    index: historyIndex,
+    undos: historyIndex,
+    redos: derived([historyStore, historyIndex], ([$h, $idx]) => $h.length - $idx - 1),
 
     append() {
       if (get(history).length >= MAX_HISTORY_LENGTH) {
