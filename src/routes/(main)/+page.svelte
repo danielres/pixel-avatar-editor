@@ -1,5 +1,6 @@
 <script lang="ts">
   import Adjust from '$lib/components/Adjust.svelte'
+  import Board from '$lib/components/Board.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
   import Picker from '$lib/components/Picker.svelte'
   import Ratio from '$lib/components/Ratio.svelte'
@@ -26,23 +27,7 @@
   <Ratio ratiow={$board.cols} ratioh={$board.values.length / $board.cols}>
     <div class="stack">
       <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
-        <div class="board" style:grid-template-columns="repeat({$board.cols}, 1fr)">
-          {#each $board.values as value, i}
-            <button
-              style:background={value}
-              on:pointerdown={() => {
-                $isPainting = true
-                if (['pipette', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)
-                else paint(i)
-              }}
-              on:pointerover={() => {
-                if (!$isPainting) return
-                if ($currentTool === 'pipette') stores.setCurrentColor(value)
-                else paint(i)
-              }}
-            />
-          {/each}
-        </div>
+        <Board {stores} />
       </Checkerboard>
 
       {#if $currentTool === 'adjust'}
@@ -72,16 +57,5 @@
   header {
     grid-column: 1 / -1;
     background: #ccc;
-  }
-
-  .board {
-    display: grid;
-    box-shadow: inset 0 0 15px 1px #0000001e;
-    border: 2px solid white;
-  }
-
-  .board button {
-    aspect-ratio: 1;
-    cursor: crosshair;
   }
 </style>
