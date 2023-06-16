@@ -20,8 +20,32 @@ export default function makeStores(cols: number, rows: number) {
   const previousTools = writable<Tool[]>(['brush'])
   const currentColor = writable<string>('none')
 
+  function restorePreviousTool() {
+    const previousTool = ['picker'].includes(get(currentTool))
+      ? get(previousTools)
+          .reverse()
+          .find((t) => ['brush', 'fill'].includes(t)) ?? 'brush'
+      : ['adjust'].includes(get(currentTool))
+      ? get(previousTools)
+          .reverse()
+          .find((t) => ['brush', 'fill', 'smudge', 'eraser', 'pipette'].includes(t)) ?? 'brush'
+      : 'brush'
+    currentTool.set(previousTool)
+  }
+
+  function setCurrentTool(nextTool: Tool) {
+    previousTools.update(($previousTools) => [
+      ...$previousTools.filter((i) => i !== get(currentTool)),
+      get(currentTool),
+    ])
+    currentTool.set(nextTool)
+  }
+
+  function toggleCurrentTool(tool: Tool) {
+    get(currentTool) === tool ? restorePreviousTool() : setCurrentTool(tool)
+  }
+
   return {
-    adjust: adjust(board, board.snapshot),
     board: {
       ...board,
       reset() {
@@ -30,30 +54,21 @@ export default function makeStores(cols: number, rows: number) {
         currentTool.set('brush')
       },
     },
-    currentColor,
-    currentTool,
+
+    // paint
     isPainting,
     paint: (index: number) => paint(index, currentTool, currentColor, board),
+
+    // colors
+    currentColor,
     getColors,
+
+    // tools
+    currentTool,
+    adjust: adjust(board, board.snapshot),
     setCurrentColor: (nextColor: string) => currentColor.set(nextColor),
-    setCurrentTool: (nextTool: Tool) => {
-      previousTools.update(($previousTools) => [
-        ...$previousTools.filter((i) => i !== get(currentTool)),
-        get(currentTool),
-      ])
-      currentTool.set(nextTool)
-    },
-    restorePreviousTool: () => {
-      const previousTool = ['picker'].includes(get(currentTool))
-        ? get(previousTools)
-            .reverse()
-            .find((t) => ['brush', 'fill'].includes(t)) ?? 'brush'
-        : ['adjust'].includes(get(currentTool))
-        ? get(previousTools)
-            .reverse()
-            .find((t) => ['brush', 'fill', 'smudge', 'eraser', 'pipette'].includes(t)) ?? 'brush'
-        : 'brush'
-      currentTool.set(previousTool)
-    },
+    setCurrentTool,
+    restorePreviousTool,
+    toggleCurrentTool,
   }
 }

@@ -16,7 +16,7 @@
   import CurrentColor from './CurrentColor.svelte'
 
   export let stores: Stores
-  const { setCurrentTool, currentTool, restorePreviousTool, board } = stores
+  const { setCurrentTool, currentTool, restorePreviousTool, board, toggleCurrentTool } = stores
   const { undo, redo, undos, redos } = board
 </script>
 
@@ -24,10 +24,10 @@
   <li>
     <ul class="group">
       <li>
-        <button on:pointerdown={() => board.reset()}><FilePlus /></button>
+        <button on:pointerdown={board.reset}><FilePlus /></button>
       </li>
       <li class:active={$currentTool === 'adjust'}>
-        <button on:pointerdown={() => setCurrentTool('adjust')}><Crop /></button>
+        <button on:pointerdown={() => toggleCurrentTool('adjust')}><Crop /></button>
       </li>
       <li>
         <button on:pointerdown={undo} disabled={!$undos}><Undo2 /></button>
