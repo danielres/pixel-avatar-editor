@@ -1,12 +1,26 @@
 <script lang="ts">
   import { Brush, DownloadCloud, Image, Info } from 'lucide-svelte'
+
+  let activeTab = 'draw'
+
+  function setActive(tab: string) {
+    activeTab = tab
+  }
 </script>
 
 <ul class="tabs">
-  <li class="active"><button><Brush /></button></li>
-  <li><button><Image /></button></li>
-  <li><button><DownloadCloud /></button></li>
-  <li><button><Info /></button></li>
+  <li class:active={activeTab === 'draw'}>
+    <button on:pointerdown={() => setActive('draw')}><Brush /></button>
+  </li>
+  <li class:active={activeTab === 'creations'}>
+    <button on:pointerdown={() => setActive('creations')}><Image /></button>
+  </li>
+  <li class:active={activeTab === 'download'}>
+    <button on:pointerdown={() => setActive('download')}><DownloadCloud /></button>
+  </li>
+  <li class:active={activeTab === 'info'}>
+    <button on:pointerdown={() => setActive('info')}><Info /></button>
+  </li>
 </ul>
 
 <style>
