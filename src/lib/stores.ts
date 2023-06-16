@@ -27,6 +27,7 @@ export default function makeStores(cols: number, rows: number) {
       reset() {
         board.set(getInitialValue())
         board.snapshot()
+        currentTool.set('brush')
       },
     },
     currentColor,
