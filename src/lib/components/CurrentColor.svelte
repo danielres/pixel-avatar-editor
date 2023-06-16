@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Stores } from '$lib/stores'
+  import type { Pigggy } from '$lib/usePigggy'
 
-  export let stores: Stores
+  export let pigggy: Pigggy
 
-  const { currentColor } = stores
+  const { currentColor } = pigggy
 </script>
 
 <div style:background={$currentColor} />

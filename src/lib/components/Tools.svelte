@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Stores } from '$lib/stores'
+  import type { Pigggy } from '$lib/usePigggy'
 
   import {
     Brush,
@@ -15,8 +15,8 @@
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
 
-  export let stores: Stores
-  const { setCurrentTool, currentTool, restorePreviousTool, board, toggleCurrentTool } = stores
+  export let pigggy: Pigggy
+  const { setCurrentTool, currentTool, restorePreviousTool, board, toggleCurrentTool } = pigggy
   const { undo, redo, undos, redos } = board
 </script>
 
@@ -62,7 +62,7 @@
             $currentTool === 'picker' ? restorePreviousTool() : setCurrentTool('picker')}
         >
           <Checkerboard rows={1} cols={1}>
-            <CurrentColor {stores} />
+            <CurrentColor {pigggy} />
           </Checkerboard>
         </button>
       </li>

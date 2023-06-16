@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Stores } from '$lib/stores'
+  import type { Pigggy } from '$lib/usePigggy'
   import { ArrowBigDown, ArrowBigLeft, ArrowBigRight, ArrowBigUp, Minus, Plus } from 'lucide-svelte'
 
-  export let stores: Stores
-  const { adjust, restorePreviousTool, board } = stores
+  export let pigggy: Pigggy
+  const { adjust, restorePreviousTool, board } = pigggy
 </script>
 
 <div class="adjust stack">

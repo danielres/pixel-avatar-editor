@@ -6,10 +6,10 @@
   import Ratio from '$lib/components/Ratio.svelte'
   import Tabs from '$lib/components/Tabs.svelte'
   import Tools from '$lib/components/Tools.svelte'
-  import makeStores from '$lib/stores'
+  import usePigggy from '$lib/usePigggy'
 
-  const stores = makeStores(12, 12)
-  const { board, currentTool, restorePreviousTool } = stores
+  const pigggy = usePigggy(12, 12)
+  const { board, currentTool, restorePreviousTool } = pigggy
 </script>
 
 <div class="shell">
@@ -25,23 +25,23 @@
   </header>
 
   <aside>
-    <Tools {stores} />
+    <Tools {pigggy} />
   </aside>
 
   <Ratio ratiow={$board.cols} ratioh={$board.values.length / $board.cols}>
     <div class="stack">
       <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
-        <Board {stores} />
+        <Board {pigggy} />
       </Checkerboard>
 
       {#if $currentTool === 'adjust'}
-        <Adjust {stores} />
+        <Adjust {pigggy} />
       {/if}
 
       <div class="stack" style:display={$currentTool === 'picker' ? 'grid' : 'none'}>
         <button on:pointerdown={restorePreviousTool} title="close" />
         <div class="card" style:width="75%" style:place-self="center">
-          <Picker {stores} />
+          <Picker {pigggy} />
         </div>
       </div>
     </div>

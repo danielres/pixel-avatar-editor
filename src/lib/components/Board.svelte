@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Stores } from '$lib/stores'
+  import type { Pigggy } from '$lib/usePigggy'
 
-  export let stores: Stores
+  export let pigggy: Pigggy
 
-  const { board, currentTool, isPainting, paint } = stores
+  const { board, currentTool, isPainting, paint } = pigggy
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
@@ -15,12 +15,12 @@
       on:pointerup={board.snapshot}
       on:pointerdown={() => {
         $isPainting = true
-        if (['pipette', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)
+        if (['pipette', 'smudge'].includes($currentTool)) pigggy.setCurrentColor(value)
         else paint(i)
       }}
       on:pointerover={() => {
         if (!$isPainting) return
-        if ($currentTool === 'pipette') stores.setCurrentColor(value)
+        if ($currentTool === 'pipette') pigggy.setCurrentColor(value)
         else paint(i)
       }}
     />

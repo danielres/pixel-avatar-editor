@@ -1,5 +1,5 @@
 import { get, type Writable } from 'svelte/store'
-import type { Board, Tool } from '../stores'
+import type { Board, Tool } from '../usePigggy'
 
 export default function (
   index: number,

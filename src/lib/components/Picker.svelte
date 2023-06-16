@@ -1,25 +1,25 @@
 <script lang="ts">
-  import type { Stores } from '$lib/stores'
-  import { Flower, Eye } from 'lucide-svelte'
+  import type { Pigggy } from '$lib/usePigggy'
+  import { Eye, Flower } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
 
-  export let stores: Stores
+  export let pigggy: Pigggy
   export let hues = 8
   export let lums = 8
   export let lumPad = 30
 
-  const { currentColor, getColors, restorePreviousTool } = stores
+  const { currentColor, getColors, restorePreviousTool } = pigggy
   const { sat, op, values } = getColors(hues, lums, lumPad)
 
   type OnPickTarget = EventTarget & HTMLButtonElement & { dataset: { background: string } }
 
   const onPick = (e: MouseEvent) => {
     const newColor = (e.target as OnPickTarget).dataset.background
-    stores.setCurrentColor(newColor)
+    pigggy.setCurrentColor(newColor)
     restorePreviousTool()
   }
 
-  stores.setCurrentColor($values[Math.floor($values.length / 2)])
+  pigggy.setCurrentColor($values[Math.floor($values.length / 2)])
 </script>
 
 <Checkerboard color="hsl(0, 0%, 95%)">

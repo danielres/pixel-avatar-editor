@@ -1,4 +1,4 @@
-import type { Board } from '$lib/stores'
+import type { Board } from '$lib/usePigggy'
 import { get, type Writable } from 'svelte/store'
 
 export default (board: Writable<Board>, onChange: () => void) => {

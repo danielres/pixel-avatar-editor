@@ -1,14 +1,14 @@
 import { get, writable } from 'svelte/store'
-import adjust from './stores/adjust'
-import getColors from './stores/getColors'
-import paint from './stores/paint'
-import undoable from './stores/undoable'
+import adjust from './usePigggy/adjust'
+import getColors from './usePigggy/getColors'
+import paint from './usePigggy/paint'
+import undoable from './usePigggy/undoable'
 
 export type Board = { cols: number; values: string[] }
 export type Tool = 'brush' | 'eraser' | 'fill' | 'adjust' | 'pipette' | 'smudge' | 'picker'
-export type Stores = ReturnType<typeof makeStores>
+export type Pigggy = ReturnType<typeof usePigggy>
 
-export default function makeStores(cols: number, rows: number) {
+export default function usePigggy(cols: number, rows: number) {
   const getInitialValue = () => {
     const values = Array.from({ length: cols * rows }).map(() => 'none')
     return { cols, values }
