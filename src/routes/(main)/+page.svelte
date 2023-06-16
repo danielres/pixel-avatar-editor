@@ -61,7 +61,7 @@
 
   h1 {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     justify-items: center;
     /* border: 1px solid red; */
   }
