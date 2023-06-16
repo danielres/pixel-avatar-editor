@@ -42,7 +42,6 @@ export default function makeStores(cols: number, rows: number) {
       ])
       currentTool.set(nextTool)
     },
-    previousTools,
     restorePreviousTool: () => {
       const previousTool = ['picker'].includes(get(currentTool))
         ? get(previousTools)
