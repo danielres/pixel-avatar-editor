@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Brush, DownloadCloud, Image, Info } from 'lucide-svelte'
 
-  let activeTab = 'draw'
+  export let activeTab = 'draw'
 
   function setActive(tab: string) {
     activeTab = tab

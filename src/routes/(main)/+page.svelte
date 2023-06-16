@@ -10,6 +10,8 @@
 
   const pigggy = usePigggy(12, 12)
   const { board, currentTool, restorePreviousTool } = pigggy
+
+  let activeTab: string
 </script>
 
 <div class="shell">
@@ -19,9 +21,7 @@
 
   <header>
     <img class="logo-name" src="https://www.pigg.gy/logo_02.png" alt="site name" />
-    <div class="tabs">
-      <Tabs />
-    </div>
+    <div class="tabs"><Tabs bind:activeTab /></div>
   </header>
 
   <aside>
