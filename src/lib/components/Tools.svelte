@@ -5,19 +5,19 @@
     Brush,
     Crop,
     Eraser,
+    FilePlus,
     PaintBucket,
     Pipette,
     Pointer,
-    FilePlus,
-    Undo2,
     Redo2,
+    Undo2,
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
 
   export let stores: Stores
   const { setCurrentTool, currentTool, restorePreviousTool, board } = stores
-  const { undo, redo, undos, redos } = board.history
+  const { undo, redo, undos, redos } = board
 </script>
 
 <ul class="tools">

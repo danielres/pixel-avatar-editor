@@ -1,7 +1,7 @@
 import { get, type Writable } from 'svelte/store'
 import type { Board, Tool } from '../stores'
 
-export function paint(
+export default function (
   index: number,
   currentTool: Writable<Tool>,
   currentColor: Writable<string>,

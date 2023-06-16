@@ -4,7 +4,6 @@
   export let stores: Stores
 
   const { board, currentTool, isPainting, paint } = stores
-  const { history } = board
 </script>
 
 <svelte:window on:pointerup={() => ($isPainting = false)} />
@@ -13,7 +12,7 @@
   {#each $board.values as value, i}
     <button
       style:background={value}
-      on:pointerup={history.append}
+      on:pointerup={board.snapshot}
       on:pointerdown={() => {
         $isPainting = true
         if (['pipette', 'smudge'].includes($currentTool)) stores.setCurrentColor(value)
