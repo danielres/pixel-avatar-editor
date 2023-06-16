@@ -4,9 +4,10 @@
   import Checkerboard from '$lib/components/Checkerboard.svelte'
   import Picker from '$lib/components/Picker.svelte'
   import Ratio from '$lib/components/Ratio.svelte'
+  import Tabs from '$lib/components/Tabs.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import makeStores from '$lib/stores'
-  import { Info, Image, DownloadCloud, Brush } from 'lucide-svelte'
+
   const stores = makeStores(12, 12)
   const { board, currentTool, restorePreviousTool } = stores
 </script>
@@ -18,12 +19,9 @@
 
   <header>
     <img class="logo-name" src="https://www.pigg.gy/logo_02.png" alt="site name" />
-    <ul class="tabs">
-      <li class="active"><button><Brush /></button></li>
-      <li><button><Image /></button></li>
-      <li><button><DownloadCloud /></button></li>
-      <li><button><Info /></button></li>
-    </ul>
+    <div class="tabs">
+      <Tabs />
+    </div>
   </header>
 
   <aside>
@@ -89,23 +87,10 @@
     display: none;
   }
 
-  header ul.tabs {
+  .tabs {
     margin-left: 2rem;
-    display: flex;
     align-self: end;
-    gap: 1rem;
     position: relative;
     top: calc(1rem + 2px);
-  }
-
-  header ul.tabs button {
-    padding: 0.6rem 0.75rem;
-    border-radius: 10% 10% 0 0;
-    color: hsl(0, 0%, 70%);
-  }
-
-  header ul.tabs li.active button {
-    background: white;
-    color: hsl(0, 0%, 0%);
   }
 </style>
