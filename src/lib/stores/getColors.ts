@@ -4,7 +4,7 @@ export default function (hues = 8, lums = 8, lumPad = 30) {
   const hue = (i: number) => getHue(i, lums, hues)
   const lum = (i: number) => getLum(i, lums, hues, lumPad)
 
-  const sat = writable(40)
+  const sat = writable(50)
   const op = writable(100)
 
   const values = derived([sat, op], ([$sat, $op]) =>
