@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Brush, DownloadCloud, Image, Info, User2 } from 'lucide-svelte'
-
-  export let activeTab = 'draw'
+    export let activeTab = 'draw'
 
   function setActive(tab: string) {
     activeTab = tab
@@ -21,8 +20,8 @@
   <li class:active={activeTab === 'info'}>
     <button on:pointerdown={() => setActive('info')}><Info /></button>
   </li>
-  <li class:active={activeTab === 'user'}>
-    <button on:pointerdown={() => setActive('user')}><User2 /></button>
+  <li class:active={activeTab === 'account'}>
+    <button on:pointerdown={() => setActive('account')}><User2 /></button>
   </li>
 </ul>
 
