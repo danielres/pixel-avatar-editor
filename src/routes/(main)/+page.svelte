@@ -25,27 +25,27 @@
   </header>
 
   <aside>
-    <Tools {pigggy} />
+    {#if activeTab === 'draw'}<Tools {pigggy} />{/if}
   </aside>
 
-  <Ratio ratiow={$board.cols} ratioh={$board.values.length / $board.cols}>
-    <div class="stack">
-      <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
-        <Board {pigggy} />
-      </Checkerboard>
+  {#if activeTab === 'draw'}
+    <Ratio ratiow={$board.cols} ratioh={$board.values.length / $board.cols}>
+      <div class="stack">
+        <Checkerboard rows={$board.values.length / $board.cols} cols={$board.cols}>
+          <Board {pigggy} />
+        </Checkerboard>
 
-      {#if $currentTool === 'adjust'}
-        <Adjust {pigggy} />
-      {/if}
+        {#if $currentTool === 'adjust'}<Adjust {pigggy} />{/if}
 
-      <div class="stack" style:display={$currentTool === 'picker' ? 'grid' : 'none'}>
-        <button on:pointerdown={restorePreviousTool} title="close" />
-        <div class="card" style:width="75%" style:place-self="center">
-          <Picker {pigggy} />
+        <div class="stack" style:display={$currentTool === 'picker' ? 'grid' : 'none'}>
+          <button on:pointerdown={restorePreviousTool} title="close" />
+          <div class="card" style:width="75%" style:place-self="center">
+            <Picker {pigggy} />
+          </div>
         </div>
       </div>
-    </div>
-  </Ratio>
+    </Ratio>
+  {/if}
 </div>
 
 <style>
