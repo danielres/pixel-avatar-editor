@@ -7,9 +7,12 @@
     Eraser,
     FilePlus,
     PaintBucket,
+    ImageOff,
     Pipette,
     Pointer,
     Redo2,
+    UploadCloud,
+    Grid,
     Undo2,
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
@@ -24,11 +27,23 @@
   <li>
     <ul class="group">
       <li>
-        <button on:pointerdown={board.reset}><FilePlus /></button>
+        <button><UploadCloud /></button>
+      </li>
+      <li>
+        <!-- <button on:pointerdown={board.reset}><FilePlus /></button> -->
+        <button on:pointerdown={board.reset}><ImageOff /></button>
       </li>
       <li class:active={$currentTool === 'adjust'}>
         <button on:pointerdown={() => toggleCurrentTool('adjust')}><Crop /></button>
       </li>
+      <li>
+        <button><Grid /></button>
+      </li>
+    </ul>
+  </li>
+
+  <li>
+    <ul class="group">
       <li>
         <button on:pointerdown={undo} disabled={!$undos}><Undo2 /></button>
       </li>
