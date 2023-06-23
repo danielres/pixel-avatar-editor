@@ -17,6 +17,7 @@
     "@sveltejs/adapter-auto": "^1.0.3",
     "@sveltejs/kit": "^1.20.2",
     "@sveltejs/package": "^1.0.2",
+    "@types/better-sqlite3": "^7.6.4",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "autoprefixer": "^10.4.14",
@@ -40,6 +41,9 @@
   "dependencies": {
     "@auth/core": "^0.8.4",
     "@auth/sveltekit": "^0.3.3",
+    "better-sqlite3": "^8.4.0",
+    "drizzle-kit": "^0.19.2",
+    "drizzle-orm": "^0.27.0",
     "lucide-svelte": "^0.244.0"
   }
 }
