@@ -1,27 +1,25 @@
 <script lang="ts">
   import { Brush, DownloadCloud, Image, Info, User2 } from 'lucide-svelte'
-    export let activeTab = 'draw'
+  import { page } from '$app/stores'
 
-  function setActive(tab: string) {
-    activeTab = tab
-  }
+  $: pathname = $page.url.pathname
 </script>
 
 <ul class="tabs">
-  <li class:active={activeTab === 'draw'}>
-    <button on:pointerdown={() => setActive('draw')}><Brush /></button>
+  <li class:active={pathname === '/'}>
+    <a href="/"><Brush /></a>
   </li>
-  <li class:active={activeTab === 'creations'}>
-    <button on:pointerdown={() => setActive('creations')}><Image /></button>
+  <!-- <li class:active={pathname === '/creations'}>
+    <a href="/creations"><Image /></a>
+  </li> -->
+  <li class:active={pathname === '/download'}>
+    <a href="/download"><DownloadCloud /></a>
   </li>
-  <li class:active={activeTab === 'download'}>
-    <button on:pointerdown={() => setActive('download')}><DownloadCloud /></button>
+  <li class:active={pathname === '/info'}>
+    <a href="/info"><Info /></a>
   </li>
-  <li class:active={activeTab === 'info'}>
-    <button on:pointerdown={() => setActive('info')}><Info /></button>
-  </li>
-  <li class:active={activeTab === 'account'}>
-    <button on:pointerdown={() => setActive('account')}><User2 /></button>
+  <li class:active={pathname === '/account'} class="account">
+    <a href="/account"><User2 /></a>
   </li>
 </ul>
 
@@ -31,18 +29,19 @@
     gap: 0.5rem;
   }
 
-  button {
+  a {
     padding: 0.6rem 0.75rem;
     border-radius: 10% 10% 0 0;
-    color: hsl(0, 0%, 70%);
+    color: hsl(0, 0%, 50%);
+    display: block;
   }
 
-  li.active button {
+  li.active a {
     background: white;
     color: hsl(0, 0%, 0%);
   }
 
-  li:hover button {
+  li:hover a {
     color: hsla(0, 0%, 0%, 0.721);
   }
 </style>

@@ -21,5 +21,6 @@
     height: min(100cqw * var(--ratioh) / var(--ratiow), 100cqh);
     /* box-shadow: inset 0 0 0 10px #88000033; */
     display: grid;
+    margin-inline: auto;
   }
 </style>

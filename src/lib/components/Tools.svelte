@@ -2,18 +2,17 @@
   import type { Pigggy } from '$lib/usePigggy'
 
   import {
-    Brush,
-    Crop,
-    Eraser,
-    FilePlus,
-    PaintBucket,
-    ImageOff,
-    Pipette,
-    Pointer,
-    Redo2,
-    UploadCloud,
-    Grid,
-    Undo2,
+      Brush,
+      Crop,
+      Eraser,
+      Grid,
+      ImageOff,
+      PaintBucket,
+      Pipette,
+      Pointer,
+      Redo2,
+      Undo2,
+      UploadCloud
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
