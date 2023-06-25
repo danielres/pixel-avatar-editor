@@ -10,7 +10,9 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "format": "prettier --plugin-search-dir . --write .",
+    "db:gen": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts",
+    "db:up": "vite-node src/db/migrate.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.35.0",
@@ -44,6 +46,7 @@
     "better-sqlite3": "^8.4.0",
     "drizzle-kit": "^0.19.2",
     "drizzle-orm": "^0.27.0",
-    "lucide-svelte": "^0.244.0"
+    "lucide-svelte": "^0.244.0",
+    "vite-node": "^0.32.2"
   }
 }
