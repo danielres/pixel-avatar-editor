@@ -11,8 +11,8 @@
       Pipette,
       Pointer,
       Redo2,
+      Save,
       Undo2,
-      UploadCloud
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
@@ -26,7 +26,7 @@
   <li>
     <ul class="group">
       <li>
-        <button><UploadCloud /></button>
+        <button><Save /></button>
       </li>
       <li>
         <!-- <button on:pointerdown={board.reset}><FilePlus /></button> -->
