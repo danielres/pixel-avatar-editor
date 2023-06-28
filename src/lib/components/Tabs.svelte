@@ -12,8 +12,8 @@
   <!-- <li class:active={pathname === '/creations'}>
     <a href="/creations"><Image /></a>
   </li> -->
-  <li class:active={pathname === '/download'}>
-    <a href="/download"><BookDown /></a>
+  <li class:active={pathname === '/library'}>
+    <a href="/library"><BookDown /></a>
   </li>
   <li class:active={pathname === '/info'}>
     <a href="/info"><Info /></a>
