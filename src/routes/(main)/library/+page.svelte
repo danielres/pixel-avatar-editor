@@ -4,10 +4,12 @@
   import BoardPreview from '$lib/components/BoardPreview.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
   import { Brush, DownloadCloud, Trash2 } from 'lucide-svelte'
+  import { goto } from '$app/navigation'
 
   export let data: PageData
 
   const pigggy = data.pigggy
+  const { board } = pigggy
 
   let activeId = data.drawings[data.drawings.length - 1].id
   $: active = data.drawings.find((d) => d.id === activeId)
@@ -36,7 +38,19 @@
 
       <div>
         <ul>
-          <li><button class="flex p-2 gap-2 w-full"><Brush />Edit</button></li>
+          <li>
+            <button
+              on:click={() => {
+                if (!active) return
+                board.snapshot()
+                board.set(active.data)
+                goto('/')
+              }}
+              class="flex p-2 gap-2 w-full"
+            >
+              <Brush />Edit
+            </button>
+          </li>
           <li><button class="flex p-2 gap-2 w-full"><Trash2 />Delete</button></li>
           <li>
             <button class="flex p-2 gap-2 w-full whitespace-nowrap">
