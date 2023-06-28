@@ -1,17 +1,18 @@
 <script lang="ts">
   import type { Pigggy } from '$lib/usePigggy'
 
+  import { enhance } from '$app/forms'
   import {
+      BookUp,
       Brush,
       Crop,
       Eraser,
       Grid,
-      ImageOff,
+      ImagePlus,
       PaintBucket,
       Pipette,
       Pointer,
       Redo2,
-      Save,
       Undo2,
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
@@ -26,11 +27,18 @@
   <li>
     <ul class="group">
       <li>
-        <button><Save /></button>
+        <button on:pointerdown={board.reset}><ImagePlus /></button>
       </li>
       <li>
-        <!-- <button on:pointerdown={board.reset}><FilePlus /></button> -->
-        <button on:pointerdown={board.reset}><ImageOff /></button>
+        <form
+          action="?/save"
+          method="post"
+          use:enhance={({ formData }) => formData.append('board', JSON.stringify($board))}
+          class="contents"
+        >
+          <input type="hidden" name="foo" value="FOO" />
+          <button type="submit" title="Save current drawing"><BookUp /></button>
+        </form>
       </li>
       <li class:active={$currentTool === 'adjust'}>
         <button on:pointerdown={() => toggleCurrentTool('adjust')}><Crop /></button>
