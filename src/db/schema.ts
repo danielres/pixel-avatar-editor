@@ -1,5 +1,6 @@
+import type { Board } from '$lib/usePigggy'
 import type { ProviderType } from '@auth/core/providers'
-import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { blob, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const users = sqliteTable('users', {
   id: text('id').notNull().primaryKey(),
@@ -50,3 +51,12 @@ export const verificationTokens = sqliteTable(
     nameDoesntMatter: primaryKey(vt.identifier, vt.token),
   })
 )
+
+export const drawings = sqliteTable('drawings', {
+  id: text('id').notNull().primaryKey(),
+  data: blob('data', { mode: 'json' }).notNull().$type<Board>(),
+  authorId: text('authorId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: integer('createdAt', { mode: 'timestamp_ms' }).notNull(),
+})
