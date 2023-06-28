@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { PageData } from './$types'
 
+  import { enhance } from '$app/forms'
+  import { goto } from '$app/navigation'
   import BoardPreview from '$lib/components/BoardPreview.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
   import { Brush, DownloadCloud, Trash2 } from 'lucide-svelte'
-  import { goto } from '$app/navigation'
 
   export let data: PageData
 
@@ -51,7 +52,22 @@
               <Brush />Edit
             </button>
           </li>
-          <li><button class="flex p-2 gap-2 w-full"><Trash2 />Delete</button></li>
+          <li>
+            <form
+              action="?/delete"
+              method="post"
+              use:enhance={({ formData }) => {
+                if (!active) return
+                formData.append('id', active.id)
+                return async ({ update }) => {
+                  await update()
+                  activeId = data.drawings[data.drawings.length - 1].id
+                }
+              }}
+            >
+              <button type="submit" class="flex p-2 gap-2 w-full"><Trash2 />Delete</button>
+            </form>
+          </li>
           <li>
             <button class="flex p-2 gap-2 w-full whitespace-nowrap">
               <DownloadCloud />Download PNG
