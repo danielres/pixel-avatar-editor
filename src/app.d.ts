@@ -6,7 +6,11 @@
 // and what to do when importing types
 declare namespace App {
   // interface Error {}
-  // interface Locals {}
+  interface Locals {
+    db: import('./db/db').Db
+    session: import('@auth/sveltekit').Session
+    user: import('./db/schema').User
+  }
   // interface PageData {}
   // interface Platform {}
 }
