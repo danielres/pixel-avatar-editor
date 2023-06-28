@@ -5,7 +5,7 @@
 </script>
 
 <div class="board" style:grid-template-columns="repeat({board.cols}, 1fr)">
-  {#each board.values as value, i}
+  {#each board.values as value}
     <div class="cell" style:background={value} />
   {/each}
 </div>
@@ -17,6 +17,5 @@
 
   .cell {
     aspect-ratio: 1;
-    cursor: crosshair;
   }
 </style>
