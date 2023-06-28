@@ -1,6 +1,8 @@
+import type { db } from '$db/db'
 import type { Adapter, AdapterAccount } from '@auth/core/adapters'
+
+import { uuid } from '$lib/utils/uuid'
 import { and, eq } from 'drizzle-orm'
-import type { db } from '../../db/db'
 import { accounts, sessions, users, verificationTokens } from '../../db/schema'
 
 export function DrizzleAdapter(d: typeof db): Adapter {
@@ -8,7 +10,7 @@ export function DrizzleAdapter(d: typeof db): Adapter {
     createUser: (data) => {
       return d
         .insert(users)
-        .values({ ...data, id: '123' })
+        .values({ ...data, id: uuid() })
         .returning()
         .get()
     },
