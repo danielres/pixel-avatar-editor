@@ -30,14 +30,14 @@
   }
 
   a {
-    @apply text-surface-400;
+    @apply text-surface-500;
     padding: 0.6rem 0.75rem;
     border-radius: 10% 10% 0 0;
     display: block;
   }
 
   li.active a {
-    @apply bg-surface-100 dark:bg-surface-700 text-surface-900;
+    @apply bg-surface-100 dark:bg-surface-700 text-surface-900 dark:text-surface-300;
   }
 
   li:hover:not(.active) a {

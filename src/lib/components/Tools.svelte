@@ -133,7 +133,8 @@
 
   li {
     @apply text-surface-400;
-    &.active {
+    &.active,
+    button:hover:not(:disabled) {
       @apply text-surface-800 dark:text-surface-100;
     }
   }
