@@ -1,7 +1,7 @@
 <script lang="ts">
   export let cols = 12
   export let rows = 12
-  export let color = 'hsl(0, 0%, 87%)'
+  export let color = 'hsla(0, 0%, 0%, 0.025)'
 </script>
 
 <div style:--cols={cols} style:--rows={rows} style:--color={color}>
