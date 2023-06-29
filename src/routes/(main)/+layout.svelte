@@ -62,7 +62,7 @@
     margin-inline: auto;
     position: relative;
     top: 0.5rem;
-    filter: drop-shadow(0 0 10px #fffbfe);
+    filter: drop-shadow(0 0 10px theme(colors.surface.500));
   }
 
   header {
@@ -87,8 +87,7 @@
   }
 
   main {
-    @apply p-4 md:p-8;
-    background: white;
+    @apply p-4 md:p-8 bg-surface-100 rounded;
     box-shadow: -2px 2px 5px 0 hsla(0, 0%, 0%, 0.121);
   }
 </style>
