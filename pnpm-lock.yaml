@@ -34,6 +34,9 @@ devDependencies:
   '@playwright/test':
     specifier: ^1.35.1
     version: 1.35.1
+  '@skeletonlabs/skeleton':
+    specifier: ^1.8.0
+    version: 1.8.0
   '@sveltejs/adapter-auto':
     specifier: ^2.1.0
     version: 2.1.0(@sveltejs/kit@1.20.5)
@@ -679,6 +682,13 @@ packages:
 
   /@polka/url@1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
+
+  /@skeletonlabs/skeleton@1.8.0:
+    resolution: {integrity: sha512-dO4ukU34MGUY1yA1Gln+YUFEEew25AHm6GMpbzCOX8p8b9NmVBWiSuF3me9jnbrV15TGJxmUGzdiRN/70b4KIg==}
+    dependencies:
+      esm-env: 1.0.0
+      svelte: 3.58.0
+    dev: true
 
   /@sveltejs/adapter-auto@2.1.0(@sveltejs/kit@1.20.5):
     resolution: {integrity: sha512-o2pZCfATFtA/Gw/BB0Xm7k4EYaekXxaPGER3xGSY3FvzFJGTlJlZjBseaXwYSM94lZ0HniOjTokN3cWaLX6fow==}
@@ -3027,6 +3037,11 @@ packages:
       pascal-case: 3.1.2
       svelte: 4.0.0
       typescript: 5.1.5
+    dev: true
+
+  /svelte@3.58.0:
+    resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}
+    engines: {node: '>= 8'}
     dev: true
 
   /svelte@4.0.0:
