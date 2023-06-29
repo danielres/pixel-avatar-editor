@@ -3,17 +3,17 @@
 
   import { enhance } from '$app/forms'
   import {
-      BookUp,
-      Brush,
-      Crop,
-      Eraser,
-      Grid,
-      ImagePlus,
-      PaintBucket,
-      Pipette,
-      Pointer,
-      Redo2,
-      Undo2,
+    BookUp,
+    Brush,
+    Crop,
+    Eraser,
+    Grid,
+    ImagePlus,
+    PaintBucket,
+    Pipette,
+    Pointer,
+    Redo2,
+    Undo2,
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
@@ -36,7 +36,6 @@
           use:enhance={({ formData }) => formData.append('board', JSON.stringify($board))}
           class="contents"
         >
-          <input type="hidden" name="foo" value="FOO" />
           <button type="submit" title="Save current drawing"><BookUp /></button>
         </form>
       </li>
@@ -92,34 +91,24 @@
   </li>
 </ul>
 
-<style>
+<style lang="postcss">
   ul.tools {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  ul.tools li {
-    width: 100%;
-    text-align: center;
-    display: flex;
+    @apply grid gap-4;
+
+    li {
+      display: flex;
+    }
   }
 
   ul.group {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background: white;
-    place-items: center;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px 1px rgba(0, 0, 0, 0.1);
-    gap: 0.5rem;
-    padding: 0.5rem;
+    @apply grid bg-surface-800 rounded p-2 gap-2;
+    @apply grid-cols-2;
   }
 
   li {
-    color: hsl(0, 0%, 70%);
-  }
-
-  li.active {
-    color: hsl(0, 0%, 0%);
+    @apply text-surface-400;
+    &.active {
+      @apply text-surface-100;
+    }
   }
 </style>
