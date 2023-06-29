@@ -23,25 +23,24 @@
   </li>
 </ul>
 
-<style>
+<style lang="postcss">
   ul {
     display: flex;
     gap: 0.5rem;
   }
 
   a {
+    @apply text-surface-400;
     padding: 0.6rem 0.75rem;
     border-radius: 10% 10% 0 0;
-    color: hsl(0, 0%, 50%);
     display: block;
   }
 
   li.active a {
-    background: white;
-    color: hsl(0, 0%, 0%);
+    @apply bg-surface-100 text-surface-900;
   }
 
-  li:hover a {
-    color: hsla(0, 0%, 0%, 0.721);
+  li:hover:not(.active) a {
+    @apply text-surface-100;
   }
 </style>
