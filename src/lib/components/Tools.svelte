@@ -101,14 +101,14 @@
   }
 
   ul.group {
-    @apply grid bg-surface-800 rounded p-2 gap-2;
+    @apply grid bg-surface-100 shadow dark:bg-surface-800 rounded p-2 gap-2;
     @apply grid-cols-2;
   }
 
   li {
     @apply text-surface-400;
     &.active {
-      @apply text-surface-100;
+      @apply text-surface-800 dark:text-surface-100;
     }
   }
 </style>
