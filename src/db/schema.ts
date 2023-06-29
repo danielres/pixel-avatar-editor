@@ -2,12 +2,15 @@ import type { Board } from '$lib/usePigggy'
 import type { ProviderType } from '@auth/core/providers'
 import { blob, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
+export type Role = 'ADMIN' | 'USER'
+
 export const users = sqliteTable('users', {
   id: text('id').notNull().primaryKey(),
   name: text('name'),
   email: text('email').notNull(),
   emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
   image: text('image'),
+  role: text('role').$type<Role>(),
 })
 
 export const accounts = sqliteTable(

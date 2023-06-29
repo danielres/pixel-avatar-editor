@@ -15,6 +15,13 @@
       "when": 1687938158470,
       "tag": "0001_great_triathlon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1688058793506,
+      "tag": "0002_tired_lyja",
+      "breakpoints": true
     }
   ]
 }
