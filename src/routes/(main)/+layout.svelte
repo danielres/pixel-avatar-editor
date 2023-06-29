@@ -4,12 +4,16 @@
   import { page } from '$app/stores'
   import Tabs from '$lib/components/Tabs.svelte'
   import Tools from '$lib/components/Tools.svelte'
-
+  import { LightSwitch } from '@skeletonlabs/skeleton'
   export let data: PageData
 
   const pigggy = data.pigggy
   $: pathname = $page.url.pathname
 </script>
+
+<div class="absolute top-2 right-2">
+  <LightSwitch />
+</div>
 
 <div class="shell">
   <h1>
