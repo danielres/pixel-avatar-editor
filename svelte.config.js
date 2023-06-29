@@ -17,6 +17,7 @@ const config = {
     adapter: adapter(),
     alias: {
       $db: './src/db',
+      $constants: './src/constants.ts',
     },
   },
 }

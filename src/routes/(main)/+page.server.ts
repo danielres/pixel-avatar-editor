@@ -1,5 +1,6 @@
 import type { Actions } from './$types'
 
+import { codes } from '$constants'
 import { drawings } from '$db/schema'
 import { fail } from '@sveltejs/kit'
 import md5 from 'blueimp-md5'
@@ -21,7 +22,10 @@ export const actions: Actions = {
         err.name === 'SqliteError' &&
         err.message.includes('UNIQUE constraint failed')
       ) {
-        return fail(409, { _message: 'Drawing already exists' })
+        return fail(409, {
+          message: 'Drawing already in your library',
+          code: codes.UNIQUE_CONSTRAINT_VIOLATION,
+        })
       } else {
         throw err
       }

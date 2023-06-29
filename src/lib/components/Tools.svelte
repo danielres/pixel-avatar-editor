@@ -2,6 +2,8 @@
   import type { Pigggy } from '$lib/usePigggy'
 
   import { enhance } from '$app/forms'
+  import { codes, paths } from '$constants'
+  import { toastStore } from '@skeletonlabs/skeleton'
   import {
     BookUp,
     Brush,
@@ -19,6 +21,7 @@
   import CurrentColor from './CurrentColor.svelte'
 
   export let pigggy: Pigggy
+
   const { setCurrentTool, currentTool, restorePreviousTool, board, toggleCurrentTool } = pigggy
   const { undo, redo, undos, redos } = board
 </script>
@@ -33,7 +36,30 @@
         <form
           action="?/save"
           method="post"
-          use:enhance={({ formData }) => formData.append('board', JSON.stringify($board))}
+          use:enhance={({ formData }) => {
+            formData.append('board', JSON.stringify($board))
+
+            return ({ result }) => {
+              if (result.type === 'failure') {
+                const code = String(result.data?.code)
+                toastStore.trigger({
+                  message:
+                    code === codes.UNIQUE_CONSTRAINT_VIOLATION
+                      ? `Drawing already present in your <a class="underline" href="${paths.library()}">library</a>`
+                      : 'Unknow error',
+                  background: 'variant-filled-warning',
+                  hideDismiss: true,
+                })
+              }
+              if (result.type === 'success') {
+                toastStore.trigger({
+                  message: `Drawing saved in your <a class="underline" href="${paths.library()}">library</a>`,
+                  background: 'variant-filled-success',
+                  hideDismiss: true,
+                })
+              }
+            }
+          }}
           class="contents"
         >
           <button type="submit" title="Save current drawing"><BookUp /></button>
