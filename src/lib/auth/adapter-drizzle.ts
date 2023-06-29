@@ -1,35 +1,37 @@
-import type { db } from '$db/db'
+import type { Db } from '$db/db'
 import type { Adapter, AdapterAccount } from '@auth/core/adapters'
 
 import { uuid } from '$lib/utils/uuid'
 import { and, eq } from 'drizzle-orm'
 import { accounts, sessions, users, verificationTokens } from '../../db/schema'
 
-export function DrizzleAdapter(d: typeof db): Adapter {
+export function DrizzleAdapter(db: Db): Adapter {
+  const usersCount = db.select({ id: users.id }).from(users).all().length
+
   return {
     createUser: (data) => {
-      return d
+      return db
         .insert(users)
-        .values({ ...data, id: uuid() })
+        .values({ ...data, id: uuid(), role: usersCount === 0 ? 'ADMIN' : 'USER' })
         .returning()
         .get()
     },
 
     getUser: (data) => {
-      return d.select().from(users).where(eq(users.id, data)).get() ?? null
+      return db.select().from(users).where(eq(users.id, data)).get() ?? null
     },
 
     getUserByEmail: (data) => {
-      return d.select().from(users).where(eq(users.email, data)).get() ?? null
+      return db.select().from(users).where(eq(users.email, data)).get() ?? null
     },
 
     createSession: (data) => {
-      return d.insert(sessions).values(data).returning().get()
+      return db.insert(sessions).values(data).returning().get()
     },
 
     getSessionAndUser: (data) => {
       return (
-        d
+        db
           .select({
             session: sessions,
             user: users,
@@ -43,11 +45,11 @@ export function DrizzleAdapter(d: typeof db): Adapter {
 
     updateUser: (data) => {
       if (!data.id) throw new Error('updateUser: No id provided')
-      return d.update(users).set(data).where(eq(users.id, data.id)).returning().get()
+      return db.update(users).set(data).where(eq(users.id, data.id)).returning().get()
     },
 
     updateSession: (data) => {
-      return d
+      return db
         .update(sessions)
         .set(data)
         .where(eq(sessions.sessionToken, data.sessionToken))
@@ -56,7 +58,7 @@ export function DrizzleAdapter(d: typeof db): Adapter {
     },
 
     linkAccount: (rawAccount) => {
-      const updatedAccount = d.insert(accounts).values(rawAccount).returning().get()
+      const updatedAccount = db.insert(accounts).values(rawAccount).returning().get()
 
       const account = {
         ...updatedAccount,
@@ -74,7 +76,7 @@ export function DrizzleAdapter(d: typeof db): Adapter {
 
     getUserByAccount: (account) => {
       return (
-        d
+        db
           .select({
             id: users.id,
             email: users.email,
@@ -96,18 +98,18 @@ export function DrizzleAdapter(d: typeof db): Adapter {
 
     deleteSession: (sessionToken) => {
       return (
-        d.delete(sessions).where(eq(sessions.sessionToken, sessionToken)).returning().get() ?? null
+        db.delete(sessions).where(eq(sessions.sessionToken, sessionToken)).returning().get() ?? null
       )
     },
 
     createVerificationToken: (token) => {
-      return d.insert(verificationTokens).values(token).returning().get()
+      return db.insert(verificationTokens).values(token).returning().get()
     },
 
     useVerificationToken: (token) => {
       try {
         return (
-          d
+          db
             .delete(verificationTokens)
             .where(
               and(
@@ -124,11 +126,11 @@ export function DrizzleAdapter(d: typeof db): Adapter {
     },
 
     deleteUser: (id) => {
-      return d.delete(users).where(eq(users.id, id)).returning().get()
+      return db.delete(users).where(eq(users.id, id)).returning().get()
     },
 
     unlinkAccount: (account) => {
-      d.delete(accounts)
+      db.delete(accounts)
         .where(
           and(
             eq(accounts.providerAccountId, account.providerAccountId),
