@@ -32,6 +32,7 @@
 
 <style>
   .outer {
-    box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.604);
+    box-shadow: inset 0 0 10px 0 hsla(0, 0%, 0%, 0.308);
+    border: 1px solid #ffffff11;
   }
 </style>

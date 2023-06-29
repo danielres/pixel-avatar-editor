@@ -5,14 +5,19 @@
   import Tabs from '$lib/components/Tabs.svelte'
   import Tools from '$lib/components/Tools.svelte'
   import { LightSwitch } from '@skeletonlabs/skeleton'
+
+  import { Toast } from '@skeletonlabs/skeleton'
+
   export let data: PageData
 
   const pigggy = data.pigggy
   $: pathname = $page.url.pathname
 </script>
 
+<Toast position="t" padding="p-2" rounded="rounded-sm" />
+
 <div class="absolute top-2 right-2">
-  <LightSwitch />
+  <LightSwitch rounded="rounded-full" />
 </div>
 
 <div class="shell">
@@ -26,7 +31,7 @@
   </header>
 
   {#if pathname === '/'}
-    <aside>
+    <aside class="pt-6">
       <Tools {pigggy} />
     </aside>
   {/if}
@@ -91,7 +96,7 @@
   }
 
   main {
-    @apply p-4 md:p-8 bg-surface-100 rounded;
+    @apply p-4 md:p-8 bg-surface-100 dark:bg-surface-700 rounded;
     box-shadow: -2px 2px 5px 0 hsla(0, 0%, 0%, 0.121);
   }
 </style>

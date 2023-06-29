@@ -30,8 +30,6 @@
 <style>
   div {
     display: grid;
-    box-shadow: inset 0 0 15px 1px #0000001e;
-    border: 2px solid white;
   }
 
   button {

@@ -37,7 +37,7 @@
   }
 
   li.active a {
-    @apply bg-surface-100 text-surface-900;
+    @apply bg-surface-100 dark:bg-surface-700 text-surface-900;
   }
 
   li:hover:not(.active) a {
