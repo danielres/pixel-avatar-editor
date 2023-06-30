@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1687528853090,
-      "tag": "0000_peaceful_frog_thor",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1687938158470,
-      "tag": "0001_great_triathlon",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1688058793506,
-      "tag": "0002_tired_lyja",
+      "when": 1688128515307,
+      "tag": "0000_organic_robin_chapel",
       "breakpoints": true
     }
   ]

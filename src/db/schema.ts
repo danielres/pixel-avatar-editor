@@ -1,6 +1,15 @@
 import type { Board } from '$lib/usePigggy'
 import type { ProviderType } from '@auth/core/providers'
-import { blob, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+
+import * as boardUtils from '$lib/utils/board'
+import {
+  customType,
+  integer,
+  primaryKey,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from 'drizzle-orm/sqlite-core'
 
 export type Role = 'ADMIN' | 'USER'
 
@@ -55,11 +64,24 @@ export const verificationTokens = sqliteTable(
   })
 )
 
-export const drawings = sqliteTable('drawings', {
-  id: text('id').notNull().primaryKey(),
-  data: blob('data', { mode: 'json' }).notNull().$type<Board>(),
-  authorId: text('authorId')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-  createdAt: integer('createdAt', { mode: 'timestamp_ms' }).notNull(),
+const dbBoard = customType<{ data: Board; driverData: string }>({
+  dataType: () => 'text',
+  toDriver: boardUtils.encode,
+  fromDriver: boardUtils.decode,
 })
+
+export const drawings = sqliteTable(
+  'drawings',
+  {
+    id: text('id').notNull().primaryKey(),
+    hash: text('hash').notNull(),
+    data: dbBoard('data').notNull(),
+    authorId: text('authorId')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    createdAt: integer('createdAt', { mode: 'timestamp_ms' }).notNull(),
+  },
+  (d) => ({
+    uniqueIdx: uniqueIndex('unique_idx').on(d.authorId, d.hash),
+  })
+)
