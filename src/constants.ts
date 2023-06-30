@@ -3,6 +3,7 @@ export const paths = {
   draw: () => '/',
   info: () => '/info',
   account: () => '/account',
+  admin: () => '/admin',
 }
 
 export const codes = {
