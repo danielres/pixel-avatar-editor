@@ -3,6 +3,7 @@
 
   import { enhance } from '$app/forms'
   import { goto } from '$app/navigation'
+  import { paths } from '$constants'
   import BoardPreview from '$lib/components/BoardPreview.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
   import { Brush, DownloadCloud, Trash2 } from 'lucide-svelte'
@@ -12,24 +13,33 @@
   const pigggy = data.pigggy
   const { board } = pigggy
 
-  let activeId = data.drawings[data.drawings.length - 1].id
+  let activeId = data.drawings[data.drawings.length - 1]?.id
   $: active = data.drawings.find((d) => d.id === activeId)
 </script>
 
 <div class="space-y-8">
-  <section>
-    <h2>Your creations</h2>
-    <div class="flex gap-4">
-      {#each [...data.drawings].reverse() as drawing}
-        <div class="grid w-24 border border-black/50" class:ring={activeId === drawing.id}>
-          <button on:click={() => (activeId = drawing.id)}>
-            <Checkerboard>
-              <BoardPreview board={drawing.data} />
-            </Checkerboard>
-          </button>
-        </div>
-      {/each}
-    </div>
+  <section class="space-y-4">
+    <h2>Your drawings</h2>
+
+    {#if data.drawings.length}
+      <div class="flex gap-4">
+        {#each [...data.drawings].reverse() as drawing}
+          <div class="grid w-24 border border-black/50" class:ring={activeId === drawing.id}>
+            <button on:click={() => (activeId = drawing.id)}>
+              <Checkerboard>
+                <BoardPreview board={drawing.data} />
+              </Checkerboard>
+            </button>
+          </div>
+        {/each}
+      </div>
+    {:else}
+      <div class="alert variant-ghost-warning whitespace-nowrap block">
+        <span>Please</span>
+        <a class="font-bold underline" href={paths.account()}>sign in</a>
+        <span>to save and view your drawings.</span>
+      </div>
+    {/if}
   </section>
 
   {#if active}
@@ -38,11 +48,6 @@
       <div class="flex gap-4 shadow-md">
         <div class="grid w-full border border-black/50">
           <div class="grid grid-cols-4 gap-4 p-4">
-            <!-- <div class="col-span-4">
-              <Checkerboard>
-                <BoardPreview board={active.data} />
-              </Checkerboard>
-            </div> -->
             <div class="col-span-2">
               <Checkerboard>
                 <BoardPreview board={active.data} />

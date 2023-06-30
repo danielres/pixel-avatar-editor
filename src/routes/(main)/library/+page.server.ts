@@ -4,8 +4,12 @@ import * as s from '$db/schema'
 import { eq } from 'drizzle-orm'
 
 export const load = (async ({ locals: { db, user } }) => {
+  const drawings = user
+    ? db.select().from(s.drawings).where(eq(s.drawings.authorId, user.id)).all()
+    : []
+
   return {
-    drawings: db.select().from(s.drawings).where(eq(s.drawings.authorId, user.id)).all(),
+    drawings,
   }
 }) satisfies PageServerLoad
 
