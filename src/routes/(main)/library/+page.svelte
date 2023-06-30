@@ -21,7 +21,7 @@
   <section class="space-y-4">
     <h2>Your drawings</h2>
 
-    {#if data.drawings.length}
+    {#if data.user}
       <div class="flex gap-4">
         {#each [...data.drawings].reverse() as drawing}
           <div class="grid w-24 border border-black/50" class:ring={activeId === drawing.id}>

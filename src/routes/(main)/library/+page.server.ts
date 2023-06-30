@@ -10,6 +10,7 @@ export const load = (async ({ locals: { db, user } }) => {
 
   return {
     drawings,
+    user,
   }
 }) satisfies PageServerLoad
 
