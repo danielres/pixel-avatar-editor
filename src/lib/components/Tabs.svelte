@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { paths } from '$constants'
   import { Brush, Book, Info, User2 } from 'lucide-svelte'
 
   $: pathname = $page.url.pathname
@@ -7,19 +8,16 @@
 
 <ul class="tabs">
   <li class:active={pathname === '/'}>
-    <a href="/"><Brush /></a>
+    <a href={paths.draw()}><Brush /></a>
   </li>
-  <!-- <li class:active={pathname === '/creations'}>
-    <a href="/creations"><Image /></a>
-  </li> -->
   <li class:active={pathname === '/library'}>
-    <a href="/library"><Book /></a>
+    <a href={paths.library()}><Book /></a>
   </li>
   <li class:active={pathname === '/info'}>
-    <a href="/info"><Info /></a>
+    <a href={paths.info()}><Info /></a>
   </li>
   <li class:active={pathname === '/account'} class="account">
-    <a href="/account"><User2 /></a>
+    <a href={paths.account()}><User2 /></a>
   </li>
 </ul>
 
