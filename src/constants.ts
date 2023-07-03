@@ -2,7 +2,6 @@ export const paths = {
   home: () => '/',
   library: () => '/library',
   draw: () => '/draw',
-  info: () => '/info',
   account: () => '/account',
   admin: () => '/admin',
 }

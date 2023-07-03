@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { paths } from '$constants'
-  import { Brush, Book, Info, User2 } from 'lucide-svelte'
+  import { Book, Brush, User2 } from 'lucide-svelte'
 
   $: pathname = $page.url.pathname
 </script>
@@ -12,9 +12,6 @@
   </li>
   <li class:active={pathname === paths.library()}>
     <a href={paths.library()}><Book /></a>
-  </li>
-  <li class:active={pathname === paths.info()}>
-    <a href={paths.info()}><Info /></a>
   </li>
   <li class:active={pathname === paths.account()}>
     <a href={paths.account()}><User2 /></a>
