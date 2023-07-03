@@ -4,9 +4,9 @@
   import Checkerboard from './Checkerboard.svelte'
 
   export let pigggy: Pigggy
-  export let hues = 8
-  export let lums = 8
-  export let lumPad = 30
+  export let hues = 12
+  export let lums = 12
+  export let lumPad = 5
 
   const { currentColor, getColors, restorePreviousTool } = pigggy
   const { sat, op, values } = getColors(hues, lums, lumPad)
