@@ -67,7 +67,7 @@
                       if (!active) return
                       board.snapshot()
                       board.set(active.data)
-                      goto('/')
+                      goto(paths.draw())
                     }}
                     class="flex p-2 gap-2 w-full"
                   >
