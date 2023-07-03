@@ -7,15 +7,17 @@
 </script>
 
 <div class="grid place-items-center min-h-screen">
-  <div class="grid justify-items-center gap-8">
+  <div class="grid justify-items-center gap-4">
     <div class="w-48">
       <img class="logo" src={picture} alt="logo" />
     </div>
 
     <main class="text-center text-lg glow">
-      <p>Pigggy is a cute little pixel art editor.</p>
-      <p>But don't be mistaken...</p>
       <p>
+        Pigggy is a cute lil pixel art editor, <br />
+        but don't be mistaken...
+      </p>
+      <p class="my-4">
         <b>Pigggy is tiny but mighty!</b>
       </p>
     </main>
