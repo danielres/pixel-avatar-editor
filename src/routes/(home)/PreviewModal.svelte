@@ -1,14 +1,16 @@
 <script lang="ts">
-  import type { Board } from '$lib/usePigggy'
+  import type { PageData } from './$types'
 
+  import { paths } from '$constants'
   import BoardPreview from '$lib/components/BoardPreview.svelte'
-  import { ChevronRight, ChevronLeft } from 'lucide-svelte'
+  import { ChevronLeft, ChevronRight } from 'lucide-svelte'
 
-  export let drawings: { data: Board }[]
+  export let featured: PageData['featured']
   export let index = 0
 
-  const next = () => (index = (index + 1) % drawings.length)
-  const prev = () => (index = (index - 1 + drawings.length) % drawings.length)
+  const next = () => (index = (index + 1) % featured.length)
+  const prev = () => (index = (index - 1 + featured.length) % featured.length)
+  const author = featured[index].author
 </script>
 
 <div
@@ -24,7 +26,7 @@
     </button>
 
     <div class="bg-black/5 shadow-md">
-      <BoardPreview board={drawings[index].data} />
+      <BoardPreview board={featured[index].data} />
     </div>
 
     <button class="flex place-items-center" on:click={next}>
@@ -36,7 +38,15 @@
     </button>
   </div>
 
-  <div class="px-16 text-center">Created by ...</div>
+  <div class="px-16 text-center">
+    <span class="opacity-75">Author:</span>
+    <a
+      class="underline underline-offset-4 decoration-dashed hover:decoration-solid"
+      href={paths.user(author.id)}
+    >
+      {author.name}
+    </a>
+  </div>
 </div>
 
 <style>

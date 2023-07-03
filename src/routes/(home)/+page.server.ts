@@ -4,8 +4,10 @@ import { drawings } from '$db/schema'
 import { desc } from 'drizzle-orm'
 
 export const load = (async ({ locals: { db } }) => {
-  const featured = db.select().from(drawings).orderBy(desc(drawings.createdAt)).limit(10).all()
-  console.log('featured', featured)
+  const featured = db.query.drawings.findMany({
+    with: { author: { columns: { name: true, id: true } } },
+    orderBy: [desc(drawings.createdAt)],
+  })
 
   return {
     featured,

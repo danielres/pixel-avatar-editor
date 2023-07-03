@@ -2,6 +2,7 @@ import type { Board } from '$lib/usePigggy'
 import type { ProviderType } from '@auth/core/providers'
 
 import * as boardUtils from '$lib/utils/board'
+import { relations } from 'drizzle-orm'
 import {
   customType,
   integer,
@@ -85,3 +86,10 @@ export const drawings = sqliteTable(
     uniqueIdx: uniqueIndex('unique_idx').on(d.authorId, d.hash),
   })
 )
+
+export const drawingsRelations = relations(drawings, ({ one }) => ({
+  author: one(users, {
+    fields: [drawings.authorId],
+    references: [users.id],
+  }),
+}))

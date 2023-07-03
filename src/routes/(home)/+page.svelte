@@ -46,7 +46,7 @@
                   type: 'component',
                   component: {
                     ...modalComponent,
-                    props: { board: drawing.data, drawings: data.featured, index: i },
+                    props: { featured: data.featured, index: i },
                   },
                 })}
             >

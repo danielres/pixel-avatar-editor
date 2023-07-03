@@ -4,6 +4,7 @@ export const paths = {
   draw: () => '/draw',
   account: () => '/account',
   admin: () => '/admin',
+  user: (id: string) => `/user/${id}`,
 }
 
 export const codes = {
