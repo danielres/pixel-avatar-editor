@@ -1,9 +1,15 @@
 <script lang="ts">
+  import type { ModalComponent } from '@skeletonlabs/skeleton'
+
   import { paths } from '$constants'
   import picture from '$lib/assets/pigggy.png'
   import BoardPreview from '$lib/components/BoardPreview.svelte'
+  import { modalStore } from '@skeletonlabs/skeleton'
+  import PreviewModal from './PreviewModal.svelte'
 
   export let data
+
+  const modalComponent: ModalComponent = { ref: PreviewModal }
 </script>
 
 <div class="grid place-items-center min-h-screen">
@@ -31,10 +37,18 @@
     <section class="space-y-4 text-center">
       <h2 class="text-2xl opacity-75">User creations</h2>
       <ul class="flex gap-4 justify-center">
-        {#each data.featured as drawing}
-          <li class="">
+        {#each data.featured as drawing, i}
+          <li>
             <button
               class="w-24 border border-surface-400-500-token hover:border-surface-600-300-token p-0.5"
+              on:click={() =>
+                modalStore.trigger({
+                  type: 'component',
+                  component: {
+                    ...modalComponent,
+                    props: { board: drawing.data, drawings: data.featured, index: i },
+                  },
+                })}
             >
               <BoardPreview board={drawing.data} />
             </button>

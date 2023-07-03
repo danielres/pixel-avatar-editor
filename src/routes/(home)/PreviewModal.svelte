@@ -1,0 +1,43 @@
+<script lang="ts">
+  import type { Board } from '$lib/usePigggy'
+
+  import BoardPreview from '$lib/components/BoardPreview.svelte'
+  import { ChevronRight, ChevronLeft } from 'lucide-svelte'
+
+  export let drawings: { data: Board }[]
+  export let index = 0
+
+  const next = () => (index = (index + 1) % drawings.length)
+  const prev = () => (index = (index - 1 + drawings.length) % drawings.length)
+</script>
+
+<div
+  class="w-modal bg-surface-200-700-token py-12 border-4 border-black/50 shadow-lg rounded-md space-y-8"
+>
+  <div class="grid grid-cols-[auto_1fr_auto]">
+    <button class="flex place-items-center" on:click={prev}>
+      <div
+        class="p-2 m-2 rounded-full text-black bg-transparent hover:bg-surface-600 aspect-square flex place-content-center transition-all"
+      >
+        <ChevronLeft />
+      </div>
+    </button>
+
+    <div class="bg-black/5 shadow-md">
+      <BoardPreview board={drawings[index].data} />
+    </div>
+
+    <button class="flex place-items-center" on:click={next}>
+      <div
+        class="p-2 m-2 rounded-full text-black hover:bg-surface-600 aspect-square flex place-content-center"
+      >
+        <ChevronRight />
+      </div>
+    </button>
+  </div>
+
+  <div class="px-16 text-center">Created by ...</div>
+</div>
+
+<style>
+</style>
