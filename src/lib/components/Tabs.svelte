@@ -7,16 +7,16 @@
 </script>
 
 <ul class="tabs">
-  <li class:active={pathname === '/'}>
+  <li class:active={pathname === paths.draw()}>
     <a href={paths.draw()}><Brush /></a>
   </li>
-  <li class:active={pathname === '/library'}>
+  <li class:active={pathname === paths.library()}>
     <a href={paths.library()}><Book /></a>
   </li>
-  <li class:active={pathname === '/info'}>
+  <li class:active={pathname === paths.info()}>
     <a href={paths.info()}><Info /></a>
   </li>
-  <li class:active={pathname === '/account'} class="account">
+  <li class:active={pathname === paths.account()}>
     <a href={paths.account()}><User2 /></a>
   </li>
 </ul>

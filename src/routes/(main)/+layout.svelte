@@ -1,14 +1,14 @@
 <script lang="ts">
-  import type { PageData } from './$types'
+  import type { LayoutData } from './$types'
 
   import { page } from '$app/stores'
+  import { paths } from '$constants'
+  import picture from '$lib/assets/pigggy.png'
   import Tabs from '$lib/components/Tabs.svelte'
   import Tools from '$lib/components/Tools.svelte'
-  import { LightSwitch } from '@skeletonlabs/skeleton'
+  import { LightSwitch, Toast } from '@skeletonlabs/skeleton'
 
-  import { Toast } from '@skeletonlabs/skeleton'
-
-  export let data: PageData
+  export let data: LayoutData
 
   const pigggy = data.pigggy
   $: pathname = $page.url.pathname
@@ -22,7 +22,9 @@
 
 <div class="shell">
   <h1>
-    <img class="logo" src="https://www.pigg.gy/piggy.png" alt="logo" />
+    <a href={paths.home()}>
+      <img class="logo" src={picture} alt="logo" />
+    </a>
   </h1>
 
   <header>
@@ -30,18 +32,18 @@
     <div class="tabs"><Tabs /></div>
   </header>
 
-  {#if pathname === '/'}
+  {#if pathname === paths.draw()}
     <aside class="pt-6">
       <Tools {pigggy} />
     </aside>
   {/if}
 
-  {#if pathname === '/'}
-    <main>
+  {#if pathname === paths.draw()}
+    <main class="block">
       <slot />
     </main>
   {:else}
-    <main class="max-h-full overflow-auto" style:grid-column="-1/1">
+    <main class="block max-h-full overflow-auto" style:grid-column="-1/1">
       <slot />
     </main>
   {/if}
@@ -95,7 +97,7 @@
     flex-grow: 1;
   }
 
-  main {
+  .block {
     @apply p-4 md:p-8 bg-surface-100 dark:bg-surface-700 rounded;
     box-shadow: -2px 2px 5px 0 hsla(0, 0%, 0%, 0.121);
   }
