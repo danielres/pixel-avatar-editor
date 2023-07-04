@@ -3,19 +3,20 @@
 
   import { enhance } from '$app/forms'
   import { codes, paths } from '$constants'
+  import { doubleResolution } from '$lib/utils/board'
   import { toastStore } from '@skeletonlabs/skeleton'
   import {
-    BookUp,
-    Brush,
-    Crop,
-    Eraser,
-    Grid,
-    ImagePlus,
-    PaintBucket,
-    Pipette,
-    Pointer,
-    Redo2,
-    Undo2,
+      BookUp,
+      Brush,
+      Crop,
+      Eraser,
+      Grid,
+      ImagePlus,
+      PaintBucket,
+      Pipette,
+      Pointer,
+      Redo2,
+      Undo2,
   } from 'lucide-svelte'
   import Checkerboard from './Checkerboard.svelte'
   import CurrentColor from './CurrentColor.svelte'
@@ -69,7 +70,14 @@
         <button on:pointerdown={() => toggleCurrentTool('adjust')}><Crop /></button>
       </li>
       <li>
-        <button><Grid /></button>
+        <button
+          on:click={() => {
+            board.snapshot()
+            $board = doubleResolution($board)
+          }}
+        >
+          <Grid />
+        </button>
       </li>
     </ul>
   </li>
