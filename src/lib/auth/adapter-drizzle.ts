@@ -2,17 +2,26 @@ import type { Db } from '$db/db'
 import type { Adapter, AdapterAccount } from '@auth/core/adapters'
 
 import { uuid } from '$lib/utils/uuid'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, sql } from 'drizzle-orm'
 import { accounts, sessions, users, verificationTokens } from '../../db/schema'
 
-export function DrizzleAdapter(db: Db): Adapter {
-  const usersCount = db.select({ id: users.id }).from(users).all().length
+function countUsers(db: Db) {
+  const { count } = db
+    .select({ count: sql<number>`count(*)` })
+    .from(users)
+    .get()
+  return count
+}
 
+export function DrizzleAdapter(db: Db): Adapter {
   return {
     createUser: (data) => {
+      const count = countUsers(db)
+      const role = count === 0 ? 'ADMIN' : 'USER'
+
       return db
         .insert(users)
-        .values({ ...data, id: uuid(), role: usersCount === 0 ? 'ADMIN' : 'USER' })
+        .values({ ...data, id: uuid(), role })
         .returning()
         .get()
     },
