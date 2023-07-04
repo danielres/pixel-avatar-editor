@@ -1,19 +1,22 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { paths } from '$constants'
-  import { Book, Brush, User2 } from 'lucide-svelte'
+  import { Book, Brush, Settings, User2 } from 'lucide-svelte'
 
   $: pathname = $page.url.pathname
 </script>
 
 <ul class="tabs">
-  <li class:active={pathname === paths.draw()}>
+  <li class:active={pathname === paths.draw()} title="Draw!">
     <a href={paths.draw()}><Brush /></a>
   </li>
-  <li class:active={pathname === paths.library()}>
+  <li class:active={pathname === paths.library()} title="Library">
     <a href={paths.library()}><Book /></a>
   </li>
-  <li class:active={pathname === paths.account()}>
+  <li class="ml-auto" class:active={pathname === paths.settings()} title="Settings">
+    <a href={paths.settings()}><Settings /></a>
+  </li>
+  <li class:active={pathname === paths.account()} title="Account">
     <a href={paths.account()}><User2 /></a>
   </li>
 </ul>
