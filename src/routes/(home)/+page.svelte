@@ -12,18 +12,17 @@
   const modalComponent: ModalComponent = { ref: PreviewModal }
 </script>
 
-<div class="grid place-items-center min-h-screen">
+<div class="dark grid place-items-center min-h-screen bg-surface-800 text-surface-100">
   <div class="grid justify-items-center gap-4">
     <div class="w-48">
       <img class="logo" src={picture} alt="logo" />
     </div>
 
     <main class="text-center text-lg glow">
-      <p>
-        Pigggy is a cute lil pixel art editor, <br />
-        but don't be mistaken...
-      </p>
+      <p>Pigggy is a cute lil' pixel art editor.</p>
       <p class="my-4">
+        But don't be fooled...
+        <br />
         <b>Pigggy is tiny but mighty!</b>
       </p>
     </main>
@@ -32,15 +31,17 @@
       Start drawing!
     </a>
 
-    <hr class="w-full my-8" />
+    <hr class="w-96 my-8" />
 
-    <section class="space-y-4 text-center">
+    <section class="space-y-4 text-center px-8">
       <h2 class="text-2xl opacity-75">User creations</h2>
-      <ul class="flex gap-4 justify-center">
+      <ul class="flex flex-wrap gap-4 justify-center max-w-xl">
         {#each data.featured as drawing, i}
-          <li>
+          <li
+            class="w-24 flex aspect-square border overflow-hidden border-surface-300-600-token hover:border-surface-600-300-token dark:bg-black/10 bg-surface-200/50"
+          >
             <button
-              class="w-24 border border-surface-400-500-token hover:border-surface-600-300-token p-0.5"
+              class="w-full"
               on:click={() =>
                 modalStore.trigger({
                   type: 'component',
