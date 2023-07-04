@@ -24,7 +24,7 @@
   pigggy.setCurrentColor($values[Math.floor(randomUnder(hues) * lums + lums / 2 - 1)])
 </script>
 
-<Checkerboard color="hsl(0, 0%, 95%)">
+<Checkerboard color="hsla(0, 0%, 95%, 0.05)">
   <div class="swatches" style:grid-template-columns="repeat({lums}, 1fr)">
     {#each $values as bg}
       <button
@@ -60,7 +60,7 @@
 
   .swatches button {
     aspect-ratio: 1;
-    border: thin solid #ffffff33;
+    border: thin solid #ffffff10;
   }
 
   .swatches button.active {
