@@ -40,12 +40,7 @@
 
   <div class="px-16 text-center">
     <span class="opacity-75">Author:</span>
-    <a
-      class="underline underline-offset-4 decoration-dashed hover:decoration-solid"
-      href={paths.user(author.id)}
-    >
       {author.name}
-    </a>
   </div>
 </div>
 
