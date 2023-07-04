@@ -19,7 +19,9 @@
     restorePreviousTool()
   }
 
-  pigggy.setCurrentColor($values[Math.floor($values.length / 2)])
+  const randomUnder = (max: number) => Math.floor(Math.random() * max)
+
+  pigggy.setCurrentColor($values[Math.floor(randomUnder(hues) * lums + lums / 2 - 1)])
 </script>
 
 <Checkerboard color="hsl(0, 0%, 95%)">
