@@ -6,6 +6,7 @@ export const paths = {
   settings: () => '/settings',
   admin: () => '/admin',
   user: (id: string) => `/user/${id}`,
+  newUser: () => `/users/new`,
 }
 
 export const codes = {

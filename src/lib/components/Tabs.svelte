@@ -16,7 +16,7 @@
   <li class="ml-auto" class:active={pathname === paths.settings()} title="Settings">
     <a href={paths.settings()}><Settings /></a>
   </li>
-  <li class:active={pathname === paths.account()} title="Account">
+  <li class:active={pathname === paths.account() || pathname === paths.newUser()} title="Account">
     <a href={paths.account()}><User2 /></a>
   </li>
 </ul>
