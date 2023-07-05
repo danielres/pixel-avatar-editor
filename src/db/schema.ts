@@ -1,7 +1,6 @@
 import type { Board } from '$lib/usePigggy'
 import type { ProviderType } from '@auth/core/providers'
 
-import * as boardUtils from '$lib/utils/board'
 import { relations } from 'drizzle-orm'
 import {
   customType,
@@ -11,6 +10,7 @@ import {
   text,
   uniqueIndex,
 } from 'drizzle-orm/sqlite-core'
+import * as boardUtils from '../lib/utils/board'
 
 export type Role = 'ADMIN' | 'USER'
 
@@ -21,6 +21,8 @@ export const users = sqliteTable('users', {
   emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
   image: text('image'),
   role: text('role').$type<Role>(),
+  avatarId: text('avatarId'),
+  username: text('username'),
 })
 
 export const accounts = sqliteTable(
@@ -91,5 +93,12 @@ export const drawingsRelations = relations(drawings, ({ one }) => ({
   author: one(users, {
     fields: [drawings.authorId],
     references: [users.id],
+  }),
+}))
+
+export const usersRelations = relations(users, ({ one }) => ({
+  avatar: one(drawings, {
+    fields: [users.avatarId],
+    references: [drawings.id],
   }),
 }))
