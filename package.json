@@ -12,6 +12,7 @@
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write .",
     "db:gen": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts",
+    "db:drop": "drizzle-kit drop --out ./drizzle",
     "db:up": "vite-node src/db/migrate.ts"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "@sveltejs/adapter-auto": "^2.1.0",
     "@sveltejs/kit": "^1.20.5",
     "@sveltejs/package": "^2.1.0",
+    "@tailwindcss/forms": "^0.5.3",
     "@types/better-sqlite3": "^7.6.4",
     "@types/blueimp-md5": "^2.18.0",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
