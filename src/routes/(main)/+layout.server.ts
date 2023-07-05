@@ -5,8 +5,9 @@ import { paths } from '$constants'
 
 export const load = (async ({ parent, url }) => {
   const { user } = await parent()
+  const isUserProfileComplete = user?.avatarId && user?.username
 
-  if (!user.avatarId && url.pathname !== paths.newUser()) {
+  if (user && !isUserProfileComplete && url.pathname !== paths.newUser()) {
     throw redirect(303, paths.newUser())
   }
 
