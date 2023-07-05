@@ -30,8 +30,14 @@ const addDbToLocals: Handle = ({ event, resolve }) => {
 
 const addUserToLocals: Handle = async ({ event, resolve }) => {
   const { session, db } = event.locals
-  if (!session?.user?.email) return resolve(event)
-  const user = db.select().from(users).where(eq(users.email, session.user.email)).get() ?? null
+  if (!session?.user) return resolve(event)
+
+  const user = db.query.users.findFirst({
+    where: (u) => eq(u.email, session.user.email),
+    with: { avatar: true },
+  })
+
+  // const user = db.select().from(users).where(eq(users.email, session.user.email)).get() ?? null
   event.locals.user = user
   return resolve(event)
 }
