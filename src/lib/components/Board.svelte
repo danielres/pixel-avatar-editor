@@ -11,6 +11,7 @@
 <div style:grid-template-columns="repeat({$board.cols}, 1fr)">
   {#each $board.values as value, i}
     <button
+      tabindex="-1"
       style:background={value}
       on:pointerup={board.snapshot}
       on:pointerdown={() => {
