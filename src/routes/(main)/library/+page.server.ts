@@ -4,10 +4,12 @@ import * as s from '$db/schema'
 import { eq } from 'drizzle-orm'
 
 export const load = (async ({ locals: { db, user } }) => {
-  const drawings = db.query.drawings.findMany({
-    where: (d) => eq(d.authorId, user.id),
-    orderBy: (d, { desc }) => [desc(d.createdAt)],
-  })
+  const drawings = user
+    ? db.query.drawings.findMany({
+        where: (d) => eq(d.authorId, user.id),
+        orderBy: (d, { desc }) => [desc(d.createdAt)],
+      })
+    : []
 
   return {
     drawings,
