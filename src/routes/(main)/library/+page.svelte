@@ -6,14 +6,14 @@
   import { paths } from '$constants'
   import BoardPreview from '$lib/components/BoardPreview.svelte'
   import Checkerboard from '$lib/components/Checkerboard.svelte'
-  import { Brush, DownloadCloud, Trash2 } from 'lucide-svelte'
+  import { Brush, DownloadCloud, Trash2, UserSquare2 } from 'lucide-svelte'
 
   export let data: PageData
 
   const pigggy = data.pigggy
   const { board } = pigggy
 
-  let activeId = data.drawings[data.drawings.length - 1]?.id
+  let activeId = data.drawings[0]?.id
   $: active = data.drawings.find((d) => d.id === activeId)
 </script>
 
@@ -23,7 +23,7 @@
 
     {#if data.user}
       <div class="flex gap-4">
-        {#each [...data.drawings].reverse() as drawing}
+        {#each data.drawings as drawing}
           <div class="grid w-24 border border-black/50" class:ring={activeId === drawing.id}>
             <button on:click={() => (activeId = drawing.id)}>
               <Checkerboard>
@@ -83,7 +83,7 @@
                       formData.append('id', active.id)
                       return async ({ update }) => {
                         await update()
-                        activeId = data.drawings[data.drawings.length - 1].id
+                        activeId = data.drawings[0].id
                       }
                     }}
                   >
@@ -93,6 +93,11 @@
                 <li>
                   <button class="flex p-2 gap-2 w-full whitespace-nowrap">
                     <DownloadCloud />Download PNG
+                  </button>
+                </li>
+                <li>
+                  <button class="flex p-2 gap-2 w-full whitespace-nowrap">
+                    <UserSquare2 />Use as avatar
                   </button>
                 </li>
               </ul>
