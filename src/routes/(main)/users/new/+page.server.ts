@@ -6,15 +6,29 @@ import { uuid } from '$lib/utils/uuid'
 import { error, redirect } from '@sveltejs/kit'
 import md5 from 'blueimp-md5'
 import { eq } from 'drizzle-orm'
+import { setError, superValidate } from 'sveltekit-superforms/server'
+import { setUsernameSchema } from './schemas'
 
 export const load = (async ({ locals }) => {
-  if (locals.user?.avatarId && locals.user?.username) {
-    throw redirect(303, paths.account())
-  }
-  return {}
+  const isNewSignup = !(locals.user?.avatarId && locals.user?.username)
+  if (!isNewSignup) throw redirect(303, paths.account())
+
+  const form = await superValidate(setUsernameSchema)
+  return { form }
 }) satisfies PageServerLoad
 
 export const actions: Actions = {
+  async checkUsername({ request, locals }) {
+    const form = await superValidate(request, setUsernameSchema)
+
+    const existingUsername = locals.db.query.users.findFirst({
+      where: eq(s.users.username, form.data.username),
+    })
+    if (existingUsername) setError(form, 'username', 'Username already taken.')
+
+    return { form }
+  },
+
   async update({ request, locals }) {
     const userId = locals.user?.id
     if (!userId) throw error(401, 'Unauthorized')
